@@ -106,7 +106,7 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
       <td><code>Smmsteelteam123</code></td><td><span class="zh">每日</span><span class="en">Daily</span></td></tr>
     <tr><td><b>CBAM <span class="zh">成本计算器</span><span class="en">cost calculator</span></b></td>
       <td><a class="link" href="https://thomaschong1974-bit.github.io/steel-cbam-calculator/" target="_blank">…github.io/steel-cbam-calculator/</a></td>
-      <td><code>Smmsteelteam123</code></td><td><span class="zh">每周</span><span class="en">Weekly</span></td></tr>
+      <td><code>Smmsteelteam123</code></td><td><span class="zh">证书价按季度（官方公布后维护）</span><span class="en">Cert price quarterly (maintained on release)</span></td></tr>
     </tbody>
   </table>
   <div class="card"><span class="zh"><b>桌面内部版：</b>你电脑上的 Cowork artifact「cbam-trq-quota-tracker」是内部工作版（口令 <code>Smmsteelteam123</code>，带批量录入/导出），每日任务会一并更新它。网站版是给同事/客户看的只读版。</span>
@@ -164,8 +164,8 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
   <div class="step"><div class="sn">2</div><div class="sb"><span class="zh">它通过<b>你电脑的 Chrome</b> 打开官方 TARIC，抓全部 283 个订单号的最新余额，校验（必须 283 条、无余额超配额）。</span><span class="en">It opens the official TARIC through <b>your computer's Chrome</b>, scrapes all 283 balances, and validates (must be 283, no balance above quota).</span></div></div>
   <div class="step"><div class="sn">3</div><div class="sb"><span class="zh">更新你桌面的内部 artifact，并把新的 <code>trq_balances.json</code> 提交到 GitHub 仓库。</span><span class="en">It updates the internal artifact on your desktop and commits the new <code>trq_balances.json</code> to the GitHub repo.</span></div></div>
   <div class="step"><div class="sn">4</div><div class="sb"><span class="zh">网站访客<b>下次打开就自动看到最新数据</b>——网页每次加载都去拉那个 JSON（带时间戳绕过缓存），或点右上角"⟳ 刷新数据"。</span><span class="en">Website visitors <b>see the latest data on next open</b> — the page fetches that JSON on every load (cache-busted), or click "⟳ Refresh" top-right.</span></div></div>
-  <p class="muted"><span class="zh">CBAM 计算器同理，但是<b>每周一</b>更新（证书价季度变、欧洲价周变）。政策扫描每周一、季度开闸日核验、12 月分配细则续期监控也都各自在跑。</span>
-    <span class="en">The CBAM calculator works the same way but refreshes <b>every Monday</b> (certificate price is quarterly, EU prices weekly). A weekly policy scan, a quarterly opening-day check, and a December renewal watch also run.</span></p>
+  <p class="muted"><span class="zh">CBAM 计算器不同：它内置的是欧委会<b>官方公布的季度证书价</b>（现为 2026 Q1 €75.36 / Q2 €75.28），未公布的季度显示"价格未公布"——我们绝不臆测碳价。每周一有一个<b>监测任务</b>检查官方是否公布了新一季证书价，一旦公布就提醒 Thomas 手动更新一次（对我说"把 CBAM 计算器的某季度证书价更新为 €X"即可）。政策扫描每周一、季度开闸日核验、12 月分配细则续期监控也都各自在跑。</span>
+    <span class="en">The CBAM calculator is different: it carries the Commission's <b>officially published quarterly certificate price</b> (now 2026 Q1 €75.36 / Q2 €75.28); unpublished quarters show "price not released" — we never guess the carbon price. A weekly <b>monitor</b> checks each Monday whether a new quarter's price has been published and, when it is, prompts Thomas for a one-time manual update (just tell me "update the CBAM calculator's Qx certificate price to €X"). A weekly policy scan, a quarterly opening-day check, and a December renewal watch also run.</span></p>
 </section>
 
 <!-- 5 ensure -->
