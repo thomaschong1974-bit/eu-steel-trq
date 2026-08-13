@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>员工上手手册 · EU 钢铁 TRQ + CBAM 工具 – SMM</title>
+<style>
+:root{--red:#C00000;--ink:#16191d;--grey:#79808a;--line:#e9ebee;--bg:#f5f6f8;--hair:#eef0f2;
+ --safe:#1a9c5b;--warn:#dd9a00;--crit:#e0442a;--exh:#96222e;--blue:#2456c9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"MiSans","PingFang SC","Microsoft YaHei",-apple-system,"Segoe UI",sans-serif;
+ color:var(--ink);background:#fff;font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+body.en{font-family:-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;line-height:1.62}
+body:not(.en) .en{display:none!important}
+body.en .zh{display:none!important}
+header{background:#fff;border-top:3px solid var(--red);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.hd{max-width:940px;margin:0 auto;padding:15px 26px;display:flex;align-items:center;gap:14px}
+.hd .lg{height:32px}.hd .lg svg{height:32px;width:auto;display:block}
+.hd h1{flex:1;margin:0;font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px}
+.hd h1 .bar{width:5px;height:21px;background:var(--red);border-radius:1px}
+.langbtn{border:1.5px solid var(--red);border-radius:999px;overflow:hidden;display:flex;cursor:pointer;font-size:13px;font-weight:700}
+.langbtn span{padding:5px 13px;color:var(--red)}.langbtn span.on{background:var(--red);color:#fff}
+main{max-width:940px;margin:0 auto;padding:0 26px 90px}
+.hero{padding:34px 0 8px}
+.hero .k{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--red)}
+.hero h2{font-size:29px;font-weight:800;letter-spacing:-.6px;margin:8px 0 8px}
+.hero p{color:var(--grey);font-size:15px;margin:0;max-width:660px}
+.welcome{background:var(--bg);border-radius:16px;padding:20px 24px;margin:20px 0}
+.welcome b{color:var(--red)}
+section{margin-top:44px;scroll-margin-top:80px}
+h3{font-size:22px;font-weight:800;letter-spacing:-.4px;display:flex;align-items:center;gap:11px;margin:0 0 8px}
+h3 .n{width:30px;height:30px;border-radius:9px;background:var(--red);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none}
+h4{font-size:16.5px;font-weight:800;margin:20px 0 4px}
+p{margin:9px 0}
+.plain{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:14px 20px;margin:14px 0}
+.plain .lbl{font-size:12px;font-weight:800;color:var(--red);letter-spacing:.05em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.tool{background:var(--bg);border-radius:16px;padding:20px 22px}
+.tool .tt{font-size:18px;font-weight:800}
+.tool .u{font-size:13px}
+.tool a{color:var(--red);font-weight:700;word-break:break-all}
+.tool .code{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 9px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--red);font-weight:700}
+.steps{counter-reset:s;margin:14px 0}
+.st{display:flex;gap:14px;align-items:flex-start;margin:12px 0}
+.st .sn{counter-increment:s;flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.st .sn:before{content:counter(s)}
+.scn{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:14px 0;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.scn .q{font-size:16px;font-weight:800;display:flex;gap:9px;align-items:flex-start}
+.scn .q .qm{flex:none;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.scn .a{margin:8px 0 0 33px;color:#2b2f36}
+.scn .a b{color:var(--ink)}
+.tag{display:inline-block;font-size:12px;font-weight:800;background:var(--red);color:#fff;border-radius:6px;padding:1px 8px;vertical-align:1px}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;padding:2px 9px;border-radius:999px}
+.p-safe{background:#e7f6ee;color:var(--safe)}.p-warn{background:#fff6e0;color:var(--warn)}
+.p-crit{background:#fdece0;color:var(--crit)}.p-exh{background:#f6e8ea;color:var(--exh)}
+.gloss{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+.gloss td{padding:8px 10px;border-bottom:1px dotted #d6dadf;vertical-align:top}
+.gloss td:first-child{font-weight:800;white-space:nowrap;width:150px}
+.remember{background:#fff7ed;border-radius:16px;padding:20px 24px;margin:16px 0}
+.remember h4{margin:0 0 8px}
+.remember ol{margin:6px 0;padding-left:22px}
+.remember li{margin:8px 0}
+.remember b{color:var(--red)}
+.tip{color:var(--grey);font-size:13.5px}
+footer{margin-top:52px;border-top:1px solid var(--ink);padding:22px 0 10px;color:var(--grey);font-size:13px;line-height:1.7}
+@media(max-width:720px){.two,.gloss{grid-template-columns:1fr}.hero h2{font-size:23px}.gloss td:first-child{width:auto}}
+@media print{header{position:static}.langbtn{display:none}body{font-size:12pt}.scn{break-inside:avoid}}
+</style>
+</head>
+<body class="lang-zh">
+<header><div class="hd">
+  <div class="lg"><svg class="sb-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 966" role="img" aria-label="SMM Shanghai Metals Market logo">
+  <path d="M 747 763 L 747 856 L 762 856 L 762 763 Z M 1823 762 L 1812 767 L 1808 770 L 1801 778 L 1796 788 L 1794 796 L 1794 802 L 1793 803 L 1793 816 L 1794 817 L 1795 828 L 1801 841 L 1811 851 L 1819 855 L 1832 858 L 1850 857 L 1862 852 L 1872 843 L 1877 834 L 1878 828 L 1862 826 L 1858 834 L 1848 843 L 1841 845 L 1830 844 L 1822 840 L 1816 834 L 1811 824 L 1810 814 L 1811 813 L 1879 813 L 1879 800 L 1878 799 L 1877 790 L 1871 777 L 1861 767 L 1847 761 L 1827 761 Z M 1811 795 L 1816 784 L 1825 776 L 1830 774 L 1843 774 L 1850 777 L 1858 785 L 1861 792 L 1862 799 L 1861 800 L 1812 800 L 1811 799 Z M 1705 765 L 1696 761 L 1683 761 L 1677 764 L 1670 773 L 1669 772 L 1669 763 L 1654 763 L 1654 856 L 1670 856 L 1670 800 L 1674 785 L 1680 779 L 1684 777 L 1692 777 L 1699 780 Z M 1563 770 L 1556 781 L 1554 789 L 1556 790 L 1570 791 L 1571 786 L 1574 781 L 1578 777 L 1585 774 L 1602 774 L 1609 777 L 1614 782 L 1616 787 L 1616 796 L 1603 800 L 1573 804 L 1562 809 L 1554 818 L 1551 827 L 1552 840 L 1555 846 L 1562 853 L 1568 856 L 1577 857 L 1578 858 L 1588 858 L 1601 855 L 1609 851 L 1616 845 L 1618 847 L 1618 851 L 1620 856 L 1637 856 L 1634 850 L 1633 840 L 1632 839 L 1632 783 L 1631 782 L 1631 778 L 1628 772 L 1622 766 L 1609 761 L 1584 761 L 1573 764 Z M 1616 810 L 1616 823 L 1614 830 L 1610 836 L 1604 841 L 1594 845 L 1580 845 L 1575 843 L 1570 838 L 1568 834 L 1568 828 L 1571 822 L 1576 818 L 1587 815 L 1603 813 L 1615 809 Z M 1281 763 L 1275 766 L 1268 773 L 1265 779 L 1264 792 L 1267 800 L 1271 805 L 1277 809 L 1317 821 L 1322 826 L 1323 830 L 1321 836 L 1315 842 L 1305 845 L 1292 844 L 1286 841 L 1280 835 L 1277 826 L 1261 828 L 1264 839 L 1271 849 L 1284 856 L 1294 857 L 1295 858 L 1307 858 L 1320 855 L 1330 849 L 1335 843 L 1338 837 L 1339 824 L 1336 815 L 1330 809 L 1325 806 L 1310 801 L 1289 796 L 1285 794 L 1280 789 L 1279 785 L 1281 780 L 1284 777 L 1291 774 L 1307 774 L 1313 777 L 1317 781 L 1320 788 L 1335 787 L 1334 779 L 1328 769 L 1324 766 L 1310 761 L 1288 761 Z M 1141 768 L 1133 777 L 1129 789 L 1145 791 L 1148 783 L 1155 776 L 1160 774 L 1177 774 L 1183 776 L 1189 781 L 1191 785 L 1192 794 L 1190 797 L 1179 800 L 1174 800 L 1173 801 L 1153 803 L 1143 806 L 1136 810 L 1130 817 L 1127 824 L 1127 838 L 1131 847 L 1136 852 L 1141 855 L 1153 858 L 1164 858 L 1179 854 L 1192 845 L 1194 853 L 1196 856 L 1212 856 L 1208 845 L 1208 833 L 1207 832 L 1207 781 L 1202 770 L 1199 767 L 1184 761 L 1159 761 L 1148 764 Z M 1191 810 L 1191 825 L 1187 834 L 1181 840 L 1170 845 L 1155 845 L 1149 842 L 1146 839 L 1143 832 L 1143 829 L 1145 824 L 1150 819 L 1157 816 L 1183 812 L 1190 809 Z M 1010 762 L 999 767 L 995 770 L 988 778 L 984 786 L 981 796 L 981 803 L 980 804 L 980 815 L 981 816 L 981 823 L 983 831 L 988 841 L 997 850 L 1006 855 L 1019 858 L 1037 857 L 1052 850 L 1061 840 L 1066 828 L 1049 826 L 1045 834 L 1035 843 L 1028 845 L 1017 844 L 1009 840 L 1003 834 L 998 824 L 997 814 L 998 813 L 1066 813 L 1066 799 L 1065 798 L 1064 790 L 1060 780 L 1054 772 L 1043 764 L 1034 761 L 1014 761 Z M 998 795 L 1003 784 L 1012 776 L 1017 774 L 1030 774 L 1037 777 L 1045 785 L 1048 792 L 1049 799 L 1048 800 L 999 800 L 998 799 Z M 659 767 L 650 777 L 646 789 L 662 791 L 666 781 L 670 777 L 677 774 L 694 774 L 700 776 L 706 781 L 708 786 L 708 796 L 696 800 L 665 804 L 653 810 L 647 817 L 644 824 L 644 829 L 643 830 L 644 839 L 648 847 L 653 852 L 658 855 L 670 858 L 681 858 L 693 855 L 701 851 L 709 845 L 711 853 L 713 856 L 729 856 L 725 845 L 725 835 L 724 834 L 724 781 L 719 770 L 714 766 L 701 761 L 676 761 L 665 764 Z M 708 810 L 708 824 L 707 828 L 703 835 L 696 841 L 687 845 L 672 845 L 666 842 L 661 836 L 660 833 L 661 826 L 668 818 L 679 815 L 700 812 L 707 809 Z M 529 763 L 515 763 L 515 771 L 514 772 L 506 765 L 496 761 L 478 761 L 474 762 L 463 768 L 455 777 L 451 785 L 448 795 L 447 816 L 450 829 L 457 842 L 465 850 L 473 854 L 481 855 L 482 856 L 497 855 L 506 851 L 512 845 L 513 846 L 513 861 L 512 865 L 509 871 L 504 876 L 499 879 L 495 880 L 479 880 L 474 878 L 468 873 L 466 869 L 466 865 L 450 864 L 451 874 L 455 882 L 462 888 L 476 893 L 498 893 L 506 891 L 514 887 L 523 878 L 527 869 L 528 858 L 529 857 Z M 483 774 L 495 774 L 501 777 L 509 785 L 514 797 L 515 810 L 514 811 L 514 819 L 512 826 L 509 832 L 502 839 L 492 843 L 486 843 L 476 839 L 467 829 L 464 820 L 463 803 L 466 790 L 470 783 L 475 778 Z M 355 763 L 355 856 L 371 856 L 371 796 L 372 795 L 372 791 L 374 786 L 379 780 L 388 775 L 392 775 L 393 774 L 398 774 L 405 776 L 411 781 L 414 787 L 415 791 L 415 856 L 431 856 L 431 788 L 430 787 L 430 781 L 426 772 L 420 766 L 412 762 L 408 761 L 390 761 L 381 764 L 370 774 L 369 773 L 369 763 Z M 265 769 L 258 778 L 255 789 L 271 791 L 271 788 L 274 782 L 279 777 L 286 774 L 303 774 L 310 777 L 315 782 L 317 787 L 317 796 L 304 800 L 278 803 L 263 809 L 256 816 L 252 826 L 252 836 L 256 846 L 263 853 L 269 856 L 278 857 L 279 858 L 289 858 L 302 855 L 310 851 L 317 845 L 319 848 L 321 856 L 338 856 L 335 850 L 334 842 L 333 841 L 333 785 L 332 784 L 332 779 L 329 772 L 323 766 L 317 763 L 309 761 L 284 761 L 274 764 Z M 317 810 L 316 827 L 313 833 L 305 841 L 295 845 L 281 845 L 276 843 L 271 838 L 269 834 L 269 827 L 271 823 L 275 819 L 287 815 L 304 813 L 316 809 Z M 1898 739 L 1898 762 L 1897 763 L 1886 763 L 1886 775 L 1897 775 L 1898 776 L 1898 844 L 1902 852 L 1909 856 L 1913 857 L 1926 857 L 1927 856 L 1931 856 L 1930 843 L 1929 842 L 1919 842 L 1914 838 L 1913 834 L 1913 776 L 1914 775 L 1929 775 L 1929 763 L 1914 763 L 1913 762 L 1913 730 Z M 1085 739 L 1085 762 L 1084 763 L 1073 763 L 1073 775 L 1084 775 L 1085 776 L 1085 843 L 1086 847 L 1089 852 L 1096 856 L 1100 857 L 1113 857 L 1114 856 L 1118 856 L 1117 843 L 1116 842 L 1106 842 L 1101 838 L 1101 834 L 1100 833 L 1100 776 L 1101 775 L 1116 775 L 1116 763 L 1101 763 L 1100 762 L 1100 730 Z M 1715 727 L 1715 856 L 1731 856 L 1731 819 L 1741 809 L 1743 810 L 1773 856 L 1792 856 L 1791 853 L 1754 798 L 1789 763 L 1767 763 L 1732 799 L 1731 798 L 1731 727 Z M 1409 727 L 1409 856 L 1425 856 L 1425 752 L 1426 751 L 1430 760 L 1462 856 L 1478 856 L 1504 779 L 1506 776 L 1512 756 L 1514 753 L 1515 754 L 1515 856 L 1532 856 L 1532 727 L 1509 727 L 1508 728 L 1471 835 L 1469 832 L 1435 728 L 1434 727 Z M 1229 727 L 1229 856 L 1245 856 L 1245 727 Z M 837 727 L 837 856 L 854 856 L 854 752 L 855 751 L 891 856 L 907 856 L 913 836 L 915 833 L 921 813 L 923 810 L 930 787 L 932 784 L 938 764 L 943 752 L 944 753 L 944 856 L 960 856 L 960 727 L 937 727 L 900 835 L 898 832 L 863 727 Z M 747 727 L 747 745 L 762 745 L 762 727 Z M 551 727 L 551 856 L 567 856 L 567 795 L 569 788 L 572 783 L 579 777 L 587 774 L 599 775 L 603 777 L 609 784 L 611 791 L 611 856 L 627 856 L 627 790 L 626 789 L 626 782 L 622 772 L 616 766 L 604 761 L 586 761 L 582 762 L 574 766 L 568 771 L 567 770 L 567 727 Z M 160 727 L 160 856 L 175 856 L 175 801 L 176 800 L 176 793 L 178 787 L 186 778 L 196 774 L 208 775 L 213 778 L 218 785 L 219 794 L 220 795 L 220 856 L 235 856 L 235 785 L 231 773 L 226 767 L 213 761 L 194 761 L 184 765 L 176 772 L 175 771 L 175 727 Z M 73 726 L 58 732 L 47 743 L 43 753 L 43 768 L 46 776 L 54 785 L 65 791 L 77 795 L 100 800 L 115 806 L 122 814 L 123 825 L 120 831 L 114 837 L 106 841 L 97 842 L 96 843 L 87 843 L 86 842 L 77 841 L 65 835 L 58 827 L 55 820 L 54 813 L 38 814 L 39 826 L 45 839 L 55 849 L 62 853 L 82 858 L 101 858 L 102 857 L 110 856 L 125 849 L 133 841 L 137 834 L 139 828 L 140 817 L 136 803 L 127 793 L 116 787 L 104 783 L 80 778 L 67 773 L 61 767 L 59 762 L 59 757 L 61 752 L 66 746 L 73 742 L 82 741 L 83 740 L 99 741 L 109 745 L 115 751 L 118 757 L 120 765 L 136 764 L 135 754 L 128 740 L 123 735 L 113 729 L 97 725 Z M 32 472 L 32 640 L 523 640 L 524 639 L 529 639 L 530 638 L 547 635 L 566 629 L 588 619 L 606 607 L 622 591 L 631 578 L 638 564 L 642 552 L 645 539 L 645 534 L 646 533 L 647 499 L 646 498 L 645 482 L 644 481 L 641 464 L 633 440 L 619 411 L 606 390 L 585 362 L 558 332 L 505 283 L 498 274 L 495 268 L 494 260 L 495 257 L 503 250 L 523 245 L 540 245 L 541 244 L 546 244 L 547 245 L 681 245 L 682 246 L 682 640 L 865 640 L 865 411 L 866 410 L 982 640 L 992 640 L 1027 570 L 1029 568 L 1105 415 L 1109 409 L 1110 410 L 1110 640 L 1293 640 L 1293 246 L 1294 245 L 1323 245 L 1324 246 L 1324 640 L 1507 640 L 1507 410 L 1508 409 L 1535 463 L 1537 465 L 1613 618 L 1615 620 L 1625 640 L 1635 640 L 1751 409 L 1752 410 L 1752 640 L 1935 640 L 1935 77 L 1752 77 L 1630 310 L 1507 77 L 1110 77 L 988 309 L 986 308 L 980 295 L 978 293 L 971 278 L 969 276 L 961 259 L 959 257 L 951 240 L 949 238 L 941 221 L 939 219 L 931 202 L 929 200 L 921 183 L 919 181 L 865 77 L 372 77 L 371 78 L 360 78 L 359 79 L 347 80 L 335 83 L 319 89 L 302 99 L 287 112 L 274 129 L 267 142 L 261 157 L 254 185 L 254 191 L 253 192 L 253 226 L 254 227 L 254 233 L 255 234 L 255 239 L 258 252 L 268 280 L 279 302 L 288 317 L 308 345 L 330 371 L 370 411 L 383 421 L 395 433 L 404 446 L 405 449 L 405 457 L 404 459 L 398 465 L 394 467 L 384 470 L 371 471 L 370 472 Z" fill="#d7000f" fill-rule="evenodd"/>
+</svg></div>
+  <h1><span class="bar"></span><span class="zh">员工上手手册 · 欧盟钢铁配额 &amp; 碳成本工具</span><span class="en">Staff Quick-Start · EU Steel Quota &amp; Carbon-Cost Tools</span></h1>
+  <div class="langbtn" onclick="tg()"><span id="lz" class="on">中文</span><span id="le">EN</span></div>
+</div></header>
+
+<main>
+<div class="hero">
+  <div class="k">SMM STEEL TEAM · <span class="zh">新人上手手册</span><span class="en">ONBOARDING MANUAL</span></div>
+  <h2><span class="zh">五分钟学会：帮客户回答欧盟钢铁配额与碳成本问题</span><span class="en">Learn in five minutes: answer clients' EU steel quota &amp; carbon-cost questions</span></h2>
+  <p><span class="zh">你不需要懂法规、不用装任何软件。手上这两个网页工具，浏览器打开、输个密码就能用。本手册用"客户问我 X，我该点哪里"的方式带你上手。</span>
+     <span class="en">You don't need to know the regulations or install anything. These two web tools open in any browser with a password. This manual teaches you the "a client asks X — where do I click" way.</span></p>
+</div>
+
+<div class="welcome">
+  <span class="zh"><b>你手上有两个工具：</b>一个查<b>关税配额</b>（某国某类钢材免税额度还剩多少、用完要不要交 50% 关税），一个算<b>碳成本</b>（进口这批钢材的 CBAM 碳关税多少）。数据每天/每周自动更新，你只管用。</span>
+  <span class="en"><b>You have two tools:</b> one for the <b>tariff quota</b> (how much duty-free room is left for an origin×product, and the 50% duty once it's gone), one for the <b>carbon cost</b> (the CBAM charge on a steel import). Data updates automatically daily/weekly — you just use it.</span>
+</div>
+
+<!-- 1 background -->
+<section id="bg">
+  <h3><span class="n">1</span><span class="zh">先花两分钟搞懂两个词</span><span class="en">Two words to understand first</span></h3>
+  <div class="plain"><div class="lbl">TRQ <span class="zh">配额（Tariff-Rate Quota）</span><span class="en">quota</span></div>
+    <span class="zh">欧盟给每个出口国、每类钢材设了一个<b>免关税进口额度</b>，按季度开放、<b>先到先得</b>。额度用完之后，再进口就要交 <b>50% 的高关税</b>。所以客户很关心"我的配额还剩多少、快不快用完"。</span>
+    <span class="en">The EU gives each exporting country and steel category a <b>duty-free import allowance</b>, opened quarterly on a <b>first-come, first-served</b> basis. Once it's used up, further imports pay a <b>50% out-of-quota duty</b>. So clients care a lot about "how much of my quota is left, and how fast is it going".</span></div>
+  <div class="plain"><div class="lbl">CBAM <span class="zh">碳边境关税</span><span class="en">carbon border levy</span></div>
+    <span class="zh">欧盟的<b>碳关税</b>：进口钢材要按它的碳排放买"CBAM 证书"。碳排越高、成本越高。</span>
+    <span class="en">The EU's <b>carbon tariff</b>: steel imports must buy "CBAM certificates" based on embedded emissions. Higher emissions = higher cost.</span></div>
+  <p><span class="zh"><b>两者叠加</b>：配额内进口<b>也要</b>缴 CBAM，配额外还要再加 50% 关税。一句话记住——<b>TRQ 工具看关税额度，CBAM 工具看碳成本。</b></span>
+     <span class="en"><b>They stack</b>: in-quota imports <b>still</b> pay CBAM; out-of-quota adds the 50% duty on top. In one line — <b>the TRQ tool is for the duty allowance, the CBAM tool is for the carbon cost.</b></span></p>
+</section>
+
+<!-- 2 open -->
+<section id="open">
+  <h3><span class="n">2</span><span class="zh">第一次打开（3 步）</span><span class="en">Opening it the first time (3 steps)</span></h3>
+  <div class="two">
+    <div class="tool"><div class="tt"><span class="zh">① 配额追踪器</span><span class="en">① Quota tracker</span></div>
+      <div class="u"><a href="https://thomaschong1974-bit.github.io/eu-steel-trq/" target="_blank">thomaschong1974-bit.github.io/eu-steel-trq/</a></div>
+      <p style="margin:8px 0 0"><span class="zh">密码</span><span class="en">Code</span> <span class="code">SMMTRQ2026</span></p></div>
+    <div class="tool"><div class="tt"><span class="zh">② CBAM 计算器</span><span class="en">② CBAM calculator</span></div>
+      <div class="u"><a href="https://thomaschong1974-bit.github.io/eu-cbam-calc/" target="_blank">thomaschong1974-bit.github.io/eu-cbam-calc/</a></div>
+      <p style="margin:8px 0 0"><span class="zh">密码</span><span class="en">Code</span> <span class="code">SMMTRQ2026</span></p></div>
+  </div>
+  <div class="steps">
+    <div class="st"><div class="sn"></div><div><span class="zh">用<b>任意浏览器</b>（电脑或手机）打开上面的链接。</span><span class="en">Open the link above in <b>any browser</b> (computer or phone).</span></div></div>
+    <div class="st"><div class="sn"></div><div><span class="zh">输入<b>密码</b>，点"进入"。</span><span class="en">Enter the <b>code</b> and click "Enter".</span></div></div>
+    <div class="st"><div class="sn"></div><div><span class="zh">右上角可切<b>中文 / EN</b>；第一次用可点<b>"✦ 互动引导"</b>让它带你走一遍。</span><span class="en">Toggle <b>中文 / EN</b> top-right; first time, click <b>"✦ Tour"</b> to be walked through it.</span></div></div>
+  </div>
+  <p class="tip"><span class="zh">看到侧栏写着"已更新 · 某日期"就说明数据是新的——不用你手动刷新。</span><span class="en">If the sidebar says "Updated · a date", the data is current — no manual refresh needed.</span></p>
+</section>
+
+<!-- 3 scenarios -->
+<section id="how">
+  <h3><span class="n">3</span><span class="zh">客户问我…我该怎么查</span><span class="en">"A client asks me…" — where to look</span></h3>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"土耳其热卷的配额还剩多少？用了多少了？"</span><span class="en">"How much Türkiye HRC quota is left? How much is used?"</span></div>
+    <div class="a"><span class="zh">开<b>配额追踪器</b> → ② 追踪表 → 顶部搜索框输 <b>土耳其</b> 或类别 <b>1A</b> 或订单号。那一行就有<b>配额量、剩余余额、已用量、占用率</b>。想核对官方数字，点那行红色的<b>订单号</b>直接跳到欧盟官方页面。</span>
+      <span class="en">Open the <b>tracker</b> → ② Tracker table → type <b>Türkiye</b> / category <b>1A</b> / the order number in the search box. That row shows <b>quota, balance, used, % used</b>. To verify officially, click the red <b>order number</b> to jump to the EU official page.</span></div></div>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"这批 10 万吨超出配额了，要多交多少关税？"</span><span class="en">"This 100,000 t exceeds the quota — how much extra duty?"</span></div>
+    <div class="a"><span class="zh">用<b>③ 配额外成本测算</b>：选订单号、输<b>出货量</b>和<b>货值（欧元/吨）</b>，它自动按当前余额拆出配额内/外，配额外部分按 <b>50%</b> 算出额外关税和"每吨加价"。或选"自定义拆分"直接填配额内/外各多少吨。</span>
+      <span class="en">Use <b>③ Out-of-quota cost estimator</b>: pick the order, enter <b>volume</b> and <b>value (EUR/t)</b>; it splits in/out of quota by the current balance and computes the <b>50%</b> extra duty and per-tonne uplift. Or "Custom split" to enter in/out tonnages directly.</span></div></div>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"哪些配额快用完了 / 已经用光了？"</span><span class="en">"Which quotas are nearly / already gone?"</span></div>
+    <div class="a"><span class="zh">看<b>① 配额看板</b>：KPI 一行直接给"临界数""已用尽数"。或在追踪表点状态筛选块 <span class="pill p-crit"><span class="zh">临界</span><span class="en">Critical</span></span> / <span class="pill p-exh"><span class="zh">已用尽</span><span class="en">Exhausted</span></span> 只看这些。热力图上红色格子就是紧张的。</span>
+      <span class="en">See <b>① Dashboard</b>: the KPI row shows "critical" and "exhausted" counts. Or in the table click the <span class="pill p-crit"><span class="zh">临界</span><span class="en">Critical</span></span> / <span class="pill p-exh"><span class="zh">已用尽</span><span class="en">Exhausted</span></span> status chips. Red cells on the heatmap are the tight ones.</span></div></div>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"这个类别土耳其没配额了，换别的国家还有空间吗？"</span><span class="en">"Türkiye is out for this category — any room from another origin?"</span></div>
+    <div class="a"><span class="zh">看<b>热力图</b>（看板里）：同一行（同一类别）横着看各国的颜色，绿色的就是还有余量的来源——这是它最有用的地方，一眼看出"换谁能走配额内"。</span>
+      <span class="en">Use the <b>heatmap</b> (on the dashboard): read across one row (one category) — green cells are origins with room. This is its best use: instantly see which alternative origin can still clear in-quota.</span></div></div>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"客户要 CBAM 碳成本报价 / 这批货碳关税多少？"</span><span class="en">"A client wants a CBAM cost / how much carbon duty on this?"</span></div>
+    <div class="a"><span class="zh">开<b>CBAM 计算器</b>：选<b>年份季度 → 原产地 → HS 编码/生产路线</b>，右边立刻给出<b>每吨 CBAM 成本</b>和拆解。把它加到配额外关税上，就是这批货的完整额外成本。</span>
+      <span class="en">Open the <b>CBAM calculator</b>: pick <b>year/quarter → origin → HS code/route</b>; the right panel gives the <b>CBAM cost per tonne</b> and breakdown. Add it to the out-of-quota duty for the full extra cost.</span></div></div>
+
+  <div class="scn"><div class="q"><span class="qm">Q</span><span class="zh">"配额什么时候重新开放？"</span><span class="en">"When do quotas re-open?"</span></div>
+    <div class="a"><span class="zh">看追踪器<b>⑤ 时间线</b>：有下一次季度开闸的<b>倒计时</b>（配额每季度 1 号重开，先到先得，开闸首日是抢配额窗口）。</span>
+      <span class="en">See <b>⑤ Timeline</b> in the tracker: a <b>countdown</b> to the next quarterly opening (quotas reopen on the 1st each quarter, first-come-first-served; day one is the land-grab window).</span></div></div>
+</section>
+
+<!-- 4 read -->
+<section id="read">
+  <h3><span class="n">4</span><span class="zh">看懂几个颜色和词</span><span class="en">A few colours &amp; words</span></h3>
+  <p><span class="zh">占用率状态四色：</span><span class="en">Four status colours (% used): </span>
+    <span class="pill p-safe"><span class="zh">充裕 &lt;70%</span><span class="en">Safe &lt;70%</span></span>
+    <span class="pill p-warn"><span class="zh">偏紧 70–90%</span><span class="en">Warning 70–90%</span></span>
+    <span class="pill p-crit"><span class="zh">临界 90–100%</span><span class="en">Critical 90–100%</span></span>
+    <span class="pill p-exh"><span class="zh">已用尽 ≥100%</span><span class="en">Exhausted ≥100%</span></span></p>
+  <table class="gloss"><tbody>
+    <tr><td><span class="zh">Δ 日均</span><span class="en">Δ/day</span></td><td><span class="zh">这个配额每天消耗多少吨；旁边"预计 MM-DD 用尽"是照这速度算的到期日，红色=撑不到季末。</span><span class="en">Tonnes drawn per day; the "est. runout MM-DD" beside it projects when it empties at this pace — red means it won't last the quarter.</span></td></tr>
+    <tr><td><span class="zh">订单号 09.xxxx</span><span class="en">Order # 09.xxxx</span></td><td><span class="zh">每个"某国×某类"配额的官方编号，点它直达欧盟官方核对。</span><span class="en">The official ID for each origin×category quota; click it to verify on the EU site.</span></td></tr>
+    <tr><td>CSQ</td><td><span class="zh">国别专属配额——某个国家自己的额度。用完了才轮到共用的"其他国家池"。</span><span class="en">Country-specific quota — a country's own allowance. Only after it's used do you fall back to the shared "other countries" pool.</span></td></tr>
+    <tr><td><span class="zh">配额内 / 配额外</span><span class="en">In / out of quota</span></td><td><span class="zh">额度之内=只缴 CBAM；超出=再加 50% 关税。</span><span class="en">Within allowance = CBAM only; beyond = plus the 50% duty.</span></td></tr>
+  </tbody></table>
+</section>
+
+<!-- 5 remember -->
+<section id="remember">
+  <h3><span class="n">5</span><span class="zh">记住这三点就够了</span><span class="en">Just remember these three</span></h3>
+  <div class="remember"><ol>
+    <li><span class="zh"><b>数据是自动更新的</b>——侧栏显示的日期就是最新数据日，你不用做任何维护。（官方周末不更新，周六日和周五一样是正常的。）</span>
+        <span class="en"><b>Data updates automatically</b> — the sidebar date is the latest data day; you maintain nothing. (Official data isn't updated on weekends, so Sat/Sun matching Friday is normal.)</span></li>
+    <li><span class="zh"><b>这是估算，供商务参考</b>——正式清关与申报以欧盟海关系统和当时法规为准。给客户报价时说明这一点。余额是全欧盟共享、先到先得，清关那一刻可能已更低。</span>
+        <span class="en"><b>These are estimates for commercial reference</b> — actual clearance follows EU customs and the regulations in force. Say so when quoting. Balances are EU-wide, first-come-first-served, and may be lower by clearance time.</span></li>
+    <li><span class="zh"><b>拿不准就问</b>——遇到工具没覆盖的问题（碳钢管件、非不锈钢品类、异常数字），别猜，问 Thomas 或钢铁团队。</span>
+        <span class="en"><b>When unsure, ask</b> — for anything the tools don't cover (carbon-steel tubes, non-stainless categories, odd numbers), don't guess; ask Thomas or the steel team.</span></li>
+  </ol></div>
+  <p class="tip"><span class="zh">完整版技术说明（含每日更新如何运作）见同站 <a href="https://thomaschong1974-bit.github.io/eu-steel-trq/guide.html" target="_blank" style="color:var(--red);font-weight:700">guide.html</a>。</span>
+     <span class="en">Full technical guide (incl. how the daily update works) at <a href="https://thomaschong1974-bit.github.io/eu-steel-trq/guide.html" target="_blank" style="color:var(--red);font-weight:700">guide.html</a> on the same site.</span></p>
+</section>
+
+<footer>
+  <span class="zh"><b>上海有色网 · 欧盟钢铁 TRQ + CBAM 工具 · 员工上手手册</b> · 估算工具，非法律/税务/核查结论，以欧盟官方法规为准。</span>
+  <span class="en"><b>SMM · EU Steel TRQ + CBAM tools · Staff manual</b> · Estimation tools, not legal/tax/verification advice; EU official regulation prevails.</span><br>
+  <span class="zh">数据来源：Reg (EU) 2026/1384、IR (EU) 2026/1457、官方 TARIC 配额查询。问题请联系 SMM 钢铁团队。</span>
+  <span class="en">Sources: Reg (EU) 2026/1384, IR (EU) 2026/1457, official TARIC quota consultation. Questions → SMM Steel Team.</span>
+</footer>
+</main>
+<script>
+function tg(){var en=document.body.classList.toggle('en');
+ document.getElementById('lz').classList.toggle('on',!en);
+ document.getElementById('le').classList.toggle('on',en);
+ document.documentElement.lang=en?'en':'zh-CN';}
+</script>
+</body>
+</html>
