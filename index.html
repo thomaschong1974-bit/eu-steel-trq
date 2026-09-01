@@ -387,6 +387,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
     <div class="htitle"><span class="bar"></span><span class="zh">欧盟钢铁 TRQ 配额追踪器</span><span class="en">EU Steel TRQ Quota Tracker</span></div>
     <div class="langbtn" onclick="toggleLang()"><span id="lz" class="on">中文</span><span id="le">EN</span></div>
     <div class="langbtn" style="margin-left:8px" onclick="tourStart()" title="Interactive tour"><span style="padding:4px 12px;display:inline-block">✦ <span class="zh">互动引导</span><span class="en">Tour</span></span></div>
+    <div class="langbtn" id="fbBtn" style="margin-left:8px;display:none" onclick="openFeedback('header')" title="Send feedback"><span style="padding:4px 12px;display:inline-block">✉ <span class="zh">意见反馈</span><span class="en">Feedback</span></span></div>
     <div class="langbtn" id="rsBtn" style="margin-left:8px;display:none" onclick="remoteSync(true)" title="Refresh data"><span style="padding:4px 12px;display:inline-block">⟳ <span class="zh">刷新数据</span><span class="en">Refresh</span></span></div>
     <div class="langbtn" style="margin-left:8px" onclick="window.print()" title="Print / Save as PDF"><span style="padding:4px 12px;display:inline-block">🖨 <span class="zh">打印/PDF</span><span class="en">Print/PDF</span></span></div>
   </div>
@@ -586,6 +587,10 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
     <span class="zh">上海有色网 · 欧盟钢铁 TRQ 配额追踪器</span><span class="en">SMM · EU Steel TRQ Quota Tracker</span><br>
     <span class="zh">估算工具, 非法律/税务/核查结论; 以欧盟官方法规为准。</span><span class="en">Estimation tool; not legal/tax/verification advice. EU official regulation prevails.</span><br>
     <span class="zh">如需更多钢铁数据服务，请联系 SMM 钢铁团队。</span><span class="en">For further steel data services, please contact the SMM Steel Team.</span>
+    <span id="fbFoot" style="display:none"><br>
+      <a href="javascript:void(0)" onclick="openFeedback('footer')" style="color:var(--red);text-decoration:none;border-bottom:1px solid currentColor">
+        <span class="zh">用得顺手吗？花 2 分钟告诉我们该补什么 →</span><span class="en">Useful? Tell us what to add next — 2 minutes →</span></a>
+    </span>
   </div>
 </footer>
 
@@ -673,11 +678,26 @@ function clientCode(slot,d){return codeFrom(GATE_SALT+'|'+isoWeekKey(d||new Date
 /* usage beacon — provider wired in once the analytics account exists */
 function track(ev,props){try{if(window.umami&&window.umami.track){window.umami.track(ev,props);}
   else if(window.plausible){window.plausible(ev,{props:props});}}catch(e){}}
+/* feedback form — the client slot rides along so the response is attributed
+   without the client typing anything. Visible only once the gate is open. */
+var FEEDBACK_URL="https://docs.google.com/forms/d/e/1FAIpQLScJH8T2HD5ITLSmfi4QZ7Wg1zjkXMMkUZhcTLvJbzNykRv_LQ/viewform";
+var FEEDBACK_FIELD="entry.985817683";
+function openFeedback(src){
+  if(!FEEDBACK_URL)return;
+  var u=FEEDBACK_URL;
+  if(FEEDBACK_FIELD&&GATE_WHO){u+=(u.indexOf('?')>-1?'&':'?')+'usp=pp_url&'+encodeURIComponent(FEEDBACK_FIELD)+'='+encodeURIComponent(GATE_WHO);}
+  track('feedback',{who:GATE_WHO||'?',from:src||'?'});
+  window.open(u,'_blank','noopener');
+}
+function showFeedback(){if(!FEEDBACK_URL)return;
+  var a=document.getElementById('fbBtn'),b=document.getElementById('fbFoot');
+  if(a)a.style.display='';if(b)b.style.display='';}
 function gateTry(){var v=document.getElementById('gPass').value.trim(),who=null;
   if(v===GATE_MASTER){who='MASTER';}
   else if(v===weekCode()){who='GEN';}
   else{for(var i=0;i<GATE_SLOTS.length;i++){if(v===clientCode(GATE_SLOTS[i])){who=GATE_SLOTS[i];break;}}}
   if(who){GATE_WHO=who;document.body.classList.remove('locked');
+    showFeedback();
     track('unlock',{who:who,week:isoWeekKey(new Date())});}
   else{document.getElementById('gErr').textContent = state.lang==='en'?'Incorrect or expired code':'访问指令有误或已过期';
     var c=document.getElementById('gateCard');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
