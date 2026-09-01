@@ -341,7 +341,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <input id="gPass" type="password" autocomplete="off" placeholder="Access code" onkeydown="if(event.key==='Enter')gateTry()">
   <button onclick="gateTry()"><span class="zh">进入</span><span class="en">Enter</span></button>
   <div class="g-err" id="gErr"></div>
-  <div class="g-note"><span class="zh">访问指令每周一自动更新 · 需要本周指令或有改进建议，请联系 SMM 钢铁团队</span><span class="en">Access code rotates every Monday · for this week's code or to send feedback, contact the SMM Steel Team</span><br>SMM Steel Team · Authorized use only</div>
+  <div class="g-note"><span class="zh">访问指令每周一自动更新 · 需要本周指令或有改进建议，请联系 SMM 钢铁团队</span><span class="en">Access code rotates every Monday · for this week's code or to send feedback, contact the SMM Steel Team</span><br><span class="zh">SMM 会记录访问指令的使用情况以统计使用量</span><span class="en">SMM records access-code usage to measure how the tool is used</span><br>SMM Steel Team · Authorized use only</div>
 </div></div>
 
 <div class="wm"></div>
@@ -651,6 +651,15 @@ function load(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
    are public. Its purpose is to make clients come back weekly for a new code. */
 var GATE_MASTER="Smmsteelteam123";
 var GATE_SALT="smm-trq-2026";
+var GATE_SLOTS=["C01","C02","C03","C04","C05","C06","C07","C08","C09","C10","C11","C12"];
+/* Which access code was used, for usage measurement. "GEN" = the shared code,
+   "MASTER" = SMM internal. Slot ids are opaque (C01…): no client name is stored
+   in this page, so one client can never learn who the others are. */
+var GATE_WHO=null;
+function fnv(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h;}
+function codeFrom(seed){var h=fnv(seed),out='',al='ACDEFHJKLMNPQRTUVWXY3479';
+  for(var j=0;j<6;j++){out+=al.charAt(h%al.length);h=Math.floor(h/al.length)+7;}
+  return 'SMM'+out;}
 function isoWeekKey(d){
   d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
   var dn=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-dn);
@@ -658,15 +667,17 @@ function isoWeekKey(d){
   var wk=Math.ceil(((d-y0)/864e5+1)/7);
   return d.getUTCFullYear()+'-W'+(wk<10?'0'+wk:wk);
 }
-function weekCode(d){
-  var s=GATE_SALT+'|'+isoWeekKey(d||new Date()), hsh=2166136261;
-  for(var i=0;i<s.length;i++){hsh^=s.charCodeAt(i);hsh=Math.imul(hsh,16777619)>>>0;}
-  var out='',al='ACDEFHJKLMNPQRTUVWXY3479';
-  for(var j=0;j<6;j++){out+=al.charAt(hsh%al.length);hsh=Math.floor(hsh/al.length)+7;}
-  return 'SMM'+out;
-}
-function gateTry(){var v=document.getElementById('gPass').value.trim();
-  if(v===GATE_MASTER||v===weekCode()){document.body.classList.remove('locked');}
+function weekCode(d){return codeFrom(GATE_SALT+'|'+isoWeekKey(d||new Date()));}
+function clientCode(slot,d){return codeFrom(GATE_SALT+'|'+isoWeekKey(d||new Date())+'|'+slot);}
+/* usage beacon — provider wired in once the analytics account exists */
+function track(ev,props){try{if(window.umami&&window.umami.track){window.umami.track(ev,props);}
+  else if(window.plausible){window.plausible(ev,{props:props});}}catch(e){}}
+function gateTry(){var v=document.getElementById('gPass').value.trim(),who=null;
+  if(v===GATE_MASTER){who='MASTER';}
+  else if(v===weekCode()){who='GEN';}
+  else{for(var i=0;i<GATE_SLOTS.length;i++){if(v===clientCode(GATE_SLOTS[i])){who=GATE_SLOTS[i];break;}}}
+  if(who){GATE_WHO=who;document.body.classList.remove('locked');
+    track('unlock',{who:who,week:isoWeekKey(new Date())});}
   else{document.getElementById('gErr').textContent = state.lang==='en'?'Incorrect or expired code':'访问指令有误或已过期';
     var c=document.getElementById('gateCard');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
 
