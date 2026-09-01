@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="9449af3e-e546-4f42-848b-d853517f00fd"></script>
 <title>欧盟钢铁 TRQ 配额追踪器 – SMM</title>
 <style>
 :root{
@@ -1340,7 +1341,11 @@ function spy(){
     if(el&&el.getBoundingClientRect().top<=120)cur=id;
   });
   links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+  /* usage depth: report each section at most once per page load */
+  if(GATE_WHO&&cur!==SPY_LAST){SPY_LAST=cur;
+    if(!SPY_SEEN[cur]){SPY_SEEN[cur]=1;track('section',{who:GATE_WHO,sec:cur});}}
 }
+var SPY_LAST=null, SPY_SEEN={};
 window.addEventListener('scroll',spy,{passive:true});
 
 /* ---------------- wiring ---------------- */
