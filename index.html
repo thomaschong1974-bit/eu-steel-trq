@@ -341,7 +341,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <input id="gPass" type="password" autocomplete="off" placeholder="Access code" onkeydown="if(event.key==='Enter')gateTry()">
   <button onclick="gateTry()"><span class="zh">进入</span><span class="en">Enter</span></button>
   <div class="g-err" id="gErr"></div>
-  <div class="g-note">SMM Steel Team · Authorized use only</div>
+  <div class="g-note"><span class="zh">访问指令每周一自动更新 · 需要本周指令或有改进建议，请联系 SMM 钢铁团队</span><span class="en">Access code rotates every Monday · for this week's code or to send feedback, contact the SMM Steel Team</span><br>SMM Steel Team · Authorized use only</div>
 </div></div>
 
 <div class="wm"></div>
@@ -643,10 +643,31 @@ function save(){try{localStorage.setItem(LSKEY,JSON.stringify(
 function load(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
   state.usage=o.usage||{};state.mode=o.mode||"balance";state.asOf=o.asOf||"";state.period=o.period||"q3";}}catch(e){}}
 
-/* ---------------- gate ---------------- */
+/* ---------------- gate: weekly auto-rotating access code ----------------
+   The client code is derived from the ISO week, so it changes by itself every
+   Monday with no redeploy and no scheduled task. MASTER stays valid always so
+   Thomas can never lock himself out.
+   NOTE: this is a courtesy gate, not security — the repo and trq_balances.json
+   are public. Its purpose is to make clients come back weekly for a new code. */
+var GATE_MASTER="Smmsteelteam123";
+var GATE_SALT="smm-trq-2026";
+function isoWeekKey(d){
+  d=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
+  var dn=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-dn);
+  var y0=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  var wk=Math.ceil(((d-y0)/864e5+1)/7);
+  return d.getUTCFullYear()+'-W'+(wk<10?'0'+wk:wk);
+}
+function weekCode(d){
+  var s=GATE_SALT+'|'+isoWeekKey(d||new Date()), hsh=2166136261;
+  for(var i=0;i<s.length;i++){hsh^=s.charCodeAt(i);hsh=Math.imul(hsh,16777619)>>>0;}
+  var out='',al='ACDEFHJKLMNPQRTUVWXY3479';
+  for(var j=0;j<6;j++){out+=al.charAt(hsh%al.length);hsh=Math.floor(hsh/al.length)+7;}
+  return 'SMM'+out;
+}
 function gateTry(){var v=document.getElementById('gPass').value.trim();
-  if(v==="Smmsteelteam123"){document.body.classList.remove('locked');}
-  else{document.getElementById('gErr').textContent = state.lang==='en'?'Incorrect code':'访问指令有误';
+  if(v===GATE_MASTER||v===weekCode()){document.body.classList.remove('locked');}
+  else{document.getElementById('gErr').textContent = state.lang==='en'?'Incorrect or expired code':'访问指令有误或已过期';
     var c=document.getElementById('gateCard');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
 
 /* ---------------- lang ---------------- */
