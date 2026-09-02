@@ -83,7 +83,7 @@ body.locked #gate{display:flex}
 
 /* ---------- hero header ---------- */
 header{background:#fff;border-top:3px solid var(--red);border-bottom:1px solid var(--line);padding:34px 0 8px}
-.hwrap{max-width:1120px;margin:0;padding:0 44px;display:flex;align-items:center;gap:16px}
+.hwrap{max-width:1120px;margin:0;padding:0 44px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .hlogo{width:120px;aspect-ratio:1922/850;background:var(--logo) center/contain no-repeat;flex:none}
 .htitle{display:flex;align-items:center;gap:10px;flex:1;min-width:0;font-size:30px;font-weight:800;letter-spacing:-.6px}
 .htitle .bar{width:5px;height:26px;background:var(--red);flex:none}
@@ -326,7 +326,18 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 
 @media(max-width:1080px){.kpis{grid-template-columns:repeat(3,1fr)}.notes{grid-template-columns:1fr}.sumgrid{grid-template-columns:1fr}.calc2{grid-template-columns:1fr}.opengrid{grid-template-columns:1fr}}
 @media(max-width:960px){.sidebar{display:none}main,.hwrap,header .sub,footer{padding-left:22px;padding-right:22px}}
-@media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}.catname,.alloc .an2{display:none}.htitle{font-size:22px}}
+@media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}.catname,.alloc .an2{display:none}
+  /* header: logo+title claim the first row, action buttons wrap onto the next */
+  header{padding-top:20px}
+  .hwrap{gap:8px 10px}
+  .hlogo{width:92px}
+  .htitle{font-size:20px;flex:1 1 140px;letter-spacing:-.3px}
+  .hwrap .langbtn{margin-left:0!important}
+  .hwrap .langbtn span{padding:4px 10px;font-size:12px}}
+@media(max-width:480px){
+  .hlogo{width:84px}
+  .htitle{flex:1 1 100%;font-size:19px;order:1}
+  .hwrap .langbtn{order:2}}
 </style>
 </head>
 <body class="locked">
