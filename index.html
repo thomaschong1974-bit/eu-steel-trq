@@ -83,9 +83,15 @@ body.locked #gate{display:flex}
 
 /* ---------- hero header ---------- */
 header{background:#fff;border-top:3px solid var(--red);border-bottom:1px solid var(--line);padding:34px 0 8px}
-.hwrap{max-width:1120px;margin:0;padding:0 44px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hwrap{max-width:1120px;margin:0;padding:0 44px;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap}
+/* the controls travel as one right-aligned group: either they sit beside the
+   title, or the whole group drops to its own row -- never split mid-group */
+.hbtns{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin-left:auto}
+/* on a phone the group must wrap -- nowrap would push the page sideways */
+@media(max-width:760px){.hbtns{flex-wrap:wrap;margin-left:0;gap:8px}}
 .hlogo{width:120px;aspect-ratio:1922/850;background:var(--logo) center/contain no-repeat;flex:none}
-.htitle{display:flex;align-items:center;gap:10px;flex:1;min-width:0;font-size:30px;font-weight:800;letter-spacing:-.6px}
+.htitle{display:flex;align-items:center;gap:10px;flex:1 1 300px;min-width:270px;font-size:30px;font-weight:800;letter-spacing:-.6px;white-space:nowrap}
+@media(max-width:1250px){.htitle{font-size:25px;min-width:230px}.hwrap .langbtn span{padding:4px 10px;font-size:12.5px}}
 .htitle .bar{width:5px;height:26px;background:var(--red);flex:none}
 /* ---------- gate help block: shared design with the CBAM calculator ---------- */
 .g-help{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);text-align:left;
@@ -99,7 +105,7 @@ header{background:#fff;border-top:3px solid var(--red);border-bottom:1px solid v
 .g-xlink b{color:var(--red)}
 .langbtn{flex:none;border:1.5px solid var(--red);border-radius:999px;overflow:hidden;display:flex;
   cursor:pointer;user-select:none;font-size:13px;font-weight:600}
-.langbtn span{padding:5px 14px;color:var(--red)}
+.langbtn span{padding:5px 12px;color:var(--red)}
 .langbtn span.on{background:var(--red);color:#fff}
 header .sub{max-width:1120px;padding:0 44px;margin:8px 0 0;font-size:13px;color:var(--grey)}
 header .sub b{color:var(--red)}
@@ -468,11 +474,13 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <div class="hwrap">
     <div class="hlogo"></div>
     <div class="htitle"><span class="bar"></span><span class="zh">欧盟钢铁 TRQ 配额追踪器</span><span class="en">EU Steel TRQ Quota Tracker</span></div>
+    <div class="hbtns">
     <div class="langbtn" onclick="toggleLang()"><span id="lz" class="on">中文</span><span id="le">EN</span></div>
-    <div class="langbtn" style="margin-left:8px" onclick="tourStart()" title="Interactive tour"><span style="padding:4px 12px;display:inline-block">✦ <span class="zh">互动引导</span><span class="en">Tour</span></span></div>
-    <div class="langbtn" id="fbBtn" style="margin-left:8px;display:none" onclick="openFeedback('header')" title="Send feedback"><span style="padding:4px 12px;display:inline-block">✉ <span class="zh">意见反馈</span><span class="en">Feedback</span></span></div>
-    <div class="langbtn" id="rsBtn" style="margin-left:8px;display:none" onclick="remoteSync(true)" title="Refresh data"><span style="padding:4px 12px;display:inline-block">⟳ <span class="zh">刷新数据</span><span class="en">Refresh</span></span></div>
-    <div class="langbtn" style="margin-left:8px" onclick="window.print()" title="Print / Save as PDF"><span style="padding:4px 12px;display:inline-block">🖨 <span class="zh">打印/PDF</span><span class="en">Print/PDF</span></span></div>
+    <div class="langbtn" onclick="tourStart()" title="Interactive tour"><span style="padding:4px 12px;display:inline-block">✦ <span class="zh">引导</span><span class="en">Tour</span></span></div>
+    <div class="langbtn" id="fbBtn" style="display:none" onclick="openFeedback('header')" title="Send feedback"><span style="padding:4px 12px;display:inline-block">✉ <span class="zh">意见反馈</span><span class="en">Feedback</span></span></div>
+    <div class="langbtn" id="rsBtn" style="display:none" onclick="remoteSync(true)" title="Refresh data"><span style="padding:4px 12px;display:inline-block">⟳ <span class="zh">刷新</span><span class="en">Refresh</span></span></div>
+    <div class="langbtn" onclick="window.print()" title="Print / Save as PDF"><span style="padding:4px 12px;display:inline-block">🖨 <span class="zh">PDF</span><span class="en">PDF</span></span></div>
+    </div>
   </div>
   <div class="sub">
     <span class="zh">Reg (EU) 2026/1384 + 分配细则 IR 2026/1457 · <b>283</b> 个配额订单号 · 年度总量 <b>18.35 Mt</b> · 配额外关税 <b>50%</b> · 先到先得 · TRQ 与 CBAM 并行叠加</span>
