@@ -727,7 +727,14 @@ function load(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
    are public. Its purpose is to make clients come back weekly for a new code. */
 var GATE_MASTER="Smmsteelteam123";
 var GATE_SALT="smm-trq-2026";
-var GATE_SLOTS=["C01","C02","C03","C04","C05","C06","C07","C08","C09","C10","C11","C12"];
+/* Client slots: 10 lettered segments x 12 = 120. One segment per SMM colleague,
+   so the "who" on every event and feedback tells you both the colleague and the
+   client. Segment C is Thomas's own and was already issued -- do not renumber it.
+   Letters I and O are skipped (they read as 1 and 0 on a printed table). */
+var GATE_SEGS="ABCDEFGHJK";
+var GATE_SLOTS=(function(){var a=[];
+  for(var i=0;i<GATE_SEGS.length;i++)for(var j=1;j<=12;j++)a.push(GATE_SEGS.charAt(i)+(j<10?'0':'')+j);
+  return a;})();
 /* Which access code was used, for usage measurement. "GEN" = the shared code,
    "MASTER" = SMM internal. Slot ids are opaque (C01…): no client name is stored
    in this page, so one client can never learn who the others are. */
