@@ -186,6 +186,7 @@ function weekMonday(off){var d=new Date();d.setUTCDate(d.getUTCDate()+(off||0)*7
 function fmtD(d){return d.toISOString().slice(0,10);}
 
 var TRACKER="https://thomaschong1974-bit.github.io/eu-steel-trq/";
+var CALC="https://thomaschong1974-bit.github.io/steel-cbam-calculator/";
 
 /* ---- local, per-browser notes ---- */
 function loadNames(){try{return JSON.parse(localStorage.getItem(NAME_KEY)||'{}');}catch(e){return {};}}
@@ -206,15 +207,21 @@ function onSeg(){saveSeg(document.getElementById('seg').value);render();}
 function slotsOf(seg){var a=[];for(var j=1;j<=12;j++)a.push(seg+(j<10?'0':'')+j);return a;}
 
 function emailZH(slot,code){
-  return '主题：本周访问指令 · SMM 欧盟钢铁 TRQ 配额追踪器\n\n'
-   +'您好：\n\n本周访问指令：'+code+'\n链接：'+TRACKER+'\n\n'
+  return '主题：本周访问指令 · SMM 欧盟钢铁进口成本工具（配额追踪器 + CBAM 计算器）\n\n'
+   +'您好：\n\n本周访问指令：'+code+'\n\n'
+   +'该指令可打开以下两个工具：\n'
+   +'· 欧盟钢铁 TRQ 配额追踪器：'+TRACKER+'\n'
+   +'· 钢铁 CBAM 成本计算器：'+CALC+'\n\n'
    +'指令每周一自动更新，我会在更新后把新的发给您；旧指令届时失效，这是正常的。\n'
    +'指令可在贵司内部同事之间共享，烦请不要转发给贵司以外的第三方。\n\n'
    +'顺祝商祺\n[你的署名]\nSMM 钢铁团队';
 }
 function emailEN(slot,code){
-  return 'Subject: This week\'s access code — SMM EU Steel TRQ Quota Tracker\n\n'
-   +'Dear [Name],\n\nThis week\'s access code: '+code+'\nLink: '+TRACKER+'\n\n'
+  return 'Subject: This week\'s access code — SMM EU steel import cost tools\n\n'
+   +'Dear [Name],\n\nThis week\'s access code: '+code+'\n\n'
+   +'The same code opens both tools:\n'
+   +'- EU Steel TRQ Quota Tracker: '+TRACKER+'\n'
+   +'- Iron & Steel CBAM Cost Calculator: '+CALC+'\n\n'
    +'The code rotates automatically every Monday and I will send you the new one; the previous code stops working then, which is expected.\n'
    +'It may be shared with colleagues inside your company, but please do not forward it to third parties outside your company.\n\n'
    +'Best regards,\n[Your name]\nSMM Steel Team';
