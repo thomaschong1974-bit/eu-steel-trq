@@ -264,6 +264,34 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 @media(max-width:900px){.algrid{grid-template-columns:1fr}.alcol{border-right:0;border-bottom:1px solid var(--hair)}
   .alcol:last-child{border-bottom:0}}
 @media print{.alerts{break-inside:avoid}.alitem{cursor:default}}
+.albrief{margin-left:12px;border:1px solid var(--red);background:none;color:var(--red);border-radius:999px;
+  padding:3px 12px;font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.albrief:hover{background:var(--red);color:#fff}
+/* ---------- one-page brief (print only) ---------- */
+#brief{display:none}
+.bf-head{display:flex;align-items:flex-end;gap:14px;border-bottom:2px solid var(--red);padding-bottom:8px;margin-bottom:12px}
+.bf-logo{width:104px;aspect-ratio:1922/850;background:var(--logo) center/contain no-repeat;flex:none}
+.bf-t{font-size:17px;font-weight:800;letter-spacing:-.3px;flex:1;min-width:0}
+.bf-m{font-size:10.5px;color:var(--grey);text-align:right;line-height:1.5}
+.bf-k{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px}
+.bf-k div{border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.bf-k .kk{font-size:8.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.03em}
+.bf-k .kv{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.bf-s{font-size:11px;font-weight:800;margin:10px 0 5px;padding-left:7px;border-left:3px solid var(--red)}
+.bf-tb{width:100%;border-collapse:collapse;font-size:9.5px;font-variant-numeric:tabular-nums}
+.bf-tb th{text-align:left;border-bottom:1px solid var(--ink);padding:3px 5px;font-size:8.5px;
+  text-transform:uppercase;letter-spacing:.03em;color:var(--grey)}
+.bf-tb td{border-bottom:1px solid var(--hair);padding:3px 5px}
+.bf-tb td.n{text-align:right}
+.bf-tb .st{font-weight:700}
+.bf-tb .exh{color:var(--exh)} .bf-tb .crit{color:var(--crit)} .bf-tb .warn{color:var(--warn)}
+.bf-f{margin-top:12px;padding-top:7px;border-top:1px solid var(--line);font-size:8.5px;color:var(--grey);line-height:1.6}
+@media print{
+  @page{size:A4 portrait;margin:11mm}
+  body.briefing>*{display:none!important}
+  body.briefing #brief{display:block!important}
+  body.briefing .wm,body.briefing .wmtile{display:none!important}
+}
 .sumcard{background:var(--bg);border-radius:14px;padding:16px 18px}
 .sumcard h4{margin:0 0 10px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
 .sumcard h4::before{content:"";width:16px;height:3px;background:var(--red);border-radius:2px}
@@ -468,6 +496,9 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
         <label class="zh">数据日期</label><label class="en">As of</label>
         <input type="date" id="asOf" disabled>
       </div>
+      <div class="grp">
+        <button class="btn" onclick="exportCSV()" title="Download the rows currently shown">⬇ <span class="zh">导出 CSV</span><span class="en">CSV</span></button>
+      </div>
 
     </div>
     <div class="tb-row chips-row">
@@ -636,6 +667,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 </div><!-- /content -->
 </div><!-- /layout -->
 
+<div id="brief"></div>
 <div id="vizTip"></div>
 
 <!-- tour tip -->
@@ -937,7 +969,8 @@ function renderAlerts(){
   }
   var head='<div class="alerts-h"><span class="dot"></span>'
     +'<span>'+(L==='en'?'What to watch this week':'本周该紧张什么')+'</span>'
-    +'<span class="asof">'+(L==='en'?'vs ':'对比 ')+w.ref.d+'</span></div>';
+    +'<span class="asof">'+(L==='en'?'vs ':'对比 ')+w.ref.d+'</span>'
+    +'<button class="albrief" onclick="printBrief()">\u1f4c4 '+(L==='en'?'One-page brief':'一页简报')+'</button></div>';
   if(!w.exh.length&&!w.soon.length&&!w.low.length){
     box.style.display='';
     box.innerHTML=head+'<div class="alok">'+(L==='en'
@@ -957,6 +990,108 @@ function renderAlerts(){
         return '<span class="num">'+fmt1(x.c.pct)+'%</span>'
               +'<span class="num">'+fmt(x.c.bal)+' '+U+(L==='en'?' left':' 剩余')+'</span>';})
    +'</div>';
+}
+
+/* ---------- exports ----------
+   CSV = whatever the user is currently looking at, so the filter IS the query.
+   Brief = a single A4 page they can forward without sending the whole tool. */
+function dl(name,mime,text){
+  var b=new Blob([text],{type:mime+';charset=utf-8'}), u=URL.createObjectURL(b);
+  var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(u);},0);
+}
+function csvCell(v){v=(v===null||v===undefined)?'':String(v);
+  return /[",\n;]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function exportCSV(){
+  var L=state.lang, rows=sortRows(filtered()), P=periodObj();
+  var head=L==='en'
+    ?['Order','Cat','Category','Origin','Quota type','Period quota (t)','Used (t)','Balance (t)','% used','delta/day (t)','Est. runout','Status']
+    :['订单号','类别','类别名称','原产地','配额类型','期间配额(吨)','已用量(吨)','剩余余额(吨)','占用率(%)','Δ日均(吨)','预计用尽','状态'];
+  var stTxt={safe:L==='en'?'safe':'充裕',warn:L==='en'?'watch':'关注',crit:L==='en'?'critical':'临界',
+             exh:L==='en'?'exhausted':'已用尽',none:L==='en'?'no data':'无数据'};
+  var lines=[head.map(csvCell).join(',')];
+  rows.forEach(function(r){
+    var c=calc(r),dd=deltaOf(r);
+    lines.push([r.o,r.c,(L==='en'?r.ce:r.cz),(L==='en'?r.ne:r.nz),(L==='en'?r.te:r.tz),
+      Math.round(c.quota), c.tracked?Math.round(c.used):'', c.tracked?Math.round(c.bal):'',
+      c.tracked?(Math.round(c.pct*10)/10):'', dd?Math.round(dd.rate):'',
+      dd?runoutTxt(dd,L).replace(/,/g,' '):'', stTxt[c.st]].map(csvCell).join(','));
+  });
+  dl('SMM_TRQ_'+state.period.toUpperCase()+'_'+PRELOAD.asOf+'.csv','text/csv',
+     '\ufeff'+lines.join('\r\n'));
+  track('export',{who:GATE_WHO||'?',kind:'csv',rows:rows.length,period:state.period});
+}
+function briefHTML(){
+  var L=state.lang, U=L==='en'?'t':'吨', P=periodObj();
+  var rows=filtered(), totQ=0,totUsed=0,nCrit=0,nExh=0,nTrack=0;
+  rows.forEach(function(r){var c=calc(r);totQ+=c.quota;
+    if(c.tracked){nTrack++;totUsed+=c.used;if(c.st==='crit')nCrit++;if(c.st==='exh')nExh++;}});
+  var pct=totQ>0?totUsed/totQ*100:0, dTot=0;
+  rows.forEach(function(r){var dd=deltaOf(r);if(dd)dTot+=dd.d1;});
+  var scope=[];
+  if(state.cat)scope.push((L==='en'?'Category ':'类别 ')+state.cat);
+  if(state.q)scope.push((L==='en'?'Filter "':'筛选“')+state.q+(L==='en'?'"':'”'));
+  var scopeTxt=scope.length?scope.join(' · '):(L==='en'?'All 283 order numbers':'全部 283 个订单号');
+
+  var s='<div class="bf-head"><div class="bf-logo"></div>'
+   +'<div class="bf-t">'+(L==='en'?'EU Steel TRQ Quota Brief':'欧盟钢铁 TRQ 配额简报')
+   +'<div style="font-size:10.5px;font-weight:400;color:var(--grey);margin-top:2px">'+scopeTxt+'</div></div>'
+   +'<div class="bf-m">'+(L==='en'?'Snapshot ':'快照 ')+PRELOAD.asOf+'<br>'
+   +(P?((L==='en'?P.qe:P.qz)+' · '+(L==='en'?P.de:P.dz)):'')+'<br>'
+   +(L==='en'?'SMM Steel Team':'SMM 钢铁团队')+'</div></div>';
+
+  function k(a,b){return '<div><div class="kk">'+a+'</div><div class="kv">'+b+'</div></div>';}
+  s+='<div class="bf-k">'
+   +k(L==='en'?'Period quota':'期间配额',fmt(totQ))
+   +k(L==='en'?'Used':'已用量',fmt(totUsed))
+   +k(L==='en'?'% used':'占用率',fmt1(pct)+'%')
+   +k(L==='en'?'Latest draw-down':'最近消耗',fmt(dTot))
+   +k(L==='en'?'Critical':'临界 \u226590%',nCrit)
+   +k(L==='en'?'Exhausted':'已用尽',nExh)+'</div>';
+
+  var w=watchLists();
+  if(w&&(w.exh.length||w.soon.length)){
+    s+='<div class="bf-s">'+(L==='en'?'What to watch':'本周该紧张什么')+'</div>';
+    s+='<table class="bf-tb"><tr><th>'+(L==='en'?'Order':'订单号')+'</th><th>'+(L==='en'?'Origin':'原产地')
+      +'</th><th>'+(L==='en'?'Category':'类别')+'</th><th class="n">'+(L==='en'?'Balance':'剩余')
+      +'</th><th class="n">\u0394/'+(L==='en'?'d':'日')+'</th><th>'+(L==='en'?'Outlook':'预计')+'</th></tr>';
+    w.exh.slice(0,4).forEach(function(x){
+      s+='<tr><td>'+x.r.o+'</td><td>'+(L==='en'?x.r.ne:x.r.nz)+'</td><td>'+x.r.c+' '+(L==='en'?x.r.ce:x.r.cz)
+        +'</td><td class="n">0</td><td class="n">\u2013</td><td class="st exh">'+(L==='en'?'exhausted':'已用尽')+'</td></tr>';});
+    w.soon.slice(0,8).forEach(function(x){
+      s+='<tr><td>'+x.r.o+'</td><td>'+(L==='en'?x.r.ne:x.r.nz)+'</td><td>'+x.r.c+' '+(L==='en'?x.r.ce:x.r.cz)
+        +'</td><td class="n">'+fmt(x.c.bal)+'</td><td class="n">'+fmt(x.dd.rate)+'</td><td class="st crit">'
+        +runoutTxt(x.dd,L)+'</td></tr>';});
+    s+='</table>';
+  }
+
+  var top=filtered().filter(function(r){var c=calc(r);return c.tracked&&c.bal>0;})
+    .sort(function(a,b){return calc(b).pct-calc(a).pct;}).slice(0,18);
+  s+='<div class="bf-s">'+(L==='en'?'Nearest to exhaustion (still open)':'最接近用尽（仍有余量）')+'</div>';
+  s+='<table class="bf-tb"><tr><th>'+(L==='en'?'Order':'订单号')+'</th><th>'+(L==='en'?'Origin':'原产地')
+    +'</th><th>'+(L==='en'?'Category':'类别')+'</th><th class="n">'+(L==='en'?'Quota':'配额')
+    +'</th><th class="n">'+(L==='en'?'Balance':'剩余')+'</th><th class="n">'+(L==='en'?'% used':'占用率')
+    +'</th><th>'+(L==='en'?'Est. runout':'预计用尽')+'</th></tr>';
+  top.forEach(function(r){var c=calc(r),dd=deltaOf(r);
+    s+='<tr><td>'+r.o+'</td><td>'+(L==='en'?r.ne:r.nz)+'</td><td>'+r.c+' '+(L==='en'?r.ce:r.cz)
+      +'</td><td class="n">'+fmt(c.quota)+'</td><td class="n">'+fmt(c.bal)
+      +'</td><td class="n st '+c.st+'">'+fmt1(c.pct)+'%</td><td>'+(dd?runoutTxt(dd,L):'')+'</td></tr>';});
+  s+='</table>';
+
+  s+='<div class="bf-f">'+(L==='en'
+    ?'Balances from the official EU TARIC quota consultation (DDS), converted kg \u2192 t; synced Mon/Wed/Fri (daily around quarter openings). Reg (EU) 2026/1384 + IR (EU) 2026/1457. Out-of-quota duty 50%, first-come first-served; TRQs stack with CBAM. Estimation tool \u2014 not legal/tax/verification advice; the EU official regulation prevails. \u00a9 SMM \u00b7 Shanghai Metals Market.'
+    :'余额取自欧盟官方 TARIC 配额查询（DDS），单位由 kg 换算为吨；每周一、三、五同步（季度开闸期加密为每日）。依据 Reg (EU) 2026/1384 与 IR (EU) 2026/1457。配额外关税 50%，先到先得；TRQ 与 CBAM 并行叠加。本简报为估算工具，非法律/税务/核查结论，以欧盟官方法规为准。\u00a9 上海有色网 SMM。')
+   +'</div>';
+  return s;
+}
+function printBrief(){
+  document.getElementById('brief').innerHTML=briefHTML();
+  document.body.classList.add('briefing');
+  track('export',{who:GATE_WHO||'?',kind:'brief',period:state.period});
+  var done=function(){document.body.classList.remove('briefing');window.removeEventListener('afterprint',done);};
+  window.addEventListener('afterprint',done);
+  window.print();
+  setTimeout(done,1500);
 }
 
 function renderHead(){
