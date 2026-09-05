@@ -86,12 +86,16 @@ header{background:#fff;border-top:3px solid var(--red);border-bottom:1px solid v
 .hwrap{max-width:1120px;margin:0;padding:0 44px;display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap}
 /* the controls travel as one right-aligned group: either they sit beside the
    title, or the whole group drops to its own row -- never split mid-group */
-.hbtns{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin-left:auto}
+.hbtns{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin-left:auto;flex:none}
 /* on a phone the group must wrap -- nowrap would push the page sideways */
 @media(max-width:760px){.hbtns{flex-wrap:wrap;margin-left:0;gap:8px}}
 .hlogo{width:120px;aspect-ratio:1922/850;background:var(--logo) center/contain no-repeat;flex:none}
-.htitle{display:flex;align-items:center;gap:10px;flex:1 1 300px;min-width:270px;font-size:30px;font-weight:800;letter-spacing:-.6px;white-space:nowrap}
-@media(max-width:1250px){.htitle{font-size:25px;min-width:230px}.hwrap .langbtn span{padding:4px 10px;font-size:12.5px}}
+.htitle{display:flex;align-items:center;gap:10px;flex:1 1 300px;min-width:0;font-size:30px;font-weight:800;letter-spacing:-.6px;line-height:1.18}
+.htitle>span:not(.bar){min-width:0}
+/* EN title is ~40% longer than the ZH one - scale it down so both fit on one line */
+.htitle .en{font-size:.8em;letter-spacing:-.2px}
+@media(max-width:1400px){.hwrap .langbtn span{padding:4px 10px;font-size:12.5px}}
+@media(max-width:1250px){.htitle{font-size:25px}}
 .htitle .bar{width:5px;height:26px;background:var(--red);flex:none}
 /* ---------- gate help block: shared design with the CBAM calculator ---------- */
 .g-help{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);text-align:left;
