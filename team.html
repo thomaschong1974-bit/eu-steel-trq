@@ -168,7 +168,8 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);display
 /* ---- code algorithm: byte-identical to the tracker's ---- */
 var GATE_MASTER="Smmsteelteam123";
 var GATE_SALT="smm-trq-2026";
-var GATE_SEGS="ABCDEFGHJK";
+var GATE_SEGS="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var SLOTS_PER_SEG=20;
 var SEG_OWNER_KEY="smm_trq_team_seg", NAME_KEY="smm_trq_team_names";
 function fnv(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h;}
 function codeFrom(seed){var h=fnv(seed),out='',al='ACDEFHJKLMNPQRTUVWXY3479';
@@ -204,7 +205,7 @@ function gateTry(){
 
 function onSeg(){saveSeg(document.getElementById('seg').value);render();}
 
-function slotsOf(seg){var a=[];for(var j=1;j<=12;j++)a.push(seg+(j<10?'0':'')+j);return a;}
+function slotsOf(seg){var a=[];for(var j=1;j<=SLOTS_PER_SEG;j++)a.push(seg+(j<10?'0':'')+j);return a;}
 
 function emailZH(slot,code){
   return '主题：本周访问指令 · SMM 欧盟钢铁进口成本工具（配额追踪器 + CBAM 计算器）\n\n'
@@ -241,7 +242,7 @@ function render(){
   var off=parseInt(document.getElementById('wk').value,10)||0;
   var mon=weekMonday(off), names=loadNames();
   document.getElementById('segTip').innerHTML =
-    '显示 <b>'+seg+' 段</b>（'+seg+'01–'+seg+'12）· '+(off?'下周':'本周')
+    '显示 <b>'+seg+' 段</b>（'+seg+'01–'+seg+SLOTS_PER_SEG+'）· '+(off?'下周':'本周')
     +' <b>'+isoWeekKey(mon)+'</b>，自 '+fmtD(mon)+' 起生效'
     +(off?'（下周一 00:00 UTC 起）':'')+'。<span style="color:#a4aab3">Segment '+seg+' · '+(off?'next':'this')+' week</span>';
   var tb=document.getElementById('tbody'); tb.innerHTML='';
@@ -277,7 +278,7 @@ function boot(){
   if(!sel.options.length){
     for(var i=0;i<GATE_SEGS.length;i++){var L=GATE_SEGS.charAt(i);
       var o=document.createElement('option');o.value=L;
-      o.textContent=L+' 段 ('+L+'01–'+L+'12)'+(L==='C'?'  · Thomas':'');
+      o.textContent=L+' 段 ('+L+'01–'+L+SLOTS_PER_SEG+')'+(L==='C'?'  · Thomas':'');
       sel.appendChild(o);}
   }
   sel.value=loadSeg();
