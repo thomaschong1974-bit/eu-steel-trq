@@ -253,13 +253,23 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 .fnote{font-size:11.5px;color:var(--grey);margin-top:10px;line-height:1.7}
 
 /* ---------- ticker ---------- */
-.ticker{display:flex;align-items:center;gap:12px;background:var(--red);color:#fff;font-size:13px;padding:7px 20px;overflow:hidden}
-.tk-label{flex:none;font-weight:800;letter-spacing:.06em;border:1px solid rgba(255,255,255,.6);border-radius:999px;padding:1px 10px;font-size:11px}
-.tk-viewport{flex:1;overflow:hidden;white-space:nowrap}
-.tk-track{display:inline-flex;gap:44px;padding-left:100%;animation:tkm 55s linear infinite}
+.ticker{display:flex;align-items:center;gap:12px;background:var(--red);color:#fff;font-size:13.5px;padding:8px 20px;overflow:hidden}
+.tk-label{flex:none;font-weight:800;letter-spacing:.06em;border:1px solid rgba(255,255,255,.6);border-radius:999px;padding:1px 10px;font-size:11px;background:none;color:#fff;cursor:pointer;font-family:inherit}
+.tk-label:hover,.tk-label[aria-expanded="true"]{background:#fff;color:var(--red)}
+.tk-viewport{flex:1;overflow:hidden;white-space:nowrap;cursor:pointer}
+.tk-track{display:inline-flex;gap:56px;padding-left:100%;animation:tkm 240s linear infinite}
 .tk-track .tkd{opacity:.75;margin-right:6px;font-variant-numeric:tabular-nums}
-.ticker:hover .tk-track{animation-play-state:paused}
+.ticker:hover .tk-track,.ticker.paused .tk-track{animation-play-state:paused}
 @keyframes tkm{to{transform:translateX(-100%)}}
+@media (prefers-reduced-motion:reduce){.tk-track{animation:none;padding-left:0}.tk-viewport{overflow-x:auto}}
+.tk-panel{background:#fff;border:1px solid var(--line);border-top:3px solid var(--red);margin:0 0 14px;max-height:60vh;overflow:auto;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.tk-panel[hidden]{display:none}
+.tk-panel .tp-h{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;font-weight:800;font-size:13px;color:var(--red);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+.tk-panel .tp-x{border:0;background:none;font-size:18px;line-height:1;color:#8a9099;cursor:pointer;padding:2px 6px}
+.tk-panel ol{list-style:none;margin:0;padding:4px 20px 10px}
+.tk-panel li{display:flex;gap:14px;padding:9px 0;border-bottom:1px dotted #dfe2e6;font-size:13.5px;line-height:1.65;color:#2b2f36}
+.tk-panel li:last-child{border-bottom:0}
+.tk-panel li .tpd{flex:none;width:44px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
 
 /* ---------- summary bars ---------- */
 .sumgrid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
@@ -467,7 +477,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <div class="sb-sync">
     <span class="zh">TARIC 快照</span><span class="en">TARIC snapshot</span><br>
     <b id="sbAsOf">–</b><br>
-    <span class="zh">SMM 每周一、三、五更新</span><span class="en">Updated Mon / Wed / Fri</span>
+    <span class="zh">SMM 每周一更新</span><span class="en">Updated every Monday</span>
     <div id="rsStat" style="margin-top:4px;color:#a4aab3"></div>
     <span class="sb-fresh" id="sbFresh"></span>
   </div>
@@ -475,10 +485,11 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 </aside>
 
 <div class="content">
-<div class="ticker">
-  <span class="tk-label"><span class="zh">TRQ 快讯</span><span class="en">TRQ NEWS</span></span>
-  <div class="tk-viewport"><div class="tk-track" id="tkTrack"></div></div>
+<div class="ticker" id="ticker">
+  <button type="button" class="tk-label" id="tkAll" aria-expanded="false" aria-controls="tkPanel" title="查看全部快讯 / All news"><span class="zh">TRQ 快讯 ▾</span><span class="en">TRQ NEWS ▾</span></button>
+  <div class="tk-viewport" id="tkView" title="点击暂停 / 继续 · Click to pause / resume"><div class="tk-track" id="tkTrack"></div></div>
 </div>
+<div class="tk-panel" id="tkPanel" hidden><div class="tp-h"><span><span class="zh">全部 TRQ 快讯（最新在上）</span><span class="en">All TRQ news (newest first)</span></span><button type="button" class="tp-x" id="tkClose" aria-label="close">×</button></div><ol id="tkList"></ol></div>
 <div id="staleBar" class="stalebar" style="display:none"></div>
 <header>
   <div class="hwrap">
@@ -634,7 +645,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 <section id="method">
   <h2><span class="bar"></span><span class="zh">⑦ 方法论</span><span class="en">⑦ Methodology</span></h2>
   <div class="formula"><div class="big"><span class="zh">已用量 = 期间配额量 − TARIC 剩余余额 (Balance)</span><span class="en">Used = period quota − TARIC balance</span></div>
-    <div class="fx"><span class="zh">余额取自官方 TARIC 配额查询（DDS），单位由 kg 换算为吨；每周一、三、五同步官方快照（季度开闸期加密为每日）。</span><span class="en">Balance from the official TARIC quota consultation (DDS), converted kg → tonnes; synced Mon/Wed/Fri (daily around quarter openings).</span></div></div>
+    <div class="fx"><span class="zh">余额取自官方 TARIC 配额查询（DDS），单位由 kg 换算为吨；每周一同步官方快照（季度开闸等关键节点临时加更）。</span><span class="en">Balance from the official TARIC quota consultation (DDS), converted kg → tonnes; synced every Monday (extra refreshes around key dates such as quarter openings).</span></div></div>
   <div class="formula"><div class="big"><span class="zh">占用率 = 已用量 ÷ 期间配额量 × 100%</span><span class="en">% used = used ÷ period quota × 100%</span></div>
     <div class="fx"><span class="zh">状态阈值：&lt;70% 充裕 · 70–90% 偏紧 · 90–100% 临界 · ≥100% 已用尽（与 DDS "Exhausted" 状态一致）。</span><span class="en">Thresholds: &lt;70% safe · 70–90% warning · 90–100% critical · ≥100% exhausted (matches DDS "Exhausted").</span></div></div>
   <div class="formula"><div class="big"><span class="zh">Δ 日均 = (T₀ 余额 − T₁ 余额) ÷ 间隔天数；预计用尽 = 余额 ÷ Δ 日均</span><span class="en">Δ/day = (balance T₀ − balance T₁) ÷ days; est. runout = balance ÷ Δ/day</span></div>
@@ -653,11 +664,11 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
       <h4><span class="zh">怎么用这个追踪器</span><span class="en">How to use this tracker</span></h4>
       <p><span class="zh">上方选择<b>期间</b>（配额按季度开放，标 <b>LIVE</b> 的是当前活跃季；标「结算中」的是进口期刚结束的季度——季末后迟到的申报仍按该季度分配，直到季末后第 20 个欧委会工作日才停止（2026 Q3 为 <b>10-28</b>），在此之前数字仍会变动；停止分配后改标「已结算」，未用余量结转下一季）。表中"配额量"是该期间为每个订单号分配的免税量。</span>
          <span class="en">Pick a <b>period</b> at top (quotas open quarterly; the <b>LIVE</b> one is current, a "SETTLING" quarter has ended its import period but is still taking late allocations until the 20th Commission working day after its end (28 Oct for 2026 Q3), so its figures keep moving; once allocation stops it is marked "FINAL" and the unused volume carries over). The "Quota" column is that period's duty-free volume per order number.</span></p>
-      <p><span class="zh">"剩余余额"列为<b>固定数据</b>，来自每周一、三、五自动同步的官方 TARIC 余额快照（侧栏显示快照日期），不可在表内直接修改；已用量与占用率由此自动算出。点每行<b>订单号</b>可直达官方 TARIC 查询页核对（订单号与原产地已带好）。</span>
-         <span class="en">The <b>Balance</b> column is <b>fixed data</b> from the Mon/Wed/Fri-synced official TARIC snapshot (snapshot date in the sidebar) and cannot be edited in the table; used amount &amp; % used are derived from it. Click a row's <b>order number</b> to verify on the official TARIC consultation page (order &amp; origin pre-filled).</span></p>
+      <p><span class="zh">"剩余余额"列为<b>固定数据</b>，来自每周一自动同步的官方 TARIC 余额快照（侧栏显示快照日期），不可在表内直接修改；已用量与占用率由此自动算出。点每行<b>订单号</b>可直达官方 TARIC 查询页核对（订单号与原产地已带好）。</span>
+         <span class="en">The <b>Balance</b> column is <b>fixed data</b> from the weekly (Monday) official TARIC snapshot (snapshot date in the sidebar) and cannot be edited in the table; used amount &amp; % used are derived from it. Click a row's <b>order number</b> to verify on the official TARIC consultation page (order &amp; origin pre-filled).</span></p>
 
-      <div class="tip"><span class="zh"><b>提示：</b>本工具每周一、三、五随 SMM 官方快照更新（季度开闸期加密为每日）；如需更多钢铁数据服务，请联系 SMM 钢铁团队。</span>
-        <span class="en"><b>Note:</b> data refreshes Mon/Wed/Fri from SMM's official snapshot (daily around quarter openings); contact the SMM Steel Team for further steel data services.</span></div>
+      <div class="tip"><span class="zh"><b>提示：</b>本工具每周一随 SMM 官方快照更新（关键节点临时加更）；如需更多钢铁数据服务，请联系 SMM 钢铁团队。</span>
+        <span class="en"><b>Note:</b> data refreshes every Monday from SMM's official snapshot (extra refreshes around key dates); contact the SMM Steel Team for further steel data services.</span></div>
     </div>
     <div class="note">
       <h4><span class="zh">状态判定</span><span class="en">Status thresholds</span></h4>
@@ -681,8 +692,8 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <h2><span class="bar"></span><span class="zh">⑨ 口径与来源</span><span class="en">⑨ Definitions &amp; sources</span></h2>
   <p><span class="zh">配额量与订单号：Regulation (EU) 2026/1384 及 Commission Implementing Regulation (EU) 2026/1457 Annex I（逐点核对，年度总量 18,345,922 t 校验通过）。</span>
      <span class="en">Volumes &amp; order numbers: Regulation (EU) 2026/1384 and Commission Implementing Regulation (EU) 2026/1457 Annex I (cross-checked; annual total 18,345,922 t verified).</span></p>
-  <p><span class="zh">实时余额：欧委会 TARIC 配额查询系统 (DDS)，<a href="https://ec.europa.eu/taxation_customs/dds2/taric/quota_consultation.jsp?Lang=en" target="_blank" rel="noopener">Tariff quota consultation</a>，每周一、三、五自动同步。</span>
-     <span class="en">Live balances: European Commission TARIC quota consultation (DDS), synced Mon/Wed/Fri.</span></p>
+  <p><span class="zh">实时余额：欧委会 TARIC 配额查询系统 (DDS)，<a href="https://ec.europa.eu/taxation_customs/dds2/taric/quota_consultation.jsp?Lang=en" target="_blank" rel="noopener">Tariff quota consultation</a>，每周一自动同步。</span>
+     <span class="en">Live balances: European Commission TARIC quota consultation (DDS), synced every Monday.</span></p>
   <p><span class="zh">本工具为 SMM 内部辅助追踪，估算供商务参考；正式提取与申报以欧盟海关系统及届时适用法规为准。</span>
      <span class="en">Internal SMM tracking aid for commercial reference only; actual drawing &amp; declaration follow the EU customs systems and the regulations in force at the time.</span></p>
 </section>
@@ -796,7 +807,15 @@ function fmt(n){if(n===null||n===undefined||isNaN(n))return"–";
   return Math.round(n).toLocaleString('en-US');}
 function fmt1(n){return (Math.round(n*10)/10).toLocaleString('en-US');}
 function periodObj(){return PERIODS.find(function(p){return p.k===state.period;});}
-function quotaOf(row){return row[state.period];}
+function quotaOf(row){
+  var q=row[state.period];
+  if(typeof q!=='number'||state.period==='t'||state.mode!=='balance')return q;
+  /* Art 3(4) carry-over raises the live tranche above its base volume; until the carried volume is
+     merged explicitly, treat the balance itself as the floor so usage never goes negative */
+  var cy=((PRELOAD.carry||{})[state.period]||{})[row.o];if(cy)q+=cy;
+  var v=parseFloat((state.usage[row.o]||{})[state.period]);
+  return (!isNaN(v)&&v>q)?v:q;
+}
 function calc(row){
   var quota=quotaOf(row);
   var rec=(state.usage[row.o]||{})[state.period];
@@ -870,7 +889,7 @@ function renderKPIs(){
     kpi(L==='en'?'Period quota':'期间配额量',fmt(totQ)+' <small>'+UNIT+'</small>')+
     kpi(L==='en'?'Used':'已用量',fmt(totUsed)+' <small>'+UNIT+'</small>',{acc:true})+
     kpi(L==='en'?'Overall used %':'总体占用率',fmt1(pct)+'<small>%</small>',{bar:pct,acc:true})+
-    kpi(L==='en'?'Δ last day':'昨日消耗',(dOK?fmt(dTot):'–')+' <small>'+UNIT+'</small>')+
+    kpi(L==='en'?'Δ since last snapshot':'较上次快照消耗',(dOK?fmt(dTot):'–')+' <small>'+UNIT+'</small>')+
     kpi(L==='en'?'Critical ≥90%':'临界 ≥90%',nCrit)+
     kpi(L==='en'?'Exhausted':'已用尽',nExh);
 }
@@ -1116,8 +1135,8 @@ function briefHTML(){
   s+='</table>';
 
   s+='<div class="bf-f">'+(L==='en'
-    ?'Balances from the official EU TARIC quota consultation (DDS), converted kg \u2192 t; synced Mon/Wed/Fri (daily around quarter openings). Reg (EU) 2026/1384 + IR (EU) 2026/1457. Out-of-quota duty 50%, first-come first-served; TRQs stack with CBAM. Estimation tool \u2014 not legal/tax/verification advice; the EU official regulation prevails. \u00a9 SMM \u00b7 Shanghai Metals Market.'
-    :'余额取自欧盟官方 TARIC 配额查询（DDS），单位由 kg 换算为吨；每周一、三、五同步（季度开闸期加密为每日）。依据 Reg (EU) 2026/1384 与 IR (EU) 2026/1457。配额外关税 50%，先到先得；TRQ 与 CBAM 并行叠加。本简报为估算工具，非法律/税务/核查结论，以欧盟官方法规为准。\u00a9 上海有色网 SMM。')
+    ?'Balances from the official EU TARIC quota consultation (DDS), converted kg \u2192 t; synced every Monday (extra refreshes around key dates). Reg (EU) 2026/1384 + IR (EU) 2026/1457. Out-of-quota duty 50%, first-come first-served; TRQs stack with CBAM. Estimation tool \u2014 not legal/tax/verification advice; the EU official regulation prevails. \u00a9 SMM \u00b7 Shanghai Metals Market.'
+    :'余额取自欧盟官方 TARIC 配额查询（DDS），单位由 kg 换算为吨；每周一同步（关键节点临时加更）。依据 Reg (EU) 2026/1384 与 IR (EU) 2026/1457。配额外关税 50%，先到先得；TRQ 与 CBAM 并行叠加。本简报为估算工具，非法律/税务/核查结论，以欧盟官方法规为准。\u00a9 上海有色网 SMM。')
    +'</div>';
   return s;
 }
@@ -1272,6 +1291,7 @@ function applyPreload(){
 /* ---------------- ticker ---------------- */
 /*@NEWS_START@*/
 var NEWS=[
+ {d:"10-06",zh:"更新节奏调整：配额余额改为每周一自动同步官方 TARIC 快照（季度开闸、Q3 结转等关键节点会临时加更）；快讯条放慢，点「TRQ 快讯 ▾」可展开全部快讯",en:"Update cadence: quota balances now sync from the official TARIC snapshot every Monday (extra refreshes around key dates such as quarter openings and the Q3 carry-over); the news strip is slower, and 'TRQ NEWS ▾' opens the full list"},
  {d:"10-06",zh:"更正标签：Q3 由「已收官」改为「结算中」。Q3 的进口期 9-30 已结束，但按 Reg 2026/1384 Art 3(3)，迟到申报仍按 Q3 分配，直到季末后第 20 个欧委会工作日——10 月无欧委会假日，即 10-28（周三）——才停止；在此之前 Q3 余额仍会变动（10-01 至 10-05 已再减 5.3 万吨）。10-28 之后改标「已结算」，未用余量按 Art 3(4) 结转 Q4",en:"Label fix: Q3 now reads SETTLING instead of CLOSED. Its import period ended 30 Sep, but under Reg 2026/1384 Art 3(3) late requests are still allocated to Q3 until the 20th Commission working day after quarter-end - with no Commission holidays in October that is Wed 28 Oct. Q3 balances keep moving until then (another 53 kt drawn 1-5 Oct). After 28 Oct it will read FINAL and the unused volume carries over to Q4 under Art 3(4)"},
  {d:"10-05",zh:"TARIC 10-05 快照：Q4 首批分配入账，开闸几天就用掉 141.3 万吨（30.8%），39 个订单号已用尽——土耳其热卷 09.9801 的 16.06 万吨一次清零，土耳其镀层板、盘条、螺纹钢、空心型材，印度中厚板、中国镀层板同样用尽；印度热卷 09.9803 已用 69%。Q3 迟到分配放缓至 525 吨，剩余 78.1 万吨待 10-28 后结转",en:"TARIC 5 Oct snapshot: the first Q4 allocations are booked — 1.413 Mt (30.8%) gone within days and 39 orders exhausted. Türkiye HRC 09.9801 lost its full 160.6 kt at once; Türkiye coated sheet, wire rod, rebar and hollow sections, India quarto plate and China coated sheet are also exhausted; India HRC 09.9803 is 69% used. Late Q3 allocations slowed to 525 t, leaving 781 kt to carry over after 28 Oct"},
  {d:"10-05",zh:"追踪器切换到 2026 Q4（LIVE）：截至 TARIC 10-02 快照，Q4 尚未入账任何分配，283 个订单号均为满额，合计 458.6 万吨。Q3 进入「结算中」：进口期 9-30 已结束，但迟到申报仍按 Q3 分配至 10-28，点「2026 Q3」可查看，数字在此之前仍会变动；之后未用余量结转 Q4",en:"Tracker switched to 2026 Q4 (LIVE): as of the TARIC 2 Oct snapshot no Q4 allocations are booked yet — all 283 orders at full volume, 4.586 Mt in total. Q3 is now SETTLING: its import period ended 30 Sep, but late requests are allocated to Q3 until 28 Oct, so its figures (under '2026 Q3') keep moving; then the unused volume moves to Q4"},
@@ -1311,8 +1331,33 @@ function renderTicker(){
   for(var i=0;i<opens.length;i++){var t=Date.parse(opens[i][0]);if(t>now){
     var days=Math.ceil((t-now)/864e5);
     items.unshift('<span><span class="tkd">⏳</span>'+(L==='en'?(opens[i][1]+' quotas open in '+days+' days'):('距 '+opens[i][1]+' 配额开闸还有 '+days+' 天'))+'</span>');break;}}
-  document.getElementById('tkTrack').innerHTML=items.join('');
+  var all=items.slice(), dyn=items.length-NEWS.length;
+  /* the strip only carries the latest few items; everything stays readable in the expandable list */
+  var strip=items.slice(0,dyn+TK_MAX);
+  var tr=document.getElementById('tkTrack');
+  tr.innerHTML=strip.join('');
+  var li=document.getElementById('tkList');
+  if(li)li.innerHTML=all.map(function(h){return h.replace(/^<span><span class="tkd">([^<]*)<\/span>/,'<li><span class="tpd">$1</span><span>').replace(/<\/span>$/,'</span></li>');}).join('');
+  tkSpeed();
 }
+/* constant reading speed instead of a fixed loop time: longer content no longer means faster text */
+var TK_MAX=6, TK_PXS=55, TK_PXS_NARROW=42;
+function tkSpeed(){
+  var tr=document.getElementById('tkTrack');if(!tr)return;
+  var w=tr.scrollWidth, vw=tr.parentElement?tr.parentElement.clientWidth:1000;
+  var pxs=vw<600?TK_PXS_NARROW:TK_PXS;
+  if(w>0)tr.style.animationDuration=Math.max(30,Math.round(w/pxs))+'s';
+}
+(function(){
+  var tk=document.getElementById('ticker'),bt=document.getElementById('tkAll'),pn=document.getElementById('tkPanel'),
+      vw=document.getElementById('tkView'),cx=document.getElementById('tkClose');
+  if(!tk||!bt||!pn)return;
+  function setOpen(o){pn.hidden=!o;bt.setAttribute('aria-expanded',o?'true':'false');}
+  bt.addEventListener('click',function(){setOpen(pn.hidden);});
+  if(cx)cx.addEventListener('click',function(){setOpen(false);});
+  if(vw)vw.addEventListener('click',function(){tk.classList.toggle('paused');});
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(tkSpeed,250);});
+})();
 
 /* ---------------- summary charts (SVG stacked bars) ---------------- */
 var STHEX={safe:'#1a9c5b',warn:'#dd9a00',crit:'#e0442a',exh:'#96222e'};
@@ -1643,10 +1688,10 @@ function ccCalc(){
 /* ---------------- tour ---------------- */
 var TOUR=[
  {sel:'#periods',zh:{t:'选择期间',x:'配额按季度开放，标 LIVE 的是当前活跃季；标「结算中」的是进口期已结束、但迟到申报仍在分配的上一季（Q3 至 10-28）；"年度合计"看全年盘子。'},en:{t:'Pick a period',x:'Quotas open quarterly. The LIVE tab is the current quarter; SETTLING is the one whose import period just ended but which still takes late allocations (Q3 until 28 Oct); "Annual" shows the full-year picture.'}},
- {sel:'#kpis',zh:{t:'看板速读',x:'期间配额量、已用量、总体占用率、昨日消耗、临界与已用尽数量——每周一、三、五随官方快照刷新。'},en:{t:'Read the KPIs',x:'Period quota, used, overall %, yesterday\'s draw-down, critical &amp; exhausted counts — refreshed Mon/Wed/Fri from the official snapshot.'}},
+ {sel:'#kpis',zh:{t:'看板速读',x:'期间配额量、已用量、总体占用率、较上次快照消耗、临界与已用尽数量——每周一随官方快照刷新。'},en:{t:'Read the KPIs',x:'Period quota, used, overall %, draw-down since the last snapshot, critical &amp; exhausted counts — refreshed every Monday from the official snapshot.'}},
  {sel:'.sumgrid',zh:{t:'占用率热力图',x:'行=类别、列=原产地，颜色深浅=占用率，交叉差异一眼可见；"合计"行/列是汇总占用率。悬停看订单号明细，点击任意格子直接筛选追踪表。'},en:{t:'Usage heatmap',x:'Rows = categories, columns = origins; color = % used, so cross-differences pop instantly. The "Total" row/column carry aggregates. Hover for order detail; click any cell to filter the tracker.'}},
  {sel:'#track .toolbar',zh:{t:'筛选',x:'搜索、类别下拉、类型/状态筛选块，快速定位你关注的配额。'},en:{t:'Filter',x:'Search, category dropdown and type/status chips to zero in on the quotas you care about.'}},
- {sel:'#track .tablewrap',zh:{t:'追踪表与 Δ 列',x:'余额来自官方 TARIC 快照（只读，每周一、三、五更新）。"Δ 日均"显示消耗速度和预计用尽日期——红字表示预计撑不到季末。点订单号直达官方查询页。'},en:{t:'Tracker & Δ column',x:'Balances are read-only from the TARIC snapshot (Mon/Wed/Fri). "Δ/day" shows draw-down speed & est. runout — red means it won\'t last the quarter. Click an order # to verify officially.'}},
+ {sel:'#track .tablewrap',zh:{t:'追踪表与 Δ 列',x:'余额来自官方 TARIC 快照（只读，每周一更新）。"Δ 日均"显示消耗速度和预计用尽日期——红字表示预计撑不到季末。点订单号直达官方查询页。'},en:{t:'Tracker & Δ column',x:'Balances are read-only from the TARIC snapshot (updated every Monday). "Δ/day" shows draw-down speed & est. runout — red means it won\'t last the quarter. Click an order # to verify officially.'}},
  {sel:'#cost .calc2',zh:{t:'配额外成本测算',x:'选订单号、输入货量货值，立即算出配额外 50% 关税成本；CBAM 用主计算器另算相加。'},en:{t:'Cost estimator',x:'Pick an order, enter volume & value — instant 50% out-of-quota duty estimate; add CBAM from the companion calculator.'}},
  {sel:'#timeline .opengrid',zh:{t:'开闸倒计时',x:'下一季度开闸日历。开闸首日是抢配额窗口——提前安排到港与申报节奏。'},en:{t:'Opening countdown',x:'Next quarterly openings. Day one is the land-grab window — plan arrivals & declarations ahead.'}}
 ];
@@ -1693,10 +1738,11 @@ window.addEventListener('scroll',spy,{passive:true});
 
 /* ---------- data freshness guard ----------
    Makes stale data impossible to miss, on the page itself, with no dependence
-   on any scheduled task or notification. Calibrated to the Mon/Wed/Fri cadence:
-   the largest normal gap is Fri -> Mon = 3 days, so 4 means a sync was actually
-   missed and 6 means two in a row. Never warns on a normal Monday morning. */
-var STALE_WARN=4, STALE_ALARM=6;
+   on any scheduled task or notification. Calibrated to the weekly Monday sync:
+   the Monday run picks up TARIC's latest update (usually the previous Friday's),
+   so a normal snapshot is up to ~10 days old just before the next run; 11 means a
+   weekly sync was actually missed and 14 means the data is two weeks behind. */
+var STALE_WARN=11, STALE_ALARM=14;
 function staleDays(){
   if(!PRELOAD||!PRELOAD.asOf)return null;
   var t=Date.parse(PRELOAD.asOf); if(isNaN(t))return null;
@@ -1720,10 +1766,10 @@ function renderStale(){
   bar.style.display='flex';
   var zh = alarm
     ? ('数据已 '+d+' 天未更新（快照 '+PRELOAD.asOf+'）。占用率与余额已明显偏离实际，请先刷新再用于报价或对外发布。')
-    : ('数据已 '+d+' 天未更新（快照 '+PRELOAD.asOf+'）。正常节奏为每周一、三、五；若天数持续增大请刷新。');
+    : ('数据已 '+d+' 天未更新（快照 '+PRELOAD.asOf+'）。正常节奏为每周一更新；本周同步可能未完成，请留意。');
   var en = alarm
     ? ('Data is '+d+' days old (snapshot '+PRELOAD.asOf+'). Usage and balances have drifted materially \u2014 refresh before quoting or publishing.')
-    : ('Data is '+d+' days old (snapshot '+PRELOAD.asOf+'). Normal cadence is Mon/Wed/Fri; refresh if this keeps growing.');
+    : ('Data is '+d+' days old (snapshot '+PRELOAD.asOf+'). Normal cadence is weekly (Monday); the latest weekly sync may have been missed.');
   bar.innerHTML='<span class="sb-ico">\u26a0</span><span><span class="zh">'+zh+'</span><span class="en">'+en+'</span></span>';
 }
 
