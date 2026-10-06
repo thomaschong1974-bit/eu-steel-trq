@@ -132,6 +132,9 @@ h3{font-size:16px;font-weight:700;margin:22px 0 10px}
 .ptab.on{background:#fff;border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
 .ptab.on .pq{color:var(--red)}
 .ptab .closedq{display:inline-block;font-size:9.5px;font-weight:800;color:#fff;background:#8a9099;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:2px;letter-spacing:.3px}
+.ptab .closedq.settle{background:#c7861a}
+.pnote{margin:6px 0 4px;padding:8px 12px;border-radius:10px;background:#fdf5e6;border:1px solid #f0d9ae;color:#7a5410;font-size:12.5px;line-height:1.55}
+.pnote.fin{background:#f3f4f6;border-color:#dfe2e6;color:#4b5563}
 .ptab .live{display:inline-block;font-size:9.5px;font-weight:800;color:#fff;background:var(--red);
   border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:1px;letter-spacing:.4px}
 
@@ -501,6 +504,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 <section id="dash">
   <h2><span class="bar"></span><span class="zh">① 配额看板</span><span class="en">① Dashboard</span></h2>
   <div class="periods" id="periods"></div>
+  <div class="pnote" id="pnote" style="display:none"></div>
   <div class="kpis" id="kpis"></div>
   <div class="alerts" id="alerts" style="display:none"></div>
   <div class="sumgrid">
@@ -647,8 +651,8 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
   <div class="notes">
     <div class="note">
       <h4><span class="zh">怎么用这个追踪器</span><span class="en">How to use this tracker</span></h4>
-      <p><span class="zh">上方选择<b>期间</b>（配额按季度开放，标 <b>LIVE</b> 的是当前活跃季；标「已收官」的是刚结束的季度，迟到申报仍按该季度分配到季末后第 20 个工作日）。表中"配额量"是该期间为每个订单号分配的免税量。</span>
-         <span class="en">Pick a <b>period</b> at top (quotas open quarterly; the <b>LIVE</b> one is current, and a "CLOSED" quarter is still taking late allocations until the 20th working day after its end). The "Quota" column is that period's duty-free volume per order number.</span></p>
+      <p><span class="zh">上方选择<b>期间</b>（配额按季度开放，标 <b>LIVE</b> 的是当前活跃季；标「结算中」的是进口期刚结束的季度——季末后迟到的申报仍按该季度分配，直到季末后第 20 个欧委会工作日才停止（2026 Q3 为 <b>10-28</b>），在此之前数字仍会变动；停止分配后改标「已结算」，未用余量结转下一季）。表中"配额量"是该期间为每个订单号分配的免税量。</span>
+         <span class="en">Pick a <b>period</b> at top (quotas open quarterly; the <b>LIVE</b> one is current, a "SETTLING" quarter has ended its import period but is still taking late allocations until the 20th Commission working day after its end (28 Oct for 2026 Q3), so its figures keep moving; once allocation stops it is marked "FINAL" and the unused volume carries over). The "Quota" column is that period's duty-free volume per order number.</span></p>
       <p><span class="zh">"剩余余额"列为<b>固定数据</b>，来自每周一、三、五自动同步的官方 TARIC 余额快照（侧栏显示快照日期），不可在表内直接修改；已用量与占用率由此自动算出。点每行<b>订单号</b>可直达官方 TARIC 查询页核对（订单号与原产地已带好）。</span>
          <span class="en">The <b>Balance</b> column is <b>fixed data</b> from the Mon/Wed/Fri-synced official TARIC snapshot (snapshot date in the sidebar) and cannot be edited in the table; used amount &amp; % used are derived from it. Click a row's <b>order number</b> to verify on the official TARIC consultation page (order &amp; origin pre-filled).</span></p>
 
@@ -825,11 +829,26 @@ function renderPeriods(){
     var on=p.k===state.period?' on':'';
     var live=(p.k===(PRELOAD.period||'q3'))?'<span class="live">LIVE</span>':'';
     var cq=(PRELOAD.closed||{})[p.k];
-    if(cq)live='<span class="closedq" title="'+(state.lang==='en'?('allocation until '+cq.allocStop):('分配至 '+cq.allocStop))+'">'+(state.lang==='en'?'CLOSED':'已收官')+'</span>';
+    if(cq){var fin=qFinal(cq);
+      live='<span class="closedq'+(fin?'':' settle')+'" title="'+(state.lang==='en'
+        ?(fin?'Allocation stopped '+stopTxt(cq,'en')+'; figures final, unused volume carried over':'Import period over, but late requests are still allocated to this quarter until '+stopTxt(cq,'en')+' (20th Commission working day) - figures still moving')
+        :(fin?'已于 '+stopTxt(cq,'zh')+' 停止分配，数字为最终值，未用余量已结转下一季':'进口期已结束，但迟到申报仍按本季度分配，至 '+stopTxt(cq,'zh')+'（欧委会第 20 个工作日）停止，数字仍在变动'))
+        +'">'+(state.lang==='en'?(fin?'FINAL':'SETTLING'):(fin?'已结算':'结算中'))+'</span>';}
     return '<div class="ptab'+on+'" onclick="setPeriod(\''+p.k+'\')">'+
       '<div class="pq"><span class="zh">'+p.qz+'</span><span class="en">'+p.qe+'</span>'+live+'</div>'+
       '<div class="pd"><span class="zh">'+p.dz+'</span><span class="en">'+p.de+'</span></div></div>';
   }).join('');
+  var nt=document.getElementById('pnote'),sc=(PRELOAD.closed||{})[state.period];
+  if(nt){
+    if(!sc){nt.style.display='none';nt.innerHTML='';}
+    else{var f=qFinal(sc),Q=String(state.period).toUpperCase(),en=state.lang==='en';
+      nt.className='pnote'+(f?' fin':'');nt.style.display='';
+      nt.innerHTML=f
+        ?(en?'<b>'+Q+' is FINAL.</b> Allocation stopped on '+stopTxt(sc,'en')+' (20th Commission working day, Reg 2026/1384 Art 3(3)); the unused volume carries over to the next quarter (Art 3(4)).'
+            :'<b>'+Q+' 已结算。</b>已于 '+stopTxt(sc,'zh')+'（季末后第 20 个欧委会工作日，Reg 2026/1384 Art 3(3)）停止分配，未用余量按 Art 3(4) 结转下一季。')
+        :(en?'<b>'+Q+' is SETTLING, not final.</b> Its import period has ended, but late requests are still allocated to '+Q+' until <b>'+stopTxt(sc,'en')+'</b> (20th Commission working day after quarter-end, Reg 2026/1384 Art 3(3)). Figures below are as of TARIC '+sc.asOf+' and will still move; after that the unused volume carries over to the next quarter (Art 3(4)).'
+            :'<b>'+Q+' 结算中，数字未定。</b>进口期已结束，但迟到的申报仍按 '+Q+' 分配，直到 <b>'+stopTxt(sc,'zh')+'</b>（季末后第 20 个欧委会工作日，Reg 2026/1384 Art 3(3)）才停止。下方数字截至 TARIC '+sc.asOf+'，仍会变动；停止后未用余量按 Art 3(4) 结转下一季。');}
+  }
 }
 function setPeriod(k){state.period=k;save();renderAll();}
 
@@ -910,10 +929,15 @@ function deltaOf(row){
 /* the live period can outlive its quarter: allocation runs on for 20 working days (Reg 2026/1384 Art 3(3)),
    so a run-out estimate after quarter-end means nothing - say the quarter is closed instead */
 function qClosed(){return Date.parse(PRELOAD.asOf)>Date.parse(QEND[PRELOAD.period||'q3']||QEND.q3);}
+/* a past quarter is only final once our snapshot post-dates its allocation stop (Art 3(3)); until then it is "settling" */
+function qFinal(cq){return !!(cq&&cq.allocStop&&Date.parse(cq.asOf)>Date.parse(cq.allocStop));}
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function stopTxt(cq,L){var a=String(cq.allocStop||'').split('-');if(a.length<3)return cq.allocStop||'';return L==='en'?(+a[2])+' '+MON[+a[1]-1]:a[1]+'-'+a[2];}
 function runoutTxt(dd,L){
-  if((PRELOAD.closed||{})[state.period])return L==='en'?'quarter closed':'季度已收官';
+  var cq=(PRELOAD.closed||{})[state.period];
+  if(cq)return qFinal(cq)?(L==='en'?'final':'已结算'):(L==='en'?'settling · to '+stopTxt(cq,'en'):'结算中·至 '+stopTxt(cq,'zh'));
   if(!dd||dd.bal<=0)return'';
-  if(state.period===(PRELOAD.period||'q3')&&qClosed())return L==='en'?'quarter closed':'季度已收官';
+  if(state.period===(PRELOAD.period||'q3')&&qClosed())return L==='en'?'quarter ended · settling':'进口期已过·结算中';
   if(!dd.runout||dd.rate<=0)return L==='en'?'no draw-down yet':'暂无消耗';
   var end=Date.parse(QEND[state.period]||QEND.q3);
   var asof=Date.parse(PRELOAD.asOf);
@@ -1248,13 +1272,14 @@ function applyPreload(){
 /* ---------------- ticker ---------------- */
 /*@NEWS_START@*/
 var NEWS=[
+ {d:"10-06",zh:"更正标签：Q3 由「已收官」改为「结算中」。Q3 的进口期 9-30 已结束，但按 Reg 2026/1384 Art 3(3)，迟到申报仍按 Q3 分配，直到季末后第 20 个欧委会工作日——10 月无欧委会假日，即 10-28（周三）——才停止；在此之前 Q3 余额仍会变动（10-01 至 10-05 已再减 5.3 万吨）。10-28 之后改标「已结算」，未用余量按 Art 3(4) 结转 Q4",en:"Label fix: Q3 now reads SETTLING instead of CLOSED. Its import period ended 30 Sep, but under Reg 2026/1384 Art 3(3) late requests are still allocated to Q3 until the 20th Commission working day after quarter-end - with no Commission holidays in October that is Wed 28 Oct. Q3 balances keep moving until then (another 53 kt drawn 1-5 Oct). After 28 Oct it will read FINAL and the unused volume carries over to Q4 under Art 3(4)"},
  {d:"10-05",zh:"TARIC 10-05 快照：Q4 首批分配入账，开闸几天就用掉 141.3 万吨（30.8%），39 个订单号已用尽——土耳其热卷 09.9801 的 16.06 万吨一次清零，土耳其镀层板、盘条、螺纹钢、空心型材，印度中厚板、中国镀层板同样用尽；印度热卷 09.9803 已用 69%。Q3 迟到分配放缓至 525 吨，剩余 78.1 万吨待 10-28 后结转",en:"TARIC 5 Oct snapshot: the first Q4 allocations are booked — 1.413 Mt (30.8%) gone within days and 39 orders exhausted. Türkiye HRC 09.9801 lost its full 160.6 kt at once; Türkiye coated sheet, wire rod, rebar and hollow sections, India quarto plate and China coated sheet are also exhausted; India HRC 09.9803 is 69% used. Late Q3 allocations slowed to 525 t, leaving 781 kt to carry over after 28 Oct"},
- {d:"10-05",zh:"追踪器切换到 2026 Q4（LIVE）：截至 TARIC 10-02 快照，Q4 尚未入账任何分配，283 个订单号均为满额，合计 458.6 万吨。Q3 转为「已收官」季度，点「2026 Q3」仍可查看；迟到申报按 Q3 分配到 10-28，之后未用余量结转 Q4",en:"Tracker switched to 2026 Q4 (LIVE): as of the TARIC 2 Oct snapshot no Q4 allocations are booked yet — all 283 orders at full volume, 4.586 Mt in total. Q3 is now a CLOSED quarter, still viewable under '2026 Q3'; late requests are allocated to Q3 until 28 Oct, then the unused volume moves to Q4"},
+ {d:"10-05",zh:"追踪器切换到 2026 Q4（LIVE）：截至 TARIC 10-02 快照，Q4 尚未入账任何分配，283 个订单号均为满额，合计 458.6 万吨。Q3 进入「结算中」：进口期 9-30 已结束，但迟到申报仍按 Q3 分配至 10-28，点「2026 Q3」可查看，数字在此之前仍会变动；之后未用余量结转 Q4",en:"Tracker switched to 2026 Q4 (LIVE): as of the TARIC 2 Oct snapshot no Q4 allocations are booked yet — all 283 orders at full volume, 4.586 Mt in total. Q3 is now SETTLING: its import period ended 30 Sep, but late requests are allocated to Q3 until 28 Oct, so its figures (under '2026 Q3') keep moving; then the unused volume moves to Q4"},
  {d:"10-02",zh:"TARIC 10-02 快照：Q3 迟到申报的分配仍在继续，又扣 3.18 万吨（比前一天的 2.05 万吨还多），Q3 剩余降至 78.2 万吨；扣得最多的是 09.9808（−10,347 吨）。Q4 仍未入账任何分配，283 个订单号保持满额",en:"TARIC 2 Oct snapshot: late Q3 allocations continue — another 31.8 kt (more than the previous day's 20.5 kt), leaving 782 kt in Q3; the biggest draw was 09.9808 (−10,347 t). Still no Q4 allocations booked: all 283 orders at full volume"},
  {d:"10-01",zh:"TARIC 10-01 快照：季末后的迟到申报继续按 Q3 分配，一天又扣 2.05 万吨，已用尽订单号 84 → 108；Q3 剩余降至 81.3 万吨，这部分才是 10-28 停止分配后结转 Q4 的上限。Q4 首批提取尚未入账，283 个订单号仍为满额",en:"TARIC 1 Oct snapshot: late requests are still being allocated to Q3 — another 20.5 kt in one day, exhausted orders 84 → 108; the Q3 remainder is down to 813 kt, the ceiling for what moves to Q4 after allocation stops on 28 Oct. No Q4 drawings booked yet: all 283 orders still at full volume"},
  {d:"10-01",zh:"熔铸国举证新规 IR 2026/1963 自 10 月 1 日起生效：报关须以 TARIC 文件代码申报熔铸国，并附注明熔铸国与炉号的工厂质保书（MTC）；2027-09-30 前可用发票、供应商长期声明等替代。无法举证的进口将被拒",en:"Melt-and-pour evidence rules (IR 2026/1963) apply from 1 Oct: declare the country of melt and pour via TARIC document codes, backed by a mill test certificate showing it and the heat number; until 30 Sep 2027 invoices or long-term supplier declarations may substitute. Imports without verifiable evidence are rejected"},
- {d:"09-30",zh:"Q3 收官：全季总体占用率 81.8%，84 个订单号用尽、76 个临界，季末快照未用余量 83.4 万吨；收官日抽减 2.95 万吨。10 月 1 日 Q4 开闸，283 个订单号全部挂出新额度。Q4 开闸量为标准季度分配：按 Reg 2026/1384 Art 3(3)–(4)，Q3 分配于 10-28 停止后未用余量才结转 Q4，此前 Q3 余额仍可能因迟到申报继续减少",en:"Q3 closed: 81.8% used over the quarter; 84 exhausted, 76 critical; 834 kt unused in the quarter-end snapshot; 29.5 kt drawn on the final day. Q4 opened 1 Oct with fresh volumes on all 283 order numbers, at the standard quarterly allocation: under Reg 2026/1384 Art 3(3)–(4) the unused Q3 volume moves to Q4 only after Q3 allocation stops on 28 Oct, and late requests can still reduce Q3 balances until then"},
- {d:"09-29",zh:"TARIC 快照更新：Q3 收官在即，总体占用率 81.2%，83 个订单号已用尽、74 个临界；四天抽减 6.2 万吨。9 月 30 日 Q3 截止，10 月 1 日 Q4 开闸",en:"TARIC snapshot: Q3 81.2% used; 83 exhausted, 74 critical; 62 kt drawn in four days. Q3 closes 30 Sep, Q4 opens 1 Oct"},
+ {d:"09-30",zh:"Q3 进口期结束：全季总体占用率 81.8%，84 个订单号用尽、76 个临界，季末快照未用余量 83.4 万吨；最后一天抽减 2.95 万吨。10 月 1 日 Q4 开闸，283 个订单号全部挂出新额度。Q4 开闸量为标准季度分配：按 Reg 2026/1384 Art 3(3)–(4)，Q3 分配于 10-28 停止后未用余量才结转 Q4，此前 Q3 余额仍可能因迟到申报继续减少",en:"Q3 import period ended: 81.8% used over the quarter; 84 exhausted, 76 critical; 834 kt unused in the quarter-end snapshot; 29.5 kt drawn on the final day. Q4 opened 1 Oct with fresh volumes on all 283 order numbers, at the standard quarterly allocation: under Reg 2026/1384 Art 3(3)–(4) the unused Q3 volume moves to Q4 only after Q3 allocation stops on 28 Oct, and late requests can still reduce Q3 balances until then"},
+ {d:"09-29",zh:"TARIC 快照更新：Q3 进口期即将结束，总体占用率 81.2%，83 个订单号已用尽、74 个临界；四天抽减 6.2 万吨。9 月 30 日 Q3 截止，10 月 1 日 Q4 开闸",en:"TARIC snapshot: Q3 81.2% used; 83 exhausted, 74 critical; 62 kt drawn in four days. Q3 import period ends 30 Sep, Q4 opens 1 Oct"},
  {d:"09-25",zh:"取向电工钢（GOES）临时保障措施 IR 2026/2133 生效，至 2027-02-26：国别配额 + 最低价，覆盖叠片、铁芯及已装入变压器的铁芯。GOES 不在本工具 283 个订单号内，是另一套独立措施",en:"Provisional safeguard on grain-oriented electrical steel (IR 2026/2133) in force to 26 Feb 2027: country quotas plus price thresholds, covering laminations, cores and cores built into transformers. GOES is not among this tool's 283 order numbers — a separate measure"},
  {d:"09-25",zh:"TARIC 快照更新：Q3 总体占用率 79.8%，81 个订单号已用尽、67 个临界；单日抽减 2.1 万吨；Q3 仅剩 5 天，10 月 1 日 Q4 开闸",en:"TARIC snapshot: Q3 79.8% used; 81 exhausted, 67 critical; 21.1 kt drawn in one day. 5 days left in Q3; Q4 opens 1 Oct"},
  {d:"09-24",zh:"TARIC 快照更新：Q3 总体占用率 79.4%，82 个订单号已用尽（两天新增 10 个）；Q3 仅剩 6 天。Q4 档期已覆盖 280 个订单号",en:"TARIC snapshot: Q3 79.4% used; 82 exhausted (10 new in two days); 6 days left. Q4 tranche now covers 280 order numbers"},
@@ -1617,7 +1642,7 @@ function ccCalc(){
 
 /* ---------------- tour ---------------- */
 var TOUR=[
- {sel:'#periods',zh:{t:'选择期间',x:'配额按季度开放，标 LIVE 的是当前活跃季，标「已收官」的是刚结束的季度；"年度合计"看全年盘子。'},en:{t:'Pick a period',x:'Quotas open quarterly. The LIVE tab is the current quarter, CLOSED is the one that just ended; "Annual" shows the full-year picture.'}},
+ {sel:'#periods',zh:{t:'选择期间',x:'配额按季度开放，标 LIVE 的是当前活跃季；标「结算中」的是进口期已结束、但迟到申报仍在分配的上一季（Q3 至 10-28）；"年度合计"看全年盘子。'},en:{t:'Pick a period',x:'Quotas open quarterly. The LIVE tab is the current quarter; SETTLING is the one whose import period just ended but which still takes late allocations (Q3 until 28 Oct); "Annual" shows the full-year picture.'}},
  {sel:'#kpis',zh:{t:'看板速读',x:'期间配额量、已用量、总体占用率、昨日消耗、临界与已用尽数量——每周一、三、五随官方快照刷新。'},en:{t:'Read the KPIs',x:'Period quota, used, overall %, yesterday\'s draw-down, critical &amp; exhausted counts — refreshed Mon/Wed/Fri from the official snapshot.'}},
  {sel:'.sumgrid',zh:{t:'占用率热力图',x:'行=类别、列=原产地，颜色深浅=占用率，交叉差异一眼可见；"合计"行/列是汇总占用率。悬停看订单号明细，点击任意格子直接筛选追踪表。'},en:{t:'Usage heatmap',x:'Rows = categories, columns = origins; color = % used, so cross-differences pop instantly. The "Total" row/column carry aggregates. Hover for order detail; click any cell to filter the tracker.'}},
  {sel:'#track .toolbar',zh:{t:'筛选',x:'搜索、类别下拉、类型/状态筛选块，快速定位你关注的配额。'},en:{t:'Filter',x:'Search, category dropdown and type/status chips to zero in on the quotas you care about.'}},
