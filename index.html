@@ -372,6 +372,7 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 .pol-card .pd{font-size:11px;font-weight:800;color:var(--red);letter-spacing:.4px}
 .pol-card .pt{font-size:14.5px;font-weight:800;margin:3px 0 4px}
 .pol-card .px{font-size:12.5px;color:#3c4148;line-height:1.65}
+.pol-card .psrc{color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap}
 
 /* ---------- formula ---------- */
 .formula{background:var(--bg);border-radius:12px;padding:14px 18px;margin:10px 0;overflow-x:auto}
@@ -1312,9 +1313,38 @@ var NEWS=[
  {d:"06-17",zh:"Reg (EU) 2026/1384 通过：年度免税总量 −49% 至 18.35 Mt，配额外关税 50%",en:"Reg (EU) 2026/1384 adopted: duty-free volumes −49% to 18.35 Mt; 50% out-of-quota duty"}
 ];
 /*@NEWS_END@*/
+/* ---------- news / policy / timeline delivered with the data file ----------
+   The Mon/Wed/Fri sync writes extra items into trq_balances.json (news, policy, timeline);
+   they are merged with the items baked into this page, so the ticker and the policy
+   sections refresh with the data and the page code never has to be edited. */
+function feedTxt(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function feedUrl(u){u=String(u||'');return /^https:\/\/[^\s"'<>]+$/.test(u)?u:'';}
+function allNews(){
+  var x=((PRELOAD&&PRELOAD.news)||[]).map(function(n){return {date:String(n.date||''),d:feedTxt(n.d||String(n.date||'').slice(5)),zh:feedTxt(n.zh),en:feedTxt(n.en||n.zh)};});
+  var seen={},out=[];
+  x.concat(NEWS).forEach(function(n){var k=(n.date||('2026-'+n.d))+'|'+n.zh;if(!seen[k]){seen[k]=1;out.push(n);}});
+  out.sort(function(a,b){var A=a.date||('2026-'+a.d),B=b.date||('2026-'+b.d);return A<B?1:(A>B?-1:0);});
+  return out;
+}
+function mergeByDate(base,extra,keyOf){
+  var out=base.slice(),seen={};out.forEach(function(p){seen[keyOf(p)]=1;});
+  extra.forEach(function(p){if(seen[keyOf(p)])return;seen[keyOf(p)]=1;
+    var i=0;while(i<out.length&&!(typeof out[i].d==='string'&&out[i].d>p.d))i++;out.splice(i,0,p);});
+  return out;
+}
+function allPolicy(){
+  var x=((PRELOAD&&PRELOAD.policy)||[]).filter(function(p){return p&&typeof p.d==='string'&&p.zh&&p.en;}).map(function(p){
+    return {d:feedTxt(p.d),zh:{t:feedTxt(p.zh.t),x:feedTxt(p.zh.x)},en:{t:feedTxt(p.en.t),x:feedTxt(p.en.x)},src:feedUrl(p.src)};});
+  return mergeByDate(POLICY,x,function(p){return (typeof p.d==='string'?p.d:'~')+'|'+p.zh.t;});
+}
+function allTL(){
+  var x=((PRELOAD&&PRELOAD.timeline)||[]).filter(function(s){return s&&typeof s.d==='string';}).map(function(s){return {d:feedTxt(s.d),zh:feedTxt(s.zh),en:feedTxt(s.en||s.zh)};});
+  return mergeByDate(TL,x,function(s){return s.d+'|'+s.zh;});
+}
 function renderTicker(){
   var L=state.lang;
-  var items=NEWS.map(function(n){return '<span><span class="tkd">'+n.d+'</span>'+(L==='en'?n.en:n.zh)+'</span>';});
+  var NN=allNews();
+  var items=NN.map(function(n){return '<span><span class="tkd">'+n.d+'</span>'+(L==='en'?n.en:n.zh)+'</span>';});
   // dynamic: newly exhausted vs previous snapshot
   var h=PRELOAD.history||[];
   if(h.length>=2){
@@ -1328,7 +1358,7 @@ function renderTicker(){
   for(var i=0;i<opens.length;i++){var t=Date.parse(opens[i][0]);if(t>now){
     var days=Math.ceil((t-now)/864e5);
     items.unshift('<span><span class="tkd">⏳</span>'+(L==='en'?(opens[i][1]+' quotas open in '+days+' days'):('距 '+opens[i][1]+' 配额开闸还有 '+days+' 天'))+'</span>');break;}}
-  var all=items.slice(), dyn=items.length-NEWS.length;
+  var all=items.slice(), dyn=items.length-NN.length;
   /* the strip only carries the latest few items; everything stays readable in the expandable list */
   var strip=items.slice(0,dyn+TK_MAX);
   var tr=document.getElementById('tkTrack');
@@ -1569,10 +1599,11 @@ var POLICY=[
 ];
 function renderPolicy(){
   var L=state.lang;
-  document.getElementById('polList').innerHTML=POLICY.map(function(p){
+  document.getElementById('polList').innerHTML=allPolicy().map(function(p){
     var c=L==='en'?p.en:p.zh;
     var dd=typeof p.d==='string'?p.d:(L==='en'?p.d.en:p.d.zh);
-    return '<div class="pol-card"><div class="pd">'+dd+'</div><div class="pt">'+c.t+'</div><div class="px">'+c.x+'</div></div>';
+    var sl=p.src?' <a class="psrc" href="'+p.src+'" target="_blank" rel="noopener">'+(L==='en'?'Source':'来源')+' ↗</a>':'';
+    return '<div class="pol-card"><div class="pd">'+dd+'</div><div class="pt">'+c.t+'</div><div class="px">'+c.x+sl+'</div></div>';
   }).join('');
 }
 
@@ -1593,7 +1624,7 @@ var TL=[
 ];
 function renderTimeline(){
   var L=state.lang,now=Date.now();
-  document.getElementById('tlx').innerHTML=TL.map(function(s){
+  document.getElementById('tlx').innerHTML=allTL().map(function(s){
     var fut=Date.parse(s.d)>now;
     return '<div class="tstep'+(fut?' future':'')+'"><div class="dot"></div><div class="td">'+s.d+'</div><div class="tt">'+(L==='en'?s.en:s.zh)+'</div></div>';
   }).join('');
