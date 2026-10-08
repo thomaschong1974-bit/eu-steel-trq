@@ -83,14 +83,14 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
 <div class="hero">
   <div class="k">SMM STEEL TEAM · 2026</div>
   <h2><span class="zh">两个自动更新的欧盟钢铁工具，怎么用、怎么保证数据最新</span><span class="en">Two auto-updating EU-steel tools: how to use them, and how to keep them fresh</span></h2>
-  <p><span class="zh">本教程覆盖两件事：① 两个工具每个板块怎么用；② 每周自动更新如何运作、如何确保它按时跑起来。</span><span class="en">This guide covers two things: (1) how to use every panel of both tools; (2) how the weekly auto-update works and how to make sure it actually runs.</span></p>
+  <p><span class="zh">本教程覆盖两件事：① 两个工具每个板块怎么用；② 自动更新（每周一、三、五）如何运作、如何确保它按时跑起来。</span><span class="en">This guide covers two things: (1) how to use every panel of both tools; (2) how the Mon/Wed/Fri auto-update works and how to make sure it actually runs.</span></p>
 </div>
 
 <div class="toc">
   <a href="#links"><span class="zh">① 入口</span><span class="en">① Links</span></a>
   <a href="#trq"><span class="zh">② TRQ 追踪器</span><span class="en">② TRQ tracker</span></a>
   <a href="#cbam"><span class="zh">③ CBAM 计算器</span><span class="en">③ CBAM calculator</span></a>
-  <a href="#auto"><span class="zh">④ 每周更新如何运作</span><span class="en">④ How the weekly update works</span></a>
+  <a href="#auto"><span class="zh">④ 自动更新如何运作</span><span class="en">④ How the auto-update works</span></a>
   <a href="#ensure"><span class="zh">⑤ 确保按时更新</span><span class="en">⑤ Ensure it runs</span></a>
   <a href="#faq"><span class="zh">⑥ 常见问题</span><span class="en">⑥ FAQ</span></a>
 </div>
@@ -103,7 +103,7 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
     <tbody>
     <tr><td><b>TRQ <span class="zh">配额追踪器</span><span class="en">quota tracker</span></b></td>
       <td><a class="link" href="https://thomaschong1974-bit.github.io/eu-steel-trq/" target="_blank">…github.io/eu-steel-trq/</a></td>
-      <td><span class="zh">每周一（吉隆坡时间约 09:00）</span><span class="en">Weekly · Mon ~09:00 KL</span></td></tr>
+      <td><span class="zh">每周一、三、五（吉隆坡时间约 09:00）</span><span class="en">Mon / Wed / Fri · ~09:00 KL</span></td></tr>
     <tr><td><b>CBAM <span class="zh">成本计算器</span><span class="en">cost calculator</span></b></td>
       <td><a class="link" href="https://thomaschong1974-bit.github.io/steel-cbam-calculator/" target="_blank">…github.io/steel-cbam-calculator/</a></td>
       <td><span class="zh">证书价按季度（官方公布后维护）</span><span class="en">Cert price quarterly (maintained on release)</span></td></tr>
@@ -135,7 +135,7 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
   <p><span class="zh">每行一个配额订单号：类别、原产地、类型、订单号、配额量、剩余余额、已用量、<b>Δ 日均</b>、占用率、状态。</span>
     <span class="en">One row per quota order number: category, origin, type, order #, quota, balance, used, <b>Δ/day</b>, % used, status.</span></p>
   <ul class="check">
-    <li><span class="zh"><b>剩余余额</b>是官方固定数据（每周一从 TARIC 同步），表内不可改。</span><span class="en"><b>Balance</b> is fixed official data (synced from TARIC every Monday); not editable in the table.</span></li>
+    <li><span class="zh"><b>剩余余额</b>是官方固定数据（每周一、三、五从 TARIC 同步），表内不可改。</span><span class="en"><b>Balance</b> is fixed official data (synced from TARIC every Mon/Wed/Fri); not editable in the table.</span></li>
     <li><span class="zh"><b>Δ 日均</b>显示每天消耗速度，下方给"预计 MM-DD 用尽"；预计撑不到季末的标红。</span><span class="en"><b>Δ/day</b> shows the daily draw-down and an "est. runout MM-DD"; red if it won't last the quarter.</span></li>
     <li><span class="zh">点红色<b>订单号</b>可直达官方 TARIC 查询页核对（订单号与原产地已带好）。</span><span class="en">Click the red <b>order number</b> to verify on the official TARIC page (order &amp; origin pre-filled).</span></li>
     <li><span class="zh">上方工具栏：搜索（国家/类别/订单号）、类别下拉、类型与状态筛选块。</span><span class="en">Toolbar above: search (country/category/order), category dropdown, type &amp; status filter chips.</span></li>
@@ -162,9 +162,9 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
 
 <!-- 4 how auto works -->
 <section id="auto">
-  <h3><span class="n">4</span><span class="zh">每周自动更新是怎么运作的</span><span class="en">How the weekly auto-update works</span></h3>
-  <p><span class="zh">你不用手动做任何事——一个云端定时任务每周一替你跑：</span><span class="en">You don't do anything by hand — a scheduled cloud task runs it for you every Monday:</span></p>
-  <div class="step"><div class="sn">1</div><div class="sb"><span class="zh">每周一 <b>08:52（吉隆坡时间）</b>，云端自动启动「EU 钢铁 TRQ 配额同步 · 每周一」任务，约 9 点前后完成。</span><span class="en">Every Monday at <b>08:52 (Kuala Lumpur time)</b>, the "EU steel TRQ sync · Monday" task starts in the cloud and finishes around 09:00.</span></div></div>
+  <h3><span class="n">4</span><span class="zh">自动更新是怎么运作的</span><span class="en">How the auto-update works</span></h3>
+  <p><span class="zh">你不用手动做任何事——一个云端定时任务每周一、三、五替你跑：</span><span class="en">You don't do anything by hand — a scheduled cloud task runs it for you every Monday, Wednesday and Friday:</span></p>
+  <div class="step"><div class="sn">1</div><div class="sb"><span class="zh">每周一、三、五 <b>08:52（吉隆坡时间）</b>，云端自动启动「EU 钢铁 TRQ 配额同步 · 每周一三五」任务，约 9 点前后完成。</span><span class="en">Every Monday, Wednesday and Friday at <b>08:52 (Kuala Lumpur time)</b>, the "EU steel TRQ sync · Mon/Wed/Fri" task starts in the cloud and finishes around 09:00.</span></div></div>
   <div class="step"><div class="sn">2</div><div class="sb"><span class="zh">它通过<b>你电脑的 Chrome</b> 打开官方 TARIC，抓全部 283 个订单号的当期余额；上一季度仍在结算（季末后第 20 个欧委会工作日之前）时，一并抓上一季度余额。校验通过才发布（必须 283 条、数值合理）。</span><span class="en">It opens the official TARIC through <b>your computer&#39;s Chrome</b> and scrapes all 283 current-quarter balances, plus the previous quarter while it is still settling (until the 20th Commission working day after quarter-end). It publishes only if validation passes (283 rows, sane values).</span></div></div>
   <div class="step"><div class="sn">3</div><div class="sb"><span class="zh">把新的 <code>trq_balances.json</code> 提交到 GitHub 仓库（桌面 artifact 不再同步）。</span><span class="en">It commits the new <code>trq_balances.json</code> to the GitHub repo (the desktop artifact is no longer synced).</span></div></div>
   <div class="step"><div class="sn">4</div><div class="sb"><span class="zh">网站访客<b>下次打开就自动看到最新数据</b>——网页每次加载都去拉那个 JSON（带时间戳绕过缓存），或点右上角"⟳ 刷新数据"。</span><span class="en">Website visitors <b>see the latest data on next open</b> — the page fetches that JSON on every load (cache-busted), or click "⟳ Refresh" top-right.</span></div></div>
@@ -174,34 +174,34 @@ footer{margin-top:56px;border-top:1px solid var(--ink);padding:22px 0 10px;color
 
 <!-- 5 ensure -->
 <section id="ensure">
-  <h3><span class="n">5</span><span class="zh">怎么确保它每周真的更新（重点）</span><span class="en">How to ensure it actually updates every week (important)</span></h3>
-  <p class="big"><span class="zh">任务每周一都会<b>触发</b>；但它要靠你的电脑去抓官方数据，所以能不能<b>跑完</b>，取决于那个时点你的电脑在不在线。</span>
-    <span class="en">The task <b>fires</b> every Monday; but it drives your computer to scrape the official data, so whether it <b>completes</b> depends on your computer being online at that moment.</span></p>
+  <h3><span class="n">5</span><span class="zh">怎么确保它按时更新（重点）</span><span class="en">How to ensure it actually runs (important)</span></h3>
+  <p class="big"><span class="zh">任务每周一、三、五都会<b>触发</b>；但它要靠你的电脑去抓官方数据，所以能不能<b>跑完</b>，取决于那个时点你的电脑在不在线。</span>
+    <span class="en">The task <b>fires</b> every Mon/Wed/Fri; but it drives your computer to scrape the official data, so whether it <b>completes</b> depends on your computer being online at that moment.</span></p>
 
   <div class="card red">
-    <p class="big" style="margin-top:0"><span class="zh">每周一 08:50–09:30，这三样请同时保持在线：</span><span class="en">Every Monday 08:50–09:30, keep these three online at the same time:</span></p>
+    <p class="big" style="margin-top:0"><span class="zh">每周一、三、五 08:50–09:30，这三样请同时保持在线：</span><span class="en">Every Mon/Wed/Fri 08:50–09:30, keep these three online at the same time:</span></p>
     <ul class="check">
       <li><span class="zh"><b>桌面端 Claude 应用</b>开着（云任务通过它连到你的电脑）。</span><span class="en">The <b>Claude desktop app</b> is open (the cloud task reaches your computer through it).</span></li>
       <li><span class="zh"><b>Chrome</b> 开着，且 <b>Claude 浏览器扩展已连接</b>（登录的是同一个 claude.ai 账号）。</span><span class="en"><b>Chrome</b> is open with the <b>Claude browser extension connected</b> (same claude.ai account).</span></li>
       <li><span class="zh">Chrome 里<b>已登录 GitHub</b>（thomaschong1974-bit）——提交数据要用。</span><span class="en">You're <b>logged into GitHub</b> (thomaschong1974-bit) in Chrome — needed to commit the data.</span></li>
     </ul>
-    <p class="muted" style="margin-bottom:0"><span class="zh">电脑不用一直开，只要覆盖周一早上这半小时左右即可（抓取 + 发布约 20–40 分钟）。</span><span class="en">Your computer needn't stay on all the time — just cover roughly that half hour on Monday morning (scrape + publish takes ~20–40 min).</span></p>
+    <p class="muted" style="margin-bottom:0"><span class="zh">电脑不用一直开，只要覆盖这三天早上这半小时左右即可（抓取 + 发布约 20–40 分钟）。</span><span class="en">Your computer needn't stay on all the time — just cover roughly that half hour on those mornings (scrape + publish takes ~20–40 min).</span></p>
   </div>
 
   <h4><span class="zh">如果那个时点离线会怎样？</span><span class="en">What if you're offline then?</span></h4>
   <ul class="check">
-    <li class="warn-li"><span class="zh">任务照常触发，但连不上 Chrome → <b>自动跳过、不报错</b>，并给你<b>推送通知</b>"本周跳过：Chrome 未连接"。你会知道。</span><span class="en">The task still fires but can't reach Chrome → it <b>skips gracefully</b> and sends a <b>push notification</b> "skipped this week: Chrome not connected". You'll know.</span></li>
+    <li class="warn-li"><span class="zh">任务照常触发，但连不上 Chrome → <b>自动跳过、不报错</b>，并给你<b>推送通知</b>"本次跳过：Chrome 未连接"。你会知道。</span><span class="en">The task still fires but can't reach Chrome → it <b>skips gracefully</b> and sends a <b>push notification</b> "skipped this run: Chrome not connected". You'll know.</span></li>
     <li class="warn-li"><span class="zh">网站不会显示错误——继续显示上一次成功的数据（侧栏日期就是最后成功日）。</span><span class="en">The website never errors — it keeps showing the last successful data (the sidebar date = last successful day).</span></li>
   </ul>
 
-  <h4><span class="zh">怎么知道本周更新成功了？</span><span class="en">How to confirm this week succeeded</span></h4>
+  <h4><span class="zh">怎么知道这次更新成功了？</span><span class="en">How to confirm a run succeeded</span></h4>
   <ul class="check">
     <li><span class="zh">收到<b>推送总结</b>（占用率 / 消耗 / 用尽清单）。</span><span class="en">You get a <b>push summary</b> (% used / draw-down / exhausted list).</span></li>
-    <li><span class="zh">网站侧栏的 <b>TARIC 快照日期</b>变成最新一期（周一早上通常是上周五的官方更新）。</span><span class="en">The website sidebar's <b>TARIC snapshot date</b> moves to the latest official update (on Monday morning, usually the previous Friday's).</span></li>
+    <li><span class="zh">网站侧栏的<b>「最后更新」日期</b>变成最新一期（通常是前一个工作日的官方更新）。</span><span class="en">The website sidebar's <b>"Last updated" date</b> moves to the latest official update (usually the previous working day's).</span></li>
     <li><span class="zh">GitHub 仓库能看到当天的 <code>TRQ balances …</code> 提交。</span><span class="en">The GitHub repo shows a <code>TRQ balances …</code> commit for today.</span></li>
   </ul>
 
-  <h4><span class="zh">漏了一周 / 想立刻更新，怎么补？</span><span class="en">Missed a week / want it now?</span></h4>
+  <h4><span class="zh">漏了一次 / 想立刻更新，怎么补？</span><span class="en">Missed a run / want it now?</span></h4>
   <div class="card"><span class="zh">随时在对话里对我说 <b>"刷新配额"</b>——我立刻抓一遍最新数据并提交 GitHub。数据是累积的官方余额，补跑一次即可补上，不会丢。</span>
     <span class="en">Just tell me <b>"refresh the quota"</b> in chat anytime — I'll immediately scrape the latest and commit to GitHub. The official balances are cumulative, so one catch-up run fills the gap; nothing is lost.</span></div>
 
