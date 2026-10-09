@@ -451,6 +451,21 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 </style>
 </head>
 <body>
+<script>/* 语言：?lang= 参数 > 手动切换（记住）> 浏览器语言（中文浏览器→中文，其他→英文） */
+var SMM_LANG=(function(){var K="smm_trq_lang",l=null,m=/[?&]lang=(zh|en)(?![\w-])/i.exec(location.search);
+ if(m){l=m[1].toLowerCase();try{sessionStorage.setItem(K,l);}catch(e){}return l;}
+ try{l=sessionStorage.getItem(K)||localStorage.getItem(K);}catch(e){}
+ if(l==="zh"||l==="en")return l;
+ var a=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||navigator.userLanguage||""];
+ for(var i=0;i<a.length;i++){var s=String(a[i]||"").toLowerCase();if(s.indexOf("zh")===0)return "zh";if(s.indexOf("en")===0)return "en";}
+ return "en";})();
+var SMM_TITLE={zh:"欧盟钢铁 TRQ 配额追踪器 – SMM",en:"EU Steel TRQ Quota Tracker – SMM"};
+document.documentElement.lang=SMM_LANG==="en"?"en":"zh-CN";document.title=SMM_TITLE[SMM_LANG];
+if(SMM_LANG==="en")document.body.classList.add("en");
+function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessionStorage.setItem(K,l);}catch(e){}
+ if(/[?&]lang=/i.test(location.search)&&window.history&&history.replaceState){
+  try{history.replaceState(history.state,"",location.href.replace(/([?&]lang=)(zh|en)/i,"$1"+l));}catch(e){}}}
+</script>
 
 <!-- access gate removed 2026-09-30: the tool is open to everyone, no access code -->
 
@@ -756,7 +771,7 @@ var TYPES=[
 var STATUSES=[{k:"safe",zh:"充裕",en:"Safe"},{k:"warn",zh:"偏紧",en:"Warning"},
  {k:"crit",zh:"临界",en:"Critical"},{k:"exh",zh:"已用尽",en:"Exhausted"}];
 var LSKEY="cbam_trq_tracker_v1";
-var state={period:"q3",mode:"balance",usage:{},asOf:"",lang:"zh",
+var state={period:"q3",mode:"balance",usage:{},asOf:"",lang:SMM_LANG,
   typeFilter:{},statusFilter:{},cat:"",q:"",sort:{col:"total",dir:-1}};
 
 /* ---------------- persistence ---------------- */
@@ -792,13 +807,14 @@ function showFeedback(){if(!FEEDBACK_URL)return;
   if(a)a.style.display='';if(b)b.style.display='';}
 
 /* ---------------- lang ---------------- */
-function toggleLang(){state.lang=state.lang==='zh'?'en':'zh';
-  document.body.classList.toggle('en',state.lang==='en');
-  document.title=state.lang==='en'?'EU Steel TRQ Quota Tracker – SMM':'欧盟钢铁 TRQ 配额追踪器 – SMM';
-  document.documentElement.setAttribute('lang',state.lang==='en'?'en':'zh-CN');
-  document.getElementById('lz').classList.toggle('on',state.lang==='zh');
-  document.getElementById('le').classList.toggle('on',state.lang==='en');
-  renderAll();}
+function applyLang(){var en=state.lang==='en';
+  document.body.classList.toggle('en',en);
+  document.title=SMM_TITLE[en?'en':'zh'];
+  document.documentElement.setAttribute('lang',en?'en':'zh-CN');
+  document.getElementById('lz').classList.toggle('on',!en);
+  document.getElementById('le').classList.toggle('on',en);}
+function toggleLang(){state.lang=state.lang==='zh'?'en':'zh';smmSaveLang(state.lang);
+  applyLang();renderAll();}
 
 /* ---------------- helpers ---------------- */
 function fmt(n){if(n===null||n===undefined||isNaN(n))return"–";
@@ -1814,6 +1830,7 @@ document.getElementById('fCat').addEventListener('change',function(){state.cat=t
 load();
 state.mode='balance';
 applyPreload();
+applyLang();
 renderAll();
 /* ---------------- remote data sync (client/site edition) ---------------- */
 var REMOTE_URL="trq_balances.json";
