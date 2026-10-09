@@ -451,20 +451,30 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 </style>
 </head>
 <body>
-<script>/* 语言：?lang= 参数 > 手动切换（记住）> 浏览器语言（中文浏览器→中文，其他→英文） */
-var SMM_LANG=(function(){var K="smm_trq_lang",l=null,m=/[?&]lang=(zh|en)(?![\w-])/i.exec(location.search);
- if(m){l=m[1].toLowerCase();try{sessionStorage.setItem(K,l);}catch(e){}return l;}
- try{l=sessionStorage.getItem(K)||localStorage.getItem(K);}catch(e){}
- if(l==="zh"||l==="en")return l;
+<script>/* 语言优先级：?lang= 参数（smm.cn / metal.com 嵌入时会带）> 本次会话的选择 > 所在网站（smm.cn→中文，metal.com→英文）> 手动切换（记住）> 浏览器语言（中文→中文，其他→英文） */
+var SMM_LANG=(function(){var K="smm_trq_lang",l=null;
+ function norm(v){v=String(v||"").toLowerCase().replace(/_/g,"-");
+  if(/^(zh|cn|chs|cht|zho|chi)(-|$)/.test(v)||v==="chinese")return "zh";
+  if(/^(en|eng)(-|$)/.test(v)||v==="english")return "en";return null;}
+ function site(h){h=String(h||"").toLowerCase();
+  if(/(^|\.)smm\.cn$/.test(h))return "zh";if(/(^|\.)metal\.com$/.test(h))return "en";return null;}
+ var m=/[?&]lang=([^&#]*)/i.exec(location.search);
+ if(m){try{l=norm(decodeURIComponent(m[1]));}catch(e){l=norm(m[1]);}
+  if(l){try{sessionStorage.setItem(K,l);}catch(e){}return l;}}
+ try{l=norm(sessionStorage.getItem(K));}catch(e){}if(l)return l;
+ l=site(location.hostname);
+ if(!l){try{var ao=location.ancestorOrigins;if(ao&&ao.length)l=site(new URL(ao[ao.length-1]).hostname);}catch(e){}}
+ if(!l&&window.top!==window.self){try{l=site(new URL(document.referrer).hostname);}catch(e){}}
+ if(l)return l;
+ try{l=norm(localStorage.getItem(K));}catch(e){}if(l)return l;
  var a=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||navigator.userLanguage||""];
- for(var i=0;i<a.length;i++){var s=String(a[i]||"").toLowerCase();if(s.indexOf("zh")===0)return "zh";if(s.indexOf("en")===0)return "en";}
+ for(var i=0;i<a.length;i++){l=norm(a[i]);if(l)return l;}
  return "en";})();
 var SMM_TITLE={zh:"欧盟钢铁 TRQ 配额追踪器 – SMM",en:"EU Steel TRQ Quota Tracker – SMM"};
 document.documentElement.lang=SMM_LANG==="en"?"en":"zh-CN";document.title=SMM_TITLE[SMM_LANG];
 if(SMM_LANG==="en")document.body.classList.add("en");
 function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessionStorage.setItem(K,l);}catch(e){}
- if(/[?&]lang=/i.test(location.search)&&window.history&&history.replaceState){
-  try{history.replaceState(history.state,"",location.href.replace(/([?&]lang=)(zh|en)/i,"$1"+l));}catch(e){}}}
+ try{var u=new URL(location.href);if(u.searchParams.has("lang")&&window.history&&history.replaceState){u.searchParams.set("lang",l);history.replaceState(history.state,"",u.href);}}catch(e){}}
 </script>
 
 <!-- access gate removed 2026-09-30: the tool is open to everyone, no access code -->
