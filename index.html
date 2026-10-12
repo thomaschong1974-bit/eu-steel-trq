@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="smm-build" content="2026-10-12">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="9449af3e-e546-4f42-848b-d853517f00fd"></script>
 <title>欧盟钢铁 TRQ 配额追踪器 – SMM</title>
@@ -448,32 +449,45 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 #gate #gFeed .en,#gate .g-xlink .en{font-size:10.5px;margin-top:4px}
 #gate #gFeed .en{color:rgba(192,0,0,.62)}
 #gate .g-err{line-height:1.5}
+.sb-build{opacity:.55;font-size:10px;letter-spacing:.02em}
 </style>
 </head>
 <body>
-<script>/* 语言优先级：?lang= 参数（smm.cn / metal.com 嵌入时会带）> 本次会话的选择 > 所在网站（smm.cn→中文，metal.com→英文）> 手动切换（记住）> 浏览器语言（中文→中文，其他→英文） */
+<script>/* 语言优先级：本页 ?lang= > 本次会话在同一网站上的手动选择 > 上层页面或来源页的 ?lang= > 嵌入它的网站（metal.com→英文，smm.cn→中文）> 本页所在域名 > 以前的手动选择 > 浏览器语言（中文→中文，其他→英文） */
+var SMM_BUILD="2026-10-12",SMM_LANG_SRC="",SMM_LANG_KEY="smm_trq_lang";
 var SMM_LANG=(function(){var K="smm_trq_lang",l=null;
  function norm(v){v=String(v||"").toLowerCase().replace(/_/g,"-");
   if(/^(zh|cn|chs|cht|zho|chi)(-|$)/.test(v)||v==="chinese")return "zh";
   if(/^(en|eng)(-|$)/.test(v)||v==="english")return "en";return null;}
  function site(h){h=String(h||"").toLowerCase();
   if(/(^|\.)smm\.cn$/.test(h))return "zh";if(/(^|\.)metal\.com$/.test(h))return "en";return null;}
- var m=/[?&]lang=([^&#]*)/i.exec(location.search);
- if(m){try{l=norm(decodeURIComponent(m[1]));}catch(e){l=norm(m[1]);}
-  if(l){try{sessionStorage.setItem(K,l);}catch(e){}return l;}}
- try{l=norm(sessionStorage.getItem(K));}catch(e){}if(l)return l;
- l=site(location.hostname);
- if(!l){try{var ao=location.ancestorOrigins;if(ao&&ao.length)l=site(new URL(ao[ao.length-1]).hostname);}catch(e){}}
- if(!l&&window.top!==window.self){try{l=site(new URL(document.referrer).hostname);}catch(e){}}
- if(l)return l;
- try{l=norm(localStorage.getItem(K));}catch(e){}if(l)return l;
+ function host(u){try{return new URL(u).hostname;}catch(e){return "";}}
+ function qlang(u){var m=/[?&]lang=([^&#]*)/i.exec(String(u||""));if(!m)return null;try{return norm(decodeURIComponent(m[1]));}catch(e){return norm(m[1]);}}
+ var framed=false;try{framed=window.top!==window.self;}catch(e){framed=true;}
+ var top=null;
+ if(framed){try{var ao=location.ancestorOrigins;if(ao&&ao.length)top=site(host(ao[ao.length-1]));}catch(e){}
+  if(!top){try{top=site(window.top.location.hostname);}catch(e){}}
+  if(!top)top=site(host(document.referrer));}
+ var own=site(location.hostname),SK=K+"@"+(top?(top==="en"?"metal.com":"smm.cn"):(own?(own==="en"?"metal.com":"smm.cn"):"web"));
+ SMM_LANG_KEY=SK;
+ function done(v,src,keep){SMM_LANG_SRC=src;if(keep){try{sessionStorage.setItem(SK,v);}catch(e){}}return v;}
+ l=qlang(location.search);if(l)return done(l,"url",1);
+ try{l=norm(sessionStorage.getItem(SK));}catch(e){}if(l)return done(l,"session",0);
+ if(framed){var w=window;
+  for(var i=0;i<6;i++){var p;try{p=w.parent;}catch(e){break;}if(!p||p===w)break;w=p;
+   try{l=qlang(w.location.search);}catch(e){break;}if(l)return done(l,"parent-url",1);}
+  l=qlang(document.referrer);if(l)return done(l,"referrer-url",1);}
+ if(top)return done(top,"embedding-site",0);
+ if(own)return done(own,"own-site",0);
+ try{l=norm(localStorage.getItem(K));}catch(e){}if(l)return done(l,"saved",0);
  var a=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||navigator.userLanguage||""];
- for(var i=0;i<a.length;i++){l=norm(a[i]);if(l)return l;}
- return "en";})();
+ for(var i=0;i<a.length;i++){l=norm(a[i]);if(l)return done(l,"browser",0);}
+ return done("en","default",0);})();
+try{console.info("[SMM TRQ] build "+SMM_BUILD+", lang="+SMM_LANG+" ("+SMM_LANG_SRC+")");}catch(e){}
 var SMM_TITLE={zh:"欧盟钢铁 TRQ 配额追踪器 – SMM",en:"EU Steel TRQ Quota Tracker – SMM"};
 document.documentElement.lang=SMM_LANG==="en"?"en":"zh-CN";document.title=SMM_TITLE[SMM_LANG];
 if(SMM_LANG==="en")document.body.classList.add("en");
-function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessionStorage.setItem(K,l);}catch(e){}
+function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessionStorage.setItem(SMM_LANG_KEY,l);}catch(e){}
  try{var u=new URL(location.href);if(u.searchParams.has("lang")&&window.history&&history.replaceState){u.searchParams.set("lang",l);history.replaceState(history.state,"",u.href);}}catch(e){}}
 </script>
 
@@ -504,7 +518,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
     <span class="zh">每周一、三、五更新配额数据</span><span class="en">Quota data updated Mon / Wed / Fri</span>
     <div id="rsStat" style="margin-top:4px;color:#a4aab3"></div>
   </div>
-  <div class="sb-foot">SMM · Reg (EU) 2026/1384<br>IR (EU) 2026/1457 Annex I</div>
+  <div class="sb-foot">SMM · Reg (EU) 2026/1384<br>IR (EU) 2026/1457 Annex I<br><span class="sb-build">v2026.10.12</span></div>
 </aside>
 
 <div class="content">
