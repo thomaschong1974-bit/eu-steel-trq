@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="smm-build" content="2026-10-12">
+<meta name="smm-build" content="2026-10-14">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>员工上手手册 · EU 钢铁 TRQ + CBAM 工具 – SMM</title>
 <style>
@@ -71,7 +71,7 @@ footer{margin-top:52px;border-top:1px solid var(--ink);padding:22px 0 10px;color
 </head>
 <body class="lang-zh">
 <script>/* 语言优先级：本页 ?lang= > 本次会话在同一网站上的手动选择 > 上层页面或来源页的 ?lang= > 嵌入它的网站（metal.com→英文，smm.cn→中文）> 本页所在域名 > 以前的手动选择 > 浏览器语言（中文→中文，其他→英文） */
-var SMM_BUILD="2026-10-12",SMM_LANG_SRC="",SMM_LANG_KEY="smm_trq_lang";
+var SMM_BUILD="2026-10-14",SMM_LANG_SRC="",SMM_LANG_KEY="smm_trq_lang";
 var SMM_LANG=(function(){var K="smm_trq_lang",l=null;
  function norm(v){v=String(v||"").toLowerCase().replace(/_/g,"-");
   if(/^(zh|cn|chs|cht|zho|chi)(-|$)/.test(v)||v==="chinese")return "zh";
@@ -198,7 +198,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
     <span class="pill p-crit"><span class="zh">临界 90–100%</span><span class="en">Critical 90–100%</span></span>
     <span class="pill p-exh"><span class="zh">已用尽 ≥100%</span><span class="en">Exhausted ≥100%</span></span></p>
   <table class="gloss"><tbody>
-    <tr><td><span class="zh">Δ 日均</span><span class="en">Δ/day</span></td><td><span class="zh">这个配额每天消耗多少吨；旁边"预计 MM-DD 用尽"是照这速度算的到期日，红色=撑不到季末。</span><span class="en">Tonnes drawn per day; the "est. runout MM-DD" beside it projects when it empties at this pace — red means it won't last the quarter.</span></td></tr>
+    <tr><td><span class="zh">Δ 日均</span><span class="en">Δ/day</span></td><td><span class="zh">这个配额每天消耗多少吨（按最近 14 天、开闸首批分配之后的消耗计算）；旁边"预计 MM-DD 用尽"是照这速度算的到期日，红色=撑不到季末。已用尽的不显示日均，改为显示用尽时间。</span><span class="en">Tonnes drawn per day (over the last 14 days, after the opening allocation); the "est. runout MM-DD" beside it projects when it empties at this pace — red means it won't last the quarter. Exhausted orders show when they ran out instead.</span></td></tr>
     <tr><td><span class="zh">订单号 09.xxxx</span><span class="en">Order # 09.xxxx</span></td><td><span class="zh">每个"某国×某类"配额的官方编号，点它直达欧盟官方核对。</span><span class="en">The official ID for each origin×category quota; click it to verify on the EU site.</span></td></tr>
     <tr><td>CSQ</td><td><span class="zh">国别专属配额——某个国家自己的额度。用完了才轮到共用的"其他国家池"。</span><span class="en">Country-specific quota — a country's own allowance. Only after it's used do you fall back to the shared "other countries" pool.</span></td></tr>
     <tr><td><span class="zh">配额内 / 配额外</span><span class="en">In / out of quota</span></td><td><span class="zh">额度之内=只缴 CBAM；超出=再加 50% 关税。</span><span class="en">Within allowance = CBAM only; beyond = plus the 50% duty.</span></td></tr>
