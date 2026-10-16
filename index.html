@@ -450,6 +450,101 @@ footer{max-width:1120px;margin:56px 0 0;padding:26px 44px 44px;border-top:1px so
 #gate #gFeed .en{color:rgba(192,0,0,.62)}
 #gate .g-err{line-height:1.5}
 .sb-build{opacity:.55;font-size:10px;letter-spacing:.02em}
+
+/* ---------- quick check: one entry per customer group ---------- */
+#quick{margin-top:30px}
+#quick h2{flex-wrap:wrap;row-gap:4px}
+.qk-asof{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:0;color:var(--grey)}
+.qk-lead{font-size:13px;color:#3c4148;margin:-6px 0 12px;line-height:1.6}
+.qk-wrap{border:1.5px solid var(--red);border-radius:16px;overflow:hidden;background:#fff}
+.qk-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--line);background:#fbfbfc}
+.qk-tab{border:none;border-right:1px solid var(--line);background:transparent;padding:12px 15px 11px;text-align:left;cursor:pointer;font-family:inherit;min-width:0}
+.qk-tab:last-child{border-right:none}
+.qk-tab .t0{display:block;font-size:10.5px;font-weight:800;letter-spacing:.4px;color:#a4aab3}
+.qk-tab .t1{display:block;font-size:14px;font-weight:800;color:var(--ink);margin-top:1px}
+.qk-tab .t2{display:block;font-size:11.5px;color:var(--grey);margin-top:2px;line-height:1.4}
+.qk-tab:hover{background:#fff}
+.qk-tab.on{background:#fff;box-shadow:inset 0 -3px 0 var(--red)}
+.qk-tab.on .t0,.qk-tab.on .t1{color:var(--red)}
+.qk-body{padding:16px 18px 18px}
+.qk-ctl{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:flex-end;margin-bottom:12px}
+.qk-ctl .f{flex:0 1 150px;min-width:0}
+.qk-ctl .f.grow{flex:1 1 230px}
+.qk-ctl label{display:block;font-size:11.5px;color:var(--grey);font-weight:700;margin-bottom:4px}
+.qk-ctl select,.qk-ctl input{width:100%;padding:8px 10px;border:1px solid #d9dce1;border-radius:9px;font-size:13px;background:#fff;font-family:inherit;color:var(--ink)}
+.qk-ctl select:focus,.qk-ctl input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(192,0,0,.08)}
+.qk-head{font-size:15px;font-weight:800;line-height:1.55;margin:2px 0 12px}
+.qk-head .hl{color:var(--red)}
+.qk-how{font-size:13px;color:#3c4148;margin:0 0 10px;line-height:1.6}
+.qk-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.qk-k{background:var(--bg);border-radius:12px;padding:10px 12px;min-width:0}
+.qk-k .k{font-size:11px;color:var(--grey);font-weight:700}
+.qk-k .v{font-size:19px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qk-k .v small{font-size:11px;color:#a4aab3;font-weight:600}
+.qk-sub{font-size:13px;font-weight:800;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.qk-sub::before{content:"";width:14px;height:3px;background:var(--red);border-radius:2px;flex:none}
+.qk-tb{border:1px solid var(--line);border-radius:10px;overflow:auto;max-height:520px}
+.qk-tb table{font-size:12.5px}
+.qk-tb thead th{white-space:nowrap}
+.qk-tb td{white-space:nowrap}
+.qk-tb td.qk-when{white-space:normal;min-width:180px;font-size:12px}
+.qk-tb tr.qk-gone td{color:#9aa0a8}
+.qk-bar{display:inline-block;width:58px;height:6px;border-radius:4px;background:#e6e8ec;overflow:hidden;vertical-align:middle;margin-right:6px}
+.qk-bar i{display:block;height:100%}
+.qk-pct{font-variant-numeric:tabular-nums;font-size:12px}
+.qk-om{display:none}
+.qk-om .ordlink{font-size:11px}
+.qk-pace{font-size:11.5px}
+.qk-rate{font-weight:700;margin-right:6px;font-variant-numeric:tabular-nums}
+.qk-rt{color:var(--grey)}
+.qk-rt.hot{color:var(--crit);font-weight:700}
+.qk-dim{color:#a4aab3}
+td.qk-dim .pill{opacity:.55}
+.qk-note{font-size:11.5px;color:var(--grey);line-height:1.65;margin-top:10px}
+.qk-acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.qk-open{font-size:12px;margin-left:4px}
+.qk-v{border-radius:12px;padding:12px 15px;font-weight:800;font-size:15px;line-height:1.5;color:#fff;margin:0 0 12px}
+.qk-v small{display:block;font-weight:500;font-size:12.5px;opacity:.96;margin-top:3px;line-height:1.55}
+.qk-v.green{background:var(--safe)}
+.qk-v.amber{background:#c98a00}
+.qk-v.red{background:var(--crit)}
+.qk-v.next{background:#4b5563}
+.results2.qk-r2{padding:4px 16px 8px;margin-bottom:4px}
+.results2.qk-r2 .rr{font-size:12.5px;padding:7px 0}
+.results2.qk-r2 .rr .rv{font-weight:700}
+.qk-pts{margin:0 0 4px 18px;padding:0;font-size:13px;line-height:1.7;color:#3c4148}
+.qk-pts li{margin:3px 0}
+/* header lead + mobile section nav */
+header .sub .lead{display:block;font-size:14px;color:#3c4148;line-height:1.6;margin-bottom:3px}
+header .sub .lead b{color:var(--ink)}
+.mnav{display:none}
+@media(max-width:960px){
+  section{scroll-margin-top:56px}
+  .mnav{display:flex;gap:6px;overflow-x:auto;position:sticky;top:0;z-index:55;background:rgba(255,255,255,.97);
+    padding:8px 22px;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .mnav::-webkit-scrollbar{display:none}
+  .mnav a{flex:none;font-size:12px;font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff}
+  .mnav a.q{border-color:var(--red);color:var(--red)}
+}
+@media(max-width:900px){
+  .qk-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qk-tab:nth-child(2){border-right:none}
+  .qk-tab:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .qk-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){.hbtns{flex:1 1 100%;min-width:0}}
+@media(max-width:560px){
+  .qk-body{padding:14px 12px 14px}
+  .qk-hm{display:none}
+  .qk-om{display:block!important;margin-top:2px;font-size:11px}
+  .qk-bar{width:34px;margin-right:4px}
+  .qk-tb td,.qk-tb th{padding-left:7px;padding-right:7px}
+  .qk-tab{padding:10px 11px}
+  .qk-tab .t2{display:none}
+  .qk-head{font-size:14px}
+  .qk-asof{margin-left:0;flex-basis:100%}
+}
+@media print{.mnav{display:none!important}.qk-tb{max-height:none;overflow:visible}}
 </style>
 </head>
 <body>
@@ -503,6 +598,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
 </svg></div>
   <div class="sb-rep"><span class="zh">钢铁 TRQ 配额追踪 · 2026</span><span class="en">STEEL TRQ QUOTA TRACKER · 2026</span></div>
   <nav class="sb-nav" id="sbNav">
+    <a class="sb-link" href="#quick"><span class="sn">★</span><span class="zh">快速查询</span><span class="en">Quick check</span></a>
     <a class="sb-link" href="#dash"><span class="sn">01</span><span class="zh">配额看板</span><span class="en">Dashboard</span></a>
     <a class="sb-link" href="#track"><span class="sn">02</span><span class="zh">追踪表</span><span class="en">Tracker</span></a>
     <a class="sb-link" href="#cost"><span class="sn">03</span><span class="zh">成本测算</span><span class="en">Cost estimator</span></a>
@@ -541,13 +637,28 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
     </div>
   </div>
   <div class="sub">
+    <span class="lead"><span class="zh">按<b>原产地</b>或<b>产品</b>查欧盟钢铁免税配额还剩多少、什么时候用完、超出要多付多少。</span><span class="en">Check, by <b>origin</b> or <b>product</b>, how much EU steel duty-free quota is left, when it runs out and what missing it costs.</span></span>
     <span class="zh">Reg (EU) 2026/1384 + 分配细则 IR 2026/1457 · <b>283</b> 个配额订单号 · 年度总量 <b>18.35 Mt</b> · 配额外关税 <b>50%</b> · 先到先得 · TRQ 与 CBAM 并行叠加</span>
     <span class="en">Reg (EU) 2026/1384 + distribution rules IR 2026/1457 · <b>283</b> quota order numbers · <b>18.35 Mt</b>/yr · out-of-quota duty <b>50%</b> · first-come, first-served · TRQs stack with CBAM</span>
   </div>
 </header>
-
+<nav class="mnav" id="mNav"><a class="q" href="#quick"><span class="zh">★ 快速查询</span><span class="en">★ Quick check</span></a><a href="#dash"><span class="zh">看板</span><span class="en">Dashboard</span></a><a href="#track"><span class="zh">追踪表</span><span class="en">Tracker</span></a><a href="#cost"><span class="zh">成本测算</span><span class="en">Cost</span></a><a href="#policy"><span class="zh">政策</span><span class="en">Policy</span></a><a href="#timeline"><span class="zh">开闸日历</span><span class="en">Calendar</span></a><a href="#method"><span class="zh">方法论</span><span class="en">Method</span></a></nav>
 <main>
 
+<!-- ============ 00 quick check (one entry per customer group) ============ -->
+<section id="quick">
+  <h2><span class="bar"></span><span class="zh">快速查询 · 从这里开始</span><span class="en">Quick check · start here</span><span class="qk-asof" id="qkAsOf"></span></h2>
+  <p class="qk-lead"><span class="zh">选一个最接近你的问题，答案直接用最新的 TARIC 官方余额算好；下方看板、追踪表与测算工具保留全部细节。</span><span class="en">Pick the question closest to yours: the answer is worked out from the latest official TARIC balances. The dashboard, tracker and estimator below keep every detail.</span></p>
+  <div class="qk-wrap">
+    <div class="qk-tabs" id="qkTabs" role="tablist">
+      <button type="button" class="qk-tab" data-v="origin" role="tab" onclick="qkView('origin')"><span class="t0"><span class="zh">出口商 · 钢厂</span><span class="en">EXPORTERS · MILLS</span></span><span class="t1"><span class="zh">按原产地查</span><span class="en">By origin</span></span><span class="t2"><span class="zh">我国家的配额还剩多少、何时用完</span><span class="en">How much of my country's quota is left</span></span></button>
+      <button type="button" class="qk-tab" data-v="product" role="tab" onclick="qkView('product')"><span class="t0"><span class="zh">进口商 · 贸易商</span><span class="en">IMPORTERS · TRADERS</span></span><span class="t1"><span class="zh">按产品比来源</span><span class="en">By product</span></span><span class="t2"><span class="zh">这个产品哪些原产地还有免税余量</span><span class="en">Which origins still have duty-free room</span></span></button>
+      <button type="button" class="qk-tab" data-v="check" role="tab" onclick="qkView('check')"><span class="t0"><span class="zh">有货在途</span><span class="en">CARGO ON THE WAY</span></span><span class="t1"><span class="zh">核查一票货</span><span class="en">Check a shipment</span></span><span class="t2"><span class="zh">清关时还在配额内吗、超出多付多少</span><span class="en">In-quota on clearance day? Cost if not</span></span></button>
+      <button type="button" class="qk-tab" data-v="overview" role="tab" onclick="qkView('overview')"><span class="t0"><span class="zh">研究 · 分析</span><span class="en">RESEARCH · ANALYSIS</span></span><span class="t1"><span class="zh">全局概览</span><span class="en">Overview</span></span><span class="t2"><span class="zh">整体节奏、最紧产品、季度结转</span><span class="en">Pace, tightest products, carry-over</span></span></button>
+    </div>
+    <div class="qk-body" id="qkBody"></div>
+  </div>
+</section>
 <!-- ============ 01 dashboard ============ -->
 <section id="dash">
   <h2><span class="bar"></span><span class="zh">① 配额看板</span><span class="en">① Dashboard</span></h2>
@@ -572,6 +683,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
       <div class="grp">
         <input type="text" id="q" placeholder="搜索 国家 / 类别 / 订单号">
       </div>
+      <div class="grp" id="orgChipBox"></div>
       <div class="grp">
         <label class="zh">类别</label><label class="en">Cat.</label>
         <select id="fCat"></select>
@@ -642,7 +754,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
         <div class="field"><label><span class="zh">配额外数量（吨）</span><span class="en">Out-of-quota volume (tonnes)</span></label>
           <input id="ccOutQ" type="number" min="0" step="100" value="4000"></div>
       </div>
-      <div class="field"><label><span class="zh">货值（EUR/吨）</span><span class="en">Value (EUR/tonne)</span></label>
+      <div class="field"><label><span class="zh">完税价格（EUR/吨，CIF）</span><span class="en">Customs value (EUR/tonne, CIF)</span></label>
         <input id="ccVal" type="number" min="0" step="10" value="650"></div>
     </div>
     <div class="results2" id="ccOut"></div>
@@ -672,7 +784,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
   <h2><span class="bar"></span><span class="zh">⑥ 数据速查（Annex I 对照）</span><span class="en">⑥ Data tables (Annex I reference)</span></h2>
   <details class="dbox"><summary><span class="zh">表一 · 按产品类别汇总 — 年度总量 / 季度量 / 占新总量份额</span><span class="en">Table 1 · By product category — annual / quarterly volumes / share</span></summary>
     <div class="tblwrap2" id="dtCat"></div></details>
-  <details class="dbox"><summary><span class="zh">表二 · 按原产地汇总（CSQ + 英→北爱） — 年度总量 / Q3 量</span><span class="en">Table 2 · By origin (CSQ + UK→NI) — annual / Q3 volumes</span></summary>
+  <details class="dbox"><summary><span class="zh">表二 · 按原产地汇总（CSQ + 英→北爱） — 年度总量 / 季度量</span><span class="en">Table 2 · By origin (CSQ + UK→NI) — annual / quarterly volumes</span></summary>
     <div class="tblwrap2" id="dtCty"></div></details>
   <details class="dbox"><summary><span class="zh">表三 · 全部 283 个订单号明细 — 含 MFN / FTA 拆分（IR 2026/1457 Annex I）</span><span class="en">Table 3 · All 283 order numbers — incl. MFN / FTA split (IR 2026/1457 Annex I)</span></summary>
     <div class="tblwrap2" id="dtAll"></div></details>
@@ -687,7 +799,7 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
     <div class="fx"><span class="zh">状态阈值：&lt;70% 充裕 · 70–90% 偏紧 · 90–100% 临界 · ≥100% 已用尽（与 DDS "Exhausted" 状态一致）。</span><span class="en">Thresholds: &lt;70% safe · 70–90% warning · 90–100% critical · ≥100% exhausted (matches DDS "Exhausted").</span></div></div>
   <div class="formula"><div class="big"><span class="zh">Δ 日均 = (窗口起点余额 − 最新余额) ÷ 间隔天数；预计用尽 = 余额 ÷ Δ 日均</span><span class="en">Δ/day = (window-start balance − latest balance) ÷ days; est. runout = balance ÷ Δ/day</span></div>
     <div class="fx"><span class="zh">窗口取最近 14 天，并从开闸后首批分配入账的快照算起：季度首日的集中申报会在首批分配里一次性扣减，不代表之后的消耗节奏，因此不计入日均。已用尽的订单号不显示日均，改为显示用尽时间（"首批分配即用尽"或首次显示用尽的快照日期）。线性外推，仅供节奏参考；预计用尽晚于季末则显示"可撑至季末"。</span><span class="en">The window is the last 14 days, starting no earlier than the first snapshot after the opening allocation: claims lodged on a quarter's first day are booked together in the first allocations, a one-off that says nothing about the pace afterwards, so it is left out. Exhausted orders show when they ran out ("gone in first allocations", or the snapshot that first showed them exhausted) instead of a rate. Linear extrapolation, indicative only; if runout falls beyond quarter-end, "lasts past quarter" is shown.</span></div></div>
-  <div class="formula"><div class="big"><span class="zh">配额外成本 = 超出量 × 货值 (EUR/吨) × 50%</span><span class="en">Out-of-quota cost = excess volume × value (EUR/tonne) × 50%</span></div>
+  <div class="formula"><div class="big"><span class="zh">配额外成本 = 超出量 × 完税价格（CIF，EUR/吨）× 50%</span><span class="en">Out-of-quota cost = excess volume × customs value (CIF, EUR/tonne) × 50%</span></div>
     <div class="fx"><span class="zh">50% 为 Reg 2026/1384 Annex I 规定的从价配额外关税；不含 CBAM、反倾销/反补贴等其他措施。</span><span class="en">50% is the ad valorem out-of-quota duty per Reg 2026/1384 Annex I; excludes CBAM, AD/CVD and other measures.</span></div></div>
   <div class="formula"><div class="big"><span class="zh">季度结转（Reg 2026/1384 Art 3(3)–(4)）：季末后第 20 个工作日停止分配 → 未用余额转入下一季度</span><span class="en">Quarterly carry-over (Reg 2026/1384 Art 3(3)–(4)): allocation stops on the 20th working day after quarter-end → unused balance moves to the next quarter</span></div>
     <div class="fx"><span class="zh">季末之后约四周内，迟到的提取申请仍按上一季度分配，所以上一季度余额会继续变动，结转量要等分配停止后才计入下一季度（2026 Q3 于 <b>10-28</b> 停止）。结转只在同一配额年度（7-1 至次年 6-30）内进行，自动结转仅适用至 <b>2027-06-30</b>，此后由欧委会实施法案另定。配额用尽或停止提取后，退回数量只用于调整余额、不重新开放；季度余额结转之后的退回量不再结转（IR 2026/1457 Art 3(3)）。</span><span class="en">For about four weeks after quarter-end, late drawing requests are still allocated to the closed quarter, so its balance keeps moving and the carried-over volume only lands in the next quarter once allocation stops (28 Oct for 2026 Q3). Carry-over works only within a quota year (1 Jul – 30 Jun) and is automatic only until <b>30 Jun 2027</b>; after that the Commission decides by implementing act. Once a quota is exhausted or drawing stopped, returned quantities only adjust the balance and do not reopen it; quantities returned after the balance has been transferred are not carried forward (IR 2026/1457 Art 3(3)).</span></div></div>
@@ -699,6 +811,8 @@ function smmSaveLang(l){var K="smm_trq_lang";try{localStorage.setItem(K,l);sessi
   <div class="notes">
     <div class="note">
       <h4><span class="zh">怎么用这个追踪器</span><span class="en">How to use this tracker</span></h4>
+      <p><span class="zh">最快的用法是页面顶部的<b>快速查询</b>：<b>出口商</b>选原产地，看本国每个订单号还剩多少、何时用完、用尽后有没有后备池；<b>进口商/贸易商</b>选产品，看哪些原产地还有免税余量；<b>有货在途</b>输入原产地、产品、吨数和预计清关日，估算清关时是否仍在配额内、超出部分的 50% 关税；<b>研究分析</b>看整体节奏与最紧的产品。下面各节是完整数据。</span>
+         <span class="en">The quickest start is <b>Quick check</b> at the top: <b>exporters</b> pick an origin to see what is left on each of its order numbers, when it runs out and whether a top-up pool exists; <b>importers/traders</b> pick a product to see which origins still have duty-free room; <b>cargo on the way</b> takes origin, product, tonnes and expected clearance date and estimates whether it clears in-quota and the 50% duty on any excess; <b>research</b> gives the overall pace and tightest products. The sections below hold the full data.</span></p>
       <p><span class="zh">上方选择<b>期间</b>（配额按季度开放，标 <b>LIVE</b> 的是当前活跃季；标「结算中」的是进口期刚结束的季度——季末后迟到的申报仍按该季度分配，直到季末后第 20 个欧委会工作日才停止（2026 Q3 为 <b>10-28</b>），在此之前数字仍会变动；停止分配后改标「已结算」，未用余量结转下一季）。表中"配额量"是该期间为每个订单号分配的免税量。</span>
          <span class="en">Pick a <b>period</b> at top (quotas open quarterly; the <b>LIVE</b> one is current, a "SETTLING" quarter has ended its import period but is still taking late allocations until the 20th Commission working day after its end (28 Oct for 2026 Q3), so its figures keep moving; once allocation stops it is marked "FINAL" and the unused volume carries over). The "Quota" column is that period's duty-free volume per order number.</span></p>
       <p><span class="zh">"剩余余额"列为<b>固定数据</b>，来自每周一、三、五自动同步的官方 TARIC 余额快照（侧栏显示最后更新日期），不可在表内直接修改；已用量与占用率由此自动算出。点每行<b>订单号</b>可直达官方 TARIC 查询页核对（订单号与原产地已带好）。</span>
@@ -854,7 +968,20 @@ function quotaOf(row){
   var v=parseFloat((state.usage[row.o]||{})[state.period]);
   return (!isNaN(v)&&v>q)?v:q;
 }
+function calcYear(row){
+  var q=row.t,used=0,any=false;
+  ['q3','q4','q1','q2'].forEach(function(p){
+    var rec=(state.usage[row.o]||{})[p];
+    if(rec===undefined||rec===null||rec==='')return;
+    var v=parseFloat(rec);if(isNaN(v))return;any=true;
+    var qp=+row[p]||0,cy=((PRELOAD.carry||{})[p]||{})[row.o];if(cy)qp+=cy;if(v>qp)qp=v;
+    used+=qp-Math.max(0,v);});
+  if(!any)return {quota:q,tracked:false,used:null,bal:null,pct:null,st:'none'};
+  used=Math.min(Math.max(0,used),q);var pct=q>0?used/q*100:0;
+  return {quota:q,tracked:true,used:used,bal:q-used,pct:pct,st:stOf(pct)};
+}
 function calc(row){
+  if(state.period==='t')return calcYear(row);
   var quota=quotaOf(row);
   var rec=(state.usage[row.o]||{})[state.period];
   var tracked=(rec!==undefined&&rec!==null&&rec!=="");
@@ -897,7 +1024,15 @@ function renderPeriods(){
   }).join('');
   var nt=document.getElementById('pnote'),sc=(PRELOAD.closed||{})[state.period];
   if(nt){
-    if(!sc){nt.style.display='none';nt.innerHTML='';}
+    if(!sc){var en0=state.lang==='en',opened=[];
+      ['q3','q4','q1','q2'].forEach(function(p){if(DATA.some(function(r){var v=(state.usage[r.o]||{})[p];return v!==undefined&&v!==null&&v!=='';}))opened.push(p.toUpperCase());});
+      if(state.period==='t'){nt.className='pnote fin';nt.style.display='';
+        nt.innerHTML=en0?'<b>Annual view.</b> Quota = the whole 2026/27 quota year (Jul 2026 – Jun 2027, four equal quarters). Used = cumulative use in the quarters opened so far ('+opened.join(' + ')+'); quarters not yet opened count as unused. IR 2026/1457 covers Jul–Dec 2026 only, so 2027 volumes may change under the successor act.'
+          :'<b>年度视图。</b>配额量为 2026/27 配额年度全年（2026-07 至 2027-06，四个季度等量）；已用量为已开闸季度（'+opened.join(' + ')+'）的累计使用，未开闸季度计为未使用。IR 2026/1457 仅覆盖 2026 年下半年，2027 年的量可能随后续实施条例调整。';}
+      else if(opened.indexOf(String(state.period).toUpperCase())<0){var P0=periodObj();nt.className='pnote fin';nt.style.display='';
+        nt.innerHTML=en0?'<b>'+(P0?P0.qe:state.period)+' has not opened yet.</b> The volumes below follow the current allocation and are for reference only: IR 2026/1457 expires on 31 Dec 2026, and 2027 order numbers and volumes depend on the successor implementing act.'
+          :'<b>'+(P0?P0.qz:state.period)+' 尚未开闸。</b>下表配额量按现行分配列示，仅供参考：IR 2026/1457 于 2026-12-31 届满，2027 年的订单号与分配以后续实施条例为准。';}
+      else{nt.style.display='none';nt.innerHTML='';}}
     else{var f=qFinal(sc),Q=String(state.period).toUpperCase(),en=state.lang==='en';
       nt.className='pnote'+(f?' fin':'');nt.style.display='';
       nt.innerHTML=f
@@ -923,10 +1058,11 @@ function renderKPIs(){
   function kpi(k,v,extra){return '<div class="kpi'+(extra&&extra.acc?' acc':'')+'"><div class="k">'+k+'</div><div class="v">'+v+'</div>'+(extra&&extra.bar!==undefined?'<div class="bar"><i style="width:'+Math.min(100,extra.bar)+'%"></i></div>':'')+'</div>';}
   var dTot=0,dOK=false;
   DATA.forEach(function(r){var dd=deltaOf(r);if(dd){dTot+=dd.d1;dOK=true;}});
+  var noData=nTrack===0;
   document.getElementById('kpis').innerHTML=
     kpi(L==='en'?'Period quota':'期间配额量',fmt(totQ)+' <small>'+UNIT+'</small>')+
-    kpi(L==='en'?'Used':'已用量',fmt(totUsed)+' <small>'+UNIT+'</small>',{acc:true})+
-    kpi(L==='en'?'Overall used %':'总体占用率',fmt1(pct)+'<small>%</small>',{bar:pct,acc:true})+
+    kpi(L==='en'?'Used':'已用量',noData?'–':fmt(totUsed)+' <small>'+UNIT+'</small>',{acc:true})+
+    kpi(L==='en'?'Overall used %':'总体占用率',noData?'–':fmt1(pct)+'<small>%</small>',noData?{acc:true}:{bar:pct,acc:true})+
     kpi(L==='en'?'Δ since last snapshot':'较上次快照消耗',(dOK?fmt(dTot):'–')+' <small>'+UNIT+'</small>')+
     kpi(L==='en'?'Critical ≥90%':'临界 ≥90%',nCrit)+
     kpi(L==='en'?'Exhausted':'已用尽',nExh);
@@ -949,6 +1085,9 @@ function renderFilters(){
     var on=state.statusFilter[s.k]?' on':'';
     return '<span class="chip'+on+'" data-st="'+s.k+'" onclick="toggleStatus(\''+s.k+'\')">'+(L==='en'?s.en:s.zh)+'</span>';
   }).join('');
+  var ocb=document.getElementById('orgChipBox');
+  if(ocb){var on=state.org?DATA.find(function(r){return r.iso===state.org;}):null;
+    ocb.innerHTML=on?'<span class="chip on" onclick="clearOrg()" title="clear">'+(L==='en'?'Origin: '+on.ne:'原产地：'+on.nz)+' ✕</span>':'';}
   document.getElementById('asOf').value=state.asOf;
   var sbA=document.getElementById('sbAsOf');if(sbA)sbA.textContent=state.asOf||'–';
   document.getElementById('q').placeholder=(state.lang==='en'?'Search country / category / order #':'搜索 国家 / 类别 / 订单号');
@@ -991,6 +1130,10 @@ function deltaWin(){
 }
 function deltaOf(row){
   if(state.period!==(PRELOAD.period||'q3'))return null;
+  return deltaLive(row);
+}
+/* the same, always on the live period (used by the quick check whatever tab the dashboard shows) */
+function deltaLive(row){
   var h=PRELOAD.history||[];if(h.length<2)return null;
   var w=deltaWin(),last=h[h.length-1],prev=h[h.length-2];
   var b1=last.b[row.o],b0=prev.b[row.o];
@@ -1014,8 +1157,9 @@ function qClosed(){return Date.parse(PRELOAD.asOf)>Date.parse(QEND[PRELOAD.perio
 function qFinal(cq){return !!(cq&&cq.allocStop&&Date.parse(cq.asOf)>Date.parse(cq.allocStop));}
 var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function stopTxt(cq,L){var a=String(cq.allocStop||'').split('-');if(a.length<3)return cq.allocStop||'';return L==='en'?(+a[2])+' '+MON[+a[1]-1]:a[1]+'-'+a[2];}
-function runoutTxt(dd,L){
-  var cq=(PRELOAD.closed||{})[state.period];
+function runoutTxt(dd,L,per){
+  per=per||state.period;
+  var cq=(PRELOAD.closed||{})[per];
   if(cq)return qFinal(cq)?(L==='en'?'final':'已结算'):(L==='en'?'settling · to '+stopTxt(cq,'en'):'结算中·至 '+stopTxt(cq,'zh'));
   if(!dd)return'';
   if(dd.ex){
@@ -1025,9 +1169,9 @@ function runoutTxt(dd,L){
   }
   if(dd.bal<=0)return'';
   if(dd.wait)return L==='en'?'pace from next snapshot':'下次快照起计算';
-  if(state.period===(PRELOAD.period||'q3')&&qClosed())return L==='en'?'quarter ended · settling':'进口期已过·结算中';
+  if(per===(PRELOAD.period||'q3')&&qClosed())return L==='en'?'quarter ended · settling':'进口期已过·结算中';
   if(!dd.runout||dd.rate<=0)return L==='en'?'no draw-down yet':'暂无消耗';
-  var end=Date.parse(QEND[state.period]||QEND.q3);
+  var end=Date.parse(QEND[per]||QEND.q3);
   var asof=Date.parse(PRELOAD.asOf);
   var t=asof+dd.runout*864e5;
   if(t>end)return L==='en'?'lasts past quarter':'可撑至季末';
@@ -1071,7 +1215,7 @@ function watchLists(){
   low.sort(function(a,b){return b.c.pct-a.c.pct;});
   return {ref:ref,exh:exh,soon:soon,low:low};
 }
-function watchPick(o){state.q=o;state.cat='';state.statusFilter={};state.typeFilter={};
+function watchPick(o){state.q=o;state.cat='';state.org='';state.statusFilter={};state.typeFilter={};
   var qi=document.getElementById('q'); if(qi)qi.value=o;
   renderAll(); document.getElementById('track').scrollIntoView();}
 function renderAlerts(){
@@ -1095,7 +1239,7 @@ function renderAlerts(){
   var head='<div class="alerts-h"><span class="dot"></span>'
     +'<span>'+(L==='en'?'What to watch this week':'本周该紧张什么')+'</span>'
     +'<span class="asof">'+(L==='en'?'vs ':'对比 ')+w.ref.d+'</span>'
-    +'<button class="albrief" onclick="printBrief()">\u1f4c4 '+(L==='en'?'One-page brief':'一页简报')+'</button></div>';
+    +'<button class="albrief" onclick="printBrief()">\ud83d\udcc4 '+(L==='en'?'One-page brief':'一页简报')+'</button></div>';
   if(!w.exh.length&&!w.soon.length&&!w.low.length){
     box.style.display='';
     box.innerHTML=head+'<div class="alok">'+(L==='en'
@@ -1155,6 +1299,7 @@ function briefHTML(){
   rows.forEach(function(r){var dd=deltaOf(r);if(dd)dTot+=dd.d1;});
   var scope=[];
   if(state.cat)scope.push((L==='en'?'Category ':'类别 ')+state.cat);
+  if(state.org){var so=DATA.find(function(r){return r.iso===state.org;});if(so)scope.push((L==='en'?'Origin ':'原产地 ')+(L==='en'?so.ne:so.nz));}
   if(state.q)scope.push((L==='en'?'Filter "':'筛选“')+state.q+(L==='en'?'"':'”'));
   var scopeTxt=scope.length?scope.join(' · '):(L==='en'?'All 283 order numbers':'全部 283 个订单号');
 
@@ -1235,6 +1380,7 @@ function filtered(){
   var sf=Object.keys(state.statusFilter).filter(function(k){return state.statusFilter[k];});
   return DATA.filter(function(r){
     if(state.cat&&r.c!==state.cat)return false;
+    if(state.org&&r.iso!==state.org)return false;
     if(tf.length&&tf.indexOf(r.tk)<0)return false;
     if(sf.length){var c=calc(r);if(sf.indexOf(c.st)<0)return false;}
     if(q){var hay=(r.o+' '+r.c+' '+r.ce+' '+r.cz+' '+r.ne+' '+r.nz+' '+r.te+' '+r.tz).toLowerCase();
@@ -1563,7 +1709,7 @@ function renderSummary(){
        so nothing is double-counted or merged ambiguously. */
     if(r.tk!=='ni'&&!r.iso)return;
     var ok=r.tk==='ni'?(L==='en'?'UK→NI':'英→北爱'):(L==='en'?r.ne:r.nz);
-    if(!orgs[ok]){orgs[ok]={q:0,u:0};}
+    if(!orgs[ok]){orgs[ok]={q:0,u:0,iso:r.tk==='ni'?'':r.iso};}
     orgs[ok].q+=c.quota;if(c.tracked)orgs[ok].u+=c.used;
     var key=r.c+'|'+ok;
     if(!cell[key]){cell[key]={q:0,u:0,orders:[]};}
@@ -1597,7 +1743,7 @@ function renderSummary(){
       }
       var pct=v.u/v.q*100;
       s+='<rect class="mxc" data-k="'+hits.length+'" x="'+x+'" y="'+y+'" width="'+CS+'" height="'+CS+'" rx="2" fill="'+mxColor(pct)+'"/>';
-      hits.push({type:'cell',cat:ck,org:ok,q:v.q,u:v.u,pct:pct,orders:v.orders});
+      hits.push({type:'cell',cat:ck,org:ok,iso:orgs[ok].iso,q:v.q,u:v.u,pct:pct,orders:v.orders});
     });
     // row total (category aggregate, all types)
     var x2=LBL+orgKeys.length*(CS+GP);
@@ -1613,7 +1759,7 @@ function renderSummary(){
     var x=LBL+j*(CS+GP);
     var op=orgs[ok].q>0?orgs[ok].u/orgs[ok].q*100:0;
     s+='<rect class="mxc" data-k="'+hits.length+'" x="'+x+'" y="'+yb+'" width="'+CS+'" height="'+CS+'" rx="2" fill="'+mxColor(op)+'" stroke="#fff" stroke-width="1.5"/>';
-    hits.push({type:'org',org:ok,q:orgs[ok].q,u:orgs[ok].u,pct:op});
+    hits.push({type:'org',org:ok,iso:orgs[ok].iso,q:orgs[ok].q,u:orgs[ok].u,pct:op});
   });
   s+='</svg>';
   var el=document.getElementById('sumMat');
@@ -1630,8 +1776,9 @@ function renderSummary(){
     rc.addEventListener('click',function(){
       function orgQ(o){return o.indexOf('→')>-1?(L==='en'?'Northern':'北爱'):o;}
       if(h.type==='cat'){filterCat(h.cat);}
-      else if(h.type==='org'){filterCty(orgQ(h.org));}
-      else{state.cat=h.cat;state.q=orgQ(h.org);document.getElementById('q').value=state.q;renderAll();document.getElementById('track').scrollIntoView();}
+      else if(h.type==='org'){if(h.iso)filterOrg(h.iso);else filterCty(orgQ(h.org));}
+      else if(h.iso){state.cat=h.cat;state.org=h.iso;state.q='';document.getElementById('q').value='';renderAll();document.getElementById('track').scrollIntoView();}
+      else{state.cat=h.cat;state.org='';state.q=orgQ(h.org);document.getElementById('q').value=state.q;renderAll();document.getElementById('track').scrollIntoView();}
     });
     rc.addEventListener('mousemove',function(ev){
       var U=L==='en'?'tonnes':'吨';
@@ -1652,8 +1799,10 @@ function renderSummary(){
     rc.addEventListener('mouseleave',function(){tip.style.display='none';});
   });
 }
-function filterCat(c){state.cat=c;state.q='';renderAll();document.getElementById('track').scrollIntoView();}
-function filterCty(n){state.q=n;state.cat='';document.getElementById('q').value=n;renderAll();document.getElementById('track').scrollIntoView();}
+function filterCat(c){state.cat=c;state.q='';state.org='';var qi=document.getElementById('q');if(qi)qi.value='';renderAll();document.getElementById('track').scrollIntoView();}
+function filterOrg(iso){state.org=iso;state.q='';state.cat='';var qi=document.getElementById('q');if(qi)qi.value='';renderAll();document.getElementById('track').scrollIntoView();}
+function clearOrg(){state.org='';renderAll();}
+function filterCty(n){state.q=n;state.cat='';state.org='';document.getElementById('q').value=n;renderAll();document.getElementById('track').scrollIntoView();}
 
 /* ---------------- policy cards ---------------- */
 var POLICY=[
@@ -1716,17 +1865,17 @@ function renderDataTables(){
   DATA.forEach(function(r){if(!byCat[r.c]){byCat[r.c]={t:0,q3:0,zh:r.cz,en:r.ce};order.push(r.c);}byCat[r.c].t+=r.t;byCat[r.c].q3+=r.q3;});
   order.sort(function(a,b){return catNum(a)-catNum(b);});
   var tot=0;order.forEach(function(k){tot+=byCat[k].t;});
-  document.getElementById('dtCat').innerHTML='<table>'+th([[L==='en'?'Cat.':'类别','left'],[L==='en'?'Product':'产品','left'],[L==='en'?'Annual (tonnes)':'年度 (吨)'],['Q3 (tonnes)'],[L==='en'?'Share':'份额']])+'<tbody>'+
+  document.getElementById('dtCat').innerHTML='<table>'+th([[L==='en'?'Cat.':'类别','left'],[L==='en'?'Product':'产品','left'],[L==='en'?'Annual (tonnes)':'年度 (吨)'],[L==='en'?'Quarterly (tonnes)':'季度量 (吨)'],[L==='en'?'Share':'份额']])+'<tbody>'+
     order.map(function(k){var v=byCat[k];return '<tr><td>'+k+'</td><td>'+(L==='en'?v.en:v.zh)+'</td><td class="num">'+fmt(v.t)+'</td><td class="num">'+fmt(v.q3)+'</td><td class="num">'+fmt1(v.t/tot*100)+'%</td></tr>';}).join('')+'</tbody></table>';
   // T2 by origin
   var byC={},names=[];
   DATA.forEach(function(r){if(r.tk!=='csq'&&r.tk!=='ni')return;var key=L==='en'?r.ne:r.nz;
     if(!byC[key]){byC[key]={t:0,q3:0,n:0};names.push(key);}byC[key].t+=r.t;byC[key].q3+=r.q3;byC[key].n++;});
   names.sort(function(a,b){return byC[b].t-byC[a].t;});
-  document.getElementById('dtCty').innerHTML='<table>'+th([[L==='en'?'Origin':'原产地','left'],[L==='en'?'# orders':'订单号数'],[L==='en'?'Annual (tonnes)':'年度 (吨)'],['Q3 (tonnes)']])+'<tbody>'+
+  document.getElementById('dtCty').innerHTML='<table>'+th([[L==='en'?'Origin':'原产地','left'],[L==='en'?'# orders':'订单号数'],[L==='en'?'Annual (tonnes)':'年度 (吨)'],[L==='en'?'Quarterly (tonnes)':'季度量 (吨)']])+'<tbody>'+
     names.map(function(k){var v=byC[k];return '<tr><td>'+k+'</td><td class="num">'+v.n+'</td><td class="num">'+fmt(v.t)+'</td><td class="num">'+fmt(v.q3)+'</td></tr>';}).join('')+'</tbody></table>';
   // T3 all orders
-  document.getElementById('dtAll').innerHTML='<table>'+th([[L==='en'?'Order #':'订单号','left'],[L==='en'?'Cat.':'类别','left'],[L==='en'?'Allocation':'分配','left'],[L==='en'?'Type':'类型','left'],[L==='en'?'Annual':'年度'],['MFN'],['FTA'],['Q3']])+'<tbody>'+
+  document.getElementById('dtAll').innerHTML='<table>'+th([[L==='en'?'Order #':'订单号','left'],[L==='en'?'Cat.':'类别','left'],[L==='en'?'Allocation':'分配','left'],[L==='en'?'Type':'类型','left'],[L==='en'?'Annual':'年度'],['MFN'],['FTA'],[L==='en'?'Quarterly':'季度量']])+'<tbody>'+
     DATA.map(function(r){return '<tr><td>'+r.o+'</td><td>'+r.c+'</td><td>'+(L==='en'?r.ne:r.nz)+'</td><td>'+(L==='en'?r.te:r.tz)+'</td><td class="num">'+fmt(r.t)+'</td><td class="num">'+fmt(r.m)+'</td><td class="num">'+fmt(r.f)+'</td><td class="num">'+fmt(r.q3)+'</td></tr>';}).join('')+'</tbody></table>';
 }
 
@@ -1784,8 +1933,378 @@ function ccCalc(){
     '<div class="grand2">'+verdict+'</div>';
 }
 
+
+/* ================= quick check: one entry per customer group =================
+   Exporters ask by ORIGIN   - "how much of my country's quota is left, and what if it runs out?"
+   Importers/traders ask by PRODUCT - "which origins still have duty-free room for this product?"
+   Anyone with a cargo on the water asks about ONE SHIPMENT - "will it clear inside the quota?"
+   Analysts want the whole picture in a few sentences, then the dashboard.
+   Everything here is computed on the LIVE period from the baked/refreshed TARIC snapshot,
+   whatever period tab the dashboard further down happens to show. */
+var QK_VIEWS=['origin','product','check','overview'];
+var QK={v:null,o:null,c:null,t:10000,d:null,val:650};
+var QK_KEY='smm_trq_qk';
+var QK_DAY=864e5;
+function livePer(){return PRELOAD.period||'q3';}
+function liveBal(r){var b=(PRELOAD.balances||{})[r.o];return (typeof b==='number'&&!isNaN(b))?Math.max(0,b):null;}
+function liveQuota(r){var p=livePer(),q=+r[p]||0,cy=((PRELOAD.carry||{})[p]||{})[r.o];if(cy)q+=cy;
+  var b=liveBal(r);return (b!==null&&b>q)?b:q;}
+function liveRow(r){var q=liveQuota(r),b=liveBal(r);
+  if(b===null)return {q:q,b:null,u:null,pct:null,st:'none'};
+  var u=q-b,pct=q>0?u/q*100:0;return {q:q,b:b,u:u,pct:pct,st:stOf(pct)};}
+function qkPer(L){var p=PERIODS.find(function(x){return x.k===livePer();});return p?(L==='en'?p.qe:p.qz):livePer();}
+function qkDate(ms){var d=new Date(ms);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
+function qkMD(ms,L){var d=new Date(ms);return L==='en'?(d.getUTCDate()+' '+MON[d.getUTCMonth()]):(String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'));}
+var _qkO=null,_qkC=null;
+function qkOrigins(){if(_qkO)return _qkO;var m={},p=livePer();
+  DATA.forEach(function(r){if(!r.iso||r.tk==='ni')return;
+    var o=m[r.iso]||(m[r.iso]={iso:r.iso,zh:r.nz,en:r.ne,rows:[],q:0,fta:false});
+    o.rows.push(r);o.q+=(+r[p]||0);if(r.f>0)o.fta=true;});
+  _qkO=Object.keys(m).map(function(k){return m[k];}).sort(function(a,b){return b.q-a.q;});return _qkO;}
+function qkOrigin(iso){var os=qkOrigins();for(var i=0;i<os.length;i++)if(os[i].iso===iso)return os[i];return null;}
+function qkCats(){if(_qkC)return _qkC;var m={},out=[];
+  DATA.forEach(function(r){if(!m[r.c]){m[r.c]={c:r.c,zh:r.cz,en:r.ce,rows:[]};out.push(m[r.c]);}m[r.c].rows.push(r);});
+  out.sort(function(a,b){return catNum(a.c)-catNum(b.c);});_qkC={list:out,map:m};return _qkC;}
+function poolOf(c,tk){var x=qkCats().map[c];if(!x)return null;
+  for(var i=0;i<x.rows.length;i++)if(x.rows[i].tk===tk)return x.rows[i];return null;}
+function qkSrc(r,L){if(r.iso)return L==='en'?r.ne:r.nz;return L==='en'?r.te:r.tz;}
+function qkTy(r,L){var t=TYPES.find(function(x){return x.k===r.tk;});return t?(L==='en'?t.en:t.zh):r.tk;}
+function qkPill(st,L){if(st==='none')return '<span class="pill none">—</span>';
+  var o=STATUSES.find(function(x){return x.k===st;});return '<span class="pill '+st+'">'+(o?(L==='en'?o.en:o.zh):'')+'</span>';}
+function qkBar(lr){var w=lr.pct===null?0:Math.min(100,Math.max(0,lr.pct));
+  return '<span class="qk-bar"><i style="width:'+w+'%;background:'+(STHEX[lr.st]||'#cfd3d8')+'"></i></span>'
+    +'<b class="qk-pct" style="color:'+(STHEX[lr.st]||'#a4aab3')+'">'+(lr.pct===null?'–':fmt1(lr.pct)+'%')+'</b>';}
+function qkPace(r,L){var dd=deltaLive(r);if(!dd)return '';
+  var rt=runoutTxt(dd,L,livePer()),hot=dd.runout&&dd.rate>0&&(Date.parse(PRELOAD.asOf)+dd.runout*QK_DAY)<=Date.parse(QEND[livePer()]||QEND.q3);
+  var rate=(!dd.ex&&!dd.wait&&dd.rate>0)?('<span class="qk-rate">'+fmt(dd.rate)+(L==='en'?' t/day':' 吨/日')+'</span>'):'';
+  return rate+(rt?'<span class="qk-rt'+(hot?' hot':'')+'">'+rt+'</span>':'');}
+function qkOrd(r){return '<a class="ordlink" href="'+taricUrl(r)+'" target="_blank" rel="noopener">'+r.o+'</a>';}
+function qkCat(r,L){return '<span class="catbadge">'+r.c+'</span> '+(L==='en'?r.ce:r.cz);}
+function qkNextOpen(){var e=Date.parse(QEND[livePer()]||QEND.q3);return e+QK_DAY;}
+function qkNextKey(){var i=['q3','q4','q1','q2'].indexOf(livePer());return ['q4','q1','q2','q3'][i<0?0:i];}
+
+/* ---------- persistence: URL params (shareable) > this viewer's last choice > a sensible default ---------- */
+function qkLoad(){
+  try{var s=localStorage.getItem(QK_KEY);if(s){var o=JSON.parse(s);['v','o','c','t','d','val'].forEach(function(k){if(o[k]!==undefined&&o[k]!==null)QK[k]=o[k];});}}catch(e){}
+  try{var u=new URLSearchParams(location.search);
+    var v=u.get('view');if(v&&QK_VIEWS.indexOf(v)>-1)QK.v=v;
+    var o2=u.get('o');if(o2)QK.o=o2.toUpperCase()==='OTHER'?'__other':o2.toUpperCase();
+    var c2=u.get('c');if(c2)QK.c=c2.toUpperCase();
+    var t2=parseFloat(u.get('t'));if(t2>0)QK.t=t2;
+    var d2=u.get('d');if(d2&&/^\d{4}-\d{2}-\d{2}$/.test(d2))QK.d=d2;
+    var v2=parseFloat(u.get('v'));if(v2>0)QK.val=v2;}catch(e){}
+}
+function qkSave(){try{localStorage.setItem(QK_KEY,JSON.stringify(QK));}catch(e){}}
+function qkValid(L){
+  if(QK_VIEWS.indexOf(QK.v)<0)QK.v=(L==='en'?'product':'origin');
+  if(QK.o!=='__other'&&!qkOrigin(QK.o))QK.o='CN';
+  if(!qkOrigin('CN')&&QK.o==='CN')QK.o=qkOrigins()[0].iso;
+  if(!qkCats().map[QK.c])QK.c='1A';
+  if(!(QK.t>0))QK.t=10000;if(!(QK.val>0))QK.val=650;
+  var asof=Date.parse(PRELOAD.asOf);
+  if(!QK.d||isNaN(Date.parse(QK.d))||Date.parse(QK.d)<asof)QK.d=qkDate(asof+30*QK_DAY);
+}
+function qkView(v){QK.v=v;qkSave();renderQuick();track('quick',{v:v,tool:'trq'});}
+function qkSet(k,v){QK[k]=v;qkSave();renderQuick();}
+
+/* ---------- shipment check: which order numbers, and what is left on clearance day ---------- */
+function qkCandidates(iso,c){
+  var o=(iso&&iso!=='__other')?qkOrigin(iso):null,named=null,out=[];
+  if(o)for(var i=0;i<o.rows.length;i++)if(o.rows[i].c===c){named=o.rows[i];break;}
+  if(named){
+    out.push({r:named,role:'main'});
+    if(named.tk==='csq'&&named.f>0){var p=poolOf(c,'fta_csq');if(p)out.push({r:p,role:'after'});}
+  }else{
+    var res=poolOf(c,'residual'),fo=poolOf(c,'fta_oth');
+    if(o&&o.fta){if(fo)out.push({r:fo,role:'pool'});if(res)out.push({r:res,role:'alt'});}
+    else{if(res)out.push({r:res,role:'pool'});if(fo)out.push({r:fo,role:'ftaonly'});}
+  }
+  return {o:o,named:named,list:out};
+}
+function qkVerdict(r,T,D){
+  var per=livePer(),end=Date.parse(QEND[per]||QEND.q3),asof=Date.parse(PRELOAD.asOf);
+  var lr=liveRow(r),dd=deltaLive(r),rate=(dd&&!dd.ex&&!dd.wait)?dd.rate:0;
+  if(isNaN(D)||D<asof)D=asof;
+  var res={lr:lr,dd:dd,rate:rate,T:T,D:D};
+  if(D>end||qClosed()){res.k='next';res.out=null;return res;}
+  var b=lr.b===null?0:lr.b,days=(D-asof)/QK_DAY;
+  res.days=days;
+  if(b<=0){res.k='red';res.exp=0;res.out=T;res.why='exh';return res;}
+  var exp=Math.max(0,b-rate*days);res.exp=exp;
+  if(rate>0)res.ro=asof+b/rate*QK_DAY;
+  if(exp>=T){res.k='green';res.out=0;}
+  else if(exp>0){res.k='amber';res.out=T-exp;res.why=(T>b)?'short':'pace';}
+  else{res.k='red';res.out=T;res.why='runout';}
+  return res;
+}
+function qkInput(){
+  var g=function(id){var e=document.getElementById(id);return e?e.value:null;};
+  if(g('qkCo')!==null){QK.o=g('qkCo');QK.c=g('qkCc');
+    var t=parseFloat(g('qkCt'));QK.t=t>0?t:0;var v=parseFloat(g('qkCv'));QK.val=v>0?v:0;
+    var d=g('qkCd');if(d)QK.d=d;}
+  qkSave();
+  var box=document.getElementById('qkRes');if(box)box.innerHTML=qkCheckRes(state.lang);
+}
+function qkCheckRes(L){
+  var U=L==='en'?' t':' 吨',T=QK.t||0,val=QK.val||0,D=Date.parse(QK.d);
+  var cs=qkCandidates(QK.o,QK.c),cat=qkCats().map[QK.c];
+  if(!cs.list.length)return '<div class="qk-note">'+(L==='en'?'No quota found for this category.':'该类别没有配额。')+'</div>';
+  var main=cs.list[0],v=qkVerdict(main.r,T,D),r=main.r;
+  var oname=cs.o?(L==='en'?cs.o.en:cs.o.zh):(L==='en'?'this origin':'该原产地');
+  var cname=cat?(cat.c+' '+(L==='en'?cat.en:cat.zh)):QK.c;
+  function rr(k,x){return '<div class="rr"><span>'+k+'</span><span class="rv">'+x+'</span></div>';}
+  var s='';
+  /* 1 · which order number(s) */
+  var how;
+  if(cs.named){
+    how=L==='en'
+      ?(oname+' has its own order number for '+cname+': <b>'+r.o+'</b> ('+qkTy(r,L)+').')
+      :(oname+'在 '+cname+' 有自己的订单号 <b>'+r.o+'</b>（'+qkTy(r,L)+'）。');
+  }else{
+    how=L==='en'
+      ?((cs.o?oname+' has no own order number for '+cname+'. ':'')+'Imports draw on the shared pool <b>'+r.o+'</b> · '+qkSrc(r,L)+', first-come first-served against every other origin in the same position.')
+      :((cs.o?oname+'在 '+cname+' 没有自己的订单号。':'')+'只能使用共用池 <b>'+r.o+'</b> · '+qkSrc(r,L)+'，与所有同类原产地先到先得。');
+  }
+  /* 2 · verdict */
+  var head,sub='';
+  if(v.k==='next'){
+    var nk=qkNextKey(),no=qkNextOpen(),nq=+r[nk]||0,P2=PERIODS.find(function(x){return x.k===nk;});
+    var plabel=P2?(L==='en'?P2.qe:P2.qz):nk.toUpperCase();
+    head=L==='en'?('Clears in '+plabel+' — the quarter opening '+qkMD(no,L)):('清关落在 '+plabel+'（'+qkMD(no,L)+' 开闸）');
+    sub=L==='en'
+      ?('It will draw on '+plabel+'\'s fresh volume ('+fmt(nq)+U+' for '+r.o+' under the current allocation, not the balance shown here.')
+      :('届时提取 '+plabel+' 的新额度（按现行分配 '+r.o+' 为 '+fmt(nq)+U+'），与这里显示的本季余额无关。');
+    if(nk==='q1'||nk==='q2')sub+=L==='en'?' IR 2026/1457 expires on 31 Dec 2026, so 2027 order numbers and volumes depend on the successor act.':' IR 2026/1457 于 2026-12-31 届满，2027 年的订单号与分配以后续实施条例为准。';
+    if(v.dd&&v.dd.exFirst)sub+=L==='en'?' This order number was used up in the very first allocations of this quarter: expect the same on opening day.':' 该订单号本季开闸首批分配即用尽，下季开闸首日很可能同样一次分完。';
+  }else if(v.k==='green'){
+    head=L==='en'?'Likely in-quota at the current pace':'按目前节奏，大概率在配额内';
+    sub=L==='en'?('About '+fmt(v.exp)+U+' should still be left on '+qkMD(v.D,L)+', enough for '+fmt(T)+U+'.')
+      :('预计 '+qkMD(v.D,L)+' 清关时仍剩约 '+fmt(v.exp)+U+'，够这票 '+fmt(T)+U+'。');
+    if(v.rate<=0)sub+=L==='en'?' No draw-down recorded yet, so this rests on the latest balance only.':' 目前没有消耗记录，判断只基于最新余额。';
+    else if(v.exp<T*1.5)sub+=L==='en'?' The margin is thin: clear early if you can.':' 余量不宽裕，能早清关就早清关。';
+  }else if(v.k==='amber'){
+    head=L==='en'?('Part of it may fall outside the quota (~'+fmt(v.out)+U+')'):('可能有约 '+fmt(v.out)+U+' 超出配额');
+    sub=v.why==='short'
+      ?(L==='en'?('Only '+fmt(v.lr.b)+U+' is left in the latest snapshot, less than '+fmt(T)+U+'.'):('最新余额只剩 '+fmt(v.lr.b)+U+'，不够 '+fmt(T)+U+'。'))
+      :(L==='en'?('At the current pace only about '+fmt(v.exp)+U+' will be left on '+qkMD(v.D,L)+'.'):('按目前节奏，'+qkMD(v.D,L)+' 清关时只剩约 '+fmt(v.exp)+U+'。'));
+  }else{
+    head=v.why==='exh'?(L==='en'?'Already exhausted — the whole shipment pays the 50% duty':'已用尽：整票按 50% 配额外关税计')
+      :(L==='en'?('Likely exhausted before clearance (est. '+qkMD(v.ro,L)+')'):('按目前节奏，预计 '+qkMD(v.ro,L)+' 用尽，早于清关日'));
+  }
+  if(v.k==='red'||v.k==='amber'){
+    var alt=cs.list.slice(1).map(function(x){return {x:x,lr:liveRow(x.r)};}).filter(function(a){return a.lr.b>0;});
+    alt.forEach(function(a){
+      sub+=(sub?' ':'')+(L==='en'
+        ?(a.x.role==='after'?('FTA partners can still compete for the FTA–CSQ top-up '+a.x.r.o+' ('+fmt(a.lr.b)+U+' left in the latest snapshot) if the goods qualify for preferential origin.'):(a.x.r.o+' · '+qkSrc(a.x.r,L)+' still has '+fmt(a.lr.b)+U+' in the latest snapshot ('+(a.x.role==='ftaonly'?'FTA partners only':'other-countries pool')+').'))
+        :(a.x.role==='after'?('满足优惠原产地条件的 FTA 伙伴，还可竞争 FTA–CSQ 追加池 '+a.x.r.o+'（最新剩 '+fmt(a.lr.b)+U+'）。'):(a.x.r.o+' · '+qkSrc(a.x.r,L)+' 最新还剩 '+fmt(a.lr.b)+U+'（'+(a.x.role==='ftaonly'?'仅限 FTA 伙伴':'其他国家共用池')+'）。')));});
+    var no=qkNextOpen();
+    sub+=(sub?' ':'')+(L==='en'?('The next quarter opens '+qkMD(no,L)+' with fresh volume'+(v.dd&&v.dd.exFirst?', but this order number went in the first allocations this quarter, so expect the same rush':'')+'.')
+      :('下季度 '+qkMD(no,L)+' 开闸、额度重新计算'+(v.dd&&v.dd.exFirst?'，但该订单号本季开闸首批即用尽，下季开闸首日同样会被抢':'')+'。'));
+  }
+  s+='<div class="qk-how">'+how+'</div>';
+  s+='<div class="qk-v '+v.k+'">'+head+(sub?'<small>'+sub+'</small>':'')+'</div>';
+  /* 3 · numbers */
+  s+='<div class="results2 qk-r2">';
+  s+=rr(L==='en'?'Order number':'订单号',qkOrd(r)+' · '+qkSrc(r,L));
+  s+=rr(L==='en'?'Latest balance':'最新余额',(v.lr.b===null?'–':fmt(v.lr.b)+U)+' <span class="qk-dim">(TARIC '+PRELOAD.asOf+')</span>');
+  var pc=qkPace(r,L);s+=rr(L==='en'?'Pace / outlook':'消耗节奏 / 预计',pc||'–');
+  if(v.k!=='next'){
+    s+=rr(L==='en'?'Expected left on clearance':'清关日预计余额',fmt(v.exp)+U);
+    s+=rr(L==='en'?'Expected out-of-quota volume':'预计超配额数量',v.out>0?'<span style="color:var(--crit)">'+fmt(v.out)+U+'</span>':'0'+U);
+    var duty=(v.out||0)*val*0.5,worst=T*val*0.5;
+    s+=rr(L==='en'?'Expected 50% duty':'预计 50% 关税','€ '+fmt(duty)+(T>0?' <span class="qk-dim">(€ '+fmt1(duty/T)+'/'+(L==='en'?'t':'吨')+')</span>':''));
+    s+=rr(L==='en'?'If the whole shipment misses the quota':'若整票都没赶上配额','€ '+fmt(worst)+(T>0?' <span class="qk-dim">(€ '+fmt1(val*0.5)+'/'+(L==='en'?'t':'吨')+')</span>':''));
+  }
+  s+='</div>';
+  /* 4 · other order numbers that may come into play */
+  var others=cs.list.slice(1);
+  if(others.length){
+    s+='<div class="qk-sub">'+(L==='en'?'Other order numbers to watch':'还可能涉及的订单号')+'</div><div class="qk-tb"><table><thead><tr><th>'
+      +(L==='en'?'Order':'订单号')+'</th><th>'+(L==='en'?'Pool':'池子')+'</th><th class="num">'+(L==='en'?'Balance':'余额')+'</th><th>'+(L==='en'?'% used':'占用率')+'</th><th>'+(L==='en'?'When it applies':'何时适用')+'</th></tr></thead><tbody>';
+    others.forEach(function(x){var lr=liveRow(x.r);
+      var when=x.role==='after'?(L==='en'?'after the own quota is used up, FTA partners only (competitive)':'自有国别额度用尽后，仅 FTA 伙伴竞争使用')
+        :x.role==='alt'?(L==='en'?'shared other-countries pool (MFN)':'其他国家共用池（MFN）')
+        :(L==='en'?'FTA partners only':'仅限 FTA 伙伴');
+      s+='<tr><td>'+qkOrd(x.r)+'</td><td>'+qkSrc(x.r,L)+'</td><td class="num">'+(lr.b===null?'–':fmt(lr.b))+'</td><td>'+qkBar(lr)+'</td><td class="qk-when">'+when+'</td></tr>';});
+    s+='</tbody></table></div>';
+  }else if(cs.named&&cs.named.tk==='csq'){
+    s+='<div class="qk-note">'+(L==='en'?'This country-specific quota carries no FTA share, so the FTA–CSQ top-up pool (FTA partners only) does not apply.':'该国别配额不含 FTA 份额，FTA–CSQ 追加池（仅限 FTA 伙伴）不适用。')+'</div>';
+  }
+  /* 5 · caveats */
+  s+='<div class="qk-note">'+(L==='en'
+    ?'How this is estimated: the latest TARIC balance minus the recent pace (last 14 days after the opening allocation) × days to clearance. Balances are EU-wide and first-come, first-served — what counts is the balance on the day customs accepts the declaration for free circulation; when same-day requests exceed it, quota is allocated pro rata. Duty = 50% of the customs value (CIF) on the out-of-quota part; CBAM and any AD/CVD come on top. Commercial estimate, not legal advice.'
+    :'估算方法：最新 TARIC 余额 − 最近节奏（开闸首批之后、最近 14 天）× 距清关天数。余额为全欧盟共享、先到先得，以海关接受放行申报当天的余额为准；同一天申报超过余额时按比例分配。关税 = 超配额部分完税价格（CIF）的 50%，CBAM 及反倾销/反补贴另计。商务参考估算，非法律意见。')+'</div>';
+  s+='<div class="qk-acts"><button class="btn" onclick="qkToCost()">'+(L==='en'?'Open in the cost estimator':'在成本测算中细算')+' →</button>'
+    +'<button class="btn" onclick="qkView(\'product\');qkSet(\'c\',\''+QK.c+'\')">'+(L==='en'?'Compare all origins for this product':'比较这个产品的所有来源')+' →</button></div>';
+  return s;
+}
+function qkToCost(){
+  var cs=qkCandidates(QK.o,QK.c);if(!cs.list.length)return;
+  ccSetMode('auto');
+  var sel=document.getElementById('ccOrder');sel.value=cs.list[0].r.o;
+  document.getElementById('ccQty').value=QK.t||0;document.getElementById('ccVal').value=QK.val||0;
+  ccCalc();document.getElementById('cost').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- panels ---------- */
+function qkOriginSelect(L,id,handler){
+  var os=qkOrigins();
+  return '<select id="'+id+'" '+handler+'>'+os.map(function(o){
+    return '<option value="'+o.iso+'"'+(o.iso===QK.o?' selected':'')+'>'+(L==='en'?o.en:o.zh)+' · '+o.rows.length+(L==='en'?' own orders':' 个国别订单号')+'</option>';}).join('')
+    +'<option value="__other"'+(QK.o==='__other'?' selected':'')+'>'+(L==='en'?'Any other origin (no own quota)':'其他国家/地区（无国别配额）')+'</option></select>';
+}
+function qkCatSelect(L,id,handler){
+  return '<select id="'+id+'" '+handler+'>'+qkCats().list.map(function(x){
+    return '<option value="'+x.c+'"'+(x.c===QK.c?' selected':'')+'>'+x.c+' · '+(L==='en'?x.en:x.zh)+'</option>';}).join('')+'</select>';
+}
+function qkKpi(k,v){return '<div class="qk-k"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>';}
+function qkOriginPanel(L){
+  var U=L==='en'?' t':' 吨',per=qkPer(L),o=QK.o==='__other'?null:qkOrigin(QK.o);
+  var s='<div class="qk-ctl"><div class="f grow"><label>'+(L==='en'?'Origin':'原产地')+'</label>'+qkOriginSelect(L,'qkO','onchange="qkSet(\'o\',this.value)"')+'</div></div>';
+  var have={};
+  if(o){
+    var rows=o.rows.slice(),Q=0,Uu=0,ne=0,nc=0,nw=0,soon=0;
+    rows.forEach(function(r){var lr=liveRow(r);have[r.c]=1;Q+=lr.q;if(lr.u!==null)Uu+=lr.u;
+      if(lr.st==='exh')ne++;else if(lr.st==='crit')nc++;else if(lr.st==='warn')nw++;
+      var dd=deltaLive(r);if(dd&&dd.runout!==null&&dd.runout<=WATCH_SOON_DAYS&&!qClosed())soon++;});
+    rows.sort(function(a,b){var x=liveRow(a),y=liveRow(b);return (y.pct===null?-1:y.pct)-(x.pct===null?-1:x.pct)||catNum(a.c)-catNum(b.c);});
+    var name=L==='en'?o.en:o.zh,pct=Q>0?Uu/Q*100:0;
+    s+='<div class="qk-head">'+(L==='en'
+      ?(name+' · '+per+': <span class="hl">'+ne+'</span> of its '+rows.length+' own order numbers are used up, '+nc+' more are above 90%; overall '+fmt1(pct)+'% of its own quota is gone.')
+      :(name+' · '+per+'：'+rows.length+' 个国别订单号中 <span class="hl">'+ne+'</span> 个已用尽、'+nc+' 个超过 90%，自有配额整体已用 '+fmt1(pct)+'%。'))+'</div>';
+    s+='<div class="qk-kpis">'+qkKpi(L==='en'?'Own quota this quarter':'本季自有配额',fmt(Q)+'<small>'+U+'</small>')
+      +qkKpi(L==='en'?'Still available':'仍可用',fmt(Q-Uu)+'<small>'+U+'</small>')
+      +qkKpi(L==='en'?'Used up / ≥90%':'已用尽 / ≥90%',ne+' / '+nc)
+      +qkKpi(L==='en'?'May run out within 7 days':'7 日内可能用尽',soon)+'</div>';
+    s+='<div class="qk-sub">'+(L==='en'?'Your own order numbers (most used first)':'你的国别订单号（按占用率排序）')+'</div>';
+    s+='<div class="qk-tb"><table><thead><tr><th>'+(L==='en'?'Product':'产品')+'</th><th class="qk-hm">'+(L==='en'?'Order':'订单号')+'</th><th class="num qk-hm">'+(L==='en'?'Quota':'本季配额')
+      +'</th><th class="num">'+(L==='en'?'Left':'剩余')+'</th><th>'+(L==='en'?'% used':'占用率')+'</th><th>'+(L==='en'?'Pace / outlook':'节奏 / 预计')+'</th>'+(o.fta?'<th class="qk-hm">'+(L==='en'?'Once used up':'用尽之后')+'</th>':'')+'</tr></thead><tbody>';
+    rows.forEach(function(r){var lr=liveRow(r),after;
+      if(r.tk==='csq'&&r.f>0){var p=poolOf(r.c,'fta_csq'),pl=p?liveRow(p):null;
+        after=p?((L==='en'?'FTA–CSQ pool ':'FTA–CSQ 追加池 ')+qkOrd(p)+' · '+(pl.b===null?'–':fmt(pl.b)+U)+' '+qkPill(pl.st,L)):'–';}
+      else if(r.tk==='csq'){after='<span class="qk-dim">'+(L==='en'?'no FTA share: 50% duty':'无 FTA 份额：超出按 50%')+'</span>';}
+      else{after='<span class="qk-dim">'+(L==='en'?'see quota rules':'以分配规则为准')+'</span>';}
+      s+='<tr><td>'+qkCat(r,L)+(r.tk!=='csq'?' <span class="tybadge ty-'+r.tk+'">'+qkTy(r,L)+'</span>':'')+'<div class="qk-om">'+qkOrd(r)+'</div></td><td class="qk-hm">'+qkOrd(r)+'</td><td class="num qk-hm">'+fmt(lr.q)+'</td><td class="num">'+(lr.b===null?'–':fmt(lr.b))
+        +'</td><td>'+qkBar(lr)+'</td><td class="qk-pace">'+qkPace(r,L)+'</td>'+(o.fta?'<td class="qk-when qk-hm">'+after+'</td>':'')+'</tr>';});
+    s+='</tbody></table></div>';
+    if(!o.fta)s+='<div class="qk-note">'+(L==='en'?(o.en+'\'s own quotas carry no FTA share (MFN only): once an order number is used up, the FTA–CSQ top-up pool (FTA partners only) does not apply, so further imports are costed at the 50% out-of-quota duty.'):(o.zh+'的国别配额不含 FTA 份额（仅 MFN）：某个订单号用尽后，FTA–CSQ 追加池（仅限 FTA 伙伴）不适用，继续进口按 50% 配额外关税估算。'))+'</div>';
+  }else{
+    s+='<div class="qk-head">'+(L==='en'
+      ?'An origin without its own order numbers competes for the shared pools in every product: first-come, first-served against all other such origins.'
+      :'没有国别订单号的原产地，每个产品都只能争共用池：与所有同类原产地先到先得。')+'</div>';
+  }
+  /* products without an own order number: the shared pools */
+  var miss=qkCats().list.filter(function(x){return !have[x.c];});
+  if(miss.length){
+    s+='<div class="qk-sub">'+(o?(L==='en'?('Products where '+(o.en)+' has no own quota ('+miss.length+'): shared pools only'):((o.zh)+'没有国别配额的产品（'+miss.length+' 个）：只能用共用池'))
+      :(L==='en'?'Shared pools by product':'各产品的共用池'))+'</div>';
+    s+='<div class="qk-tb"><table><thead><tr><th>'+(L==='en'?'Product':'产品')+'</th><th>'+(L==='en'?'Other countries pool (MFN)':'其他国家共用池（MFN）')+'</th><th'+(o&&!o.fta?' class="qk-hm"':'')+'>'+(L==='en'?'FTA–Other pool (FTA partners only)':'FTA–其他国家池（仅 FTA 伙伴）')+'</th></tr></thead><tbody>';
+    miss.forEach(function(x){
+      function cell(tk){var p=poolOf(x.c,tk);if(!p)return '–';var lr=liveRow(p);
+        return qkOrd(p)+' · '+(lr.b===null?'–':fmt(lr.b)+U)+' / '+fmt(lr.q)+' '+qkPill(lr.st,L);}
+      s+='<tr><td>'+'<span class="catbadge">'+x.c+'</span> '+(L==='en'?x.en:x.zh)+'</td><td>'+cell('residual')+'</td><td'+(o&&!o.fta?' class="qk-dim qk-hm"':'')+'>'+cell('fta_oth')+'</td></tr>';});
+    s+='</tbody></table></div>';
+    s+='<div class="qk-note">'+(o?(o.fta
+      ?(L==='en'?(o.en+'\'s own quotas include an FTA share, so the FTA pools are relevant if your goods qualify for preferential origin.'):(o.zh+'的国别配额含 FTA 份额：货物满足优惠原产地条件时，FTA 池与你相关。'))
+      :(L==='en'?(o.en+'\'s own quotas carry no FTA share (MFN only), so the FTA pools (greyed) do not apply.'):(o.zh+'的国别配额不含 FTA 份额（仅 MFN），灰色的 FTA 池不适用。')))
+      :(L==='en'?'FTA pools apply only to EU free-trade partners with proof of preferential origin.':'FTA 池只适用于欧盟自贸伙伴、且货物有优惠原产地证明。'))
+      +(L==='en'?' Pool sizes are per quarter.':' 池子大小为季度量。')+'</div>';
+  }
+  var no=qkNextOpen(),days=Math.ceil((no-Date.now())/QK_DAY);
+  s+='<div class="qk-acts">'+(o?'<button class="btn" onclick="filterOrg(\''+o.iso+'\')">'+(L==='en'?'Show in the tracker':'在追踪表中查看')+' →</button>':'')
+    +'<button class="btn pri" onclick="qkView(\'check\')">'+(L==='en'?'Check a shipment':'核查一票货')+' →</button>'
+    +'<span class="qk-dim qk-open">'+(L==='en'?('Next quarter opens '+qkMD(no,L)+(days>0?' (in '+days+' days)':'')):('下季度 '+qkMD(no,L)+' 开闸'+(days>0?'（还有 '+days+' 天）':'')))+'</span></div>';
+  return s;
+}
+function qkProductPanel(L){
+  var U=L==='en'?' t':' 吨',per=qkPer(L),cat=qkCats().map[QK.c];
+  var s='<div class="qk-ctl"><div class="f grow"><label>'+(L==='en'?'Product category':'产品类别')+'</label>'+qkCatSelect(L,'qkC','onchange="qkSet(\'c\',this.value)"')+'</div></div>';
+  var rows=cat.rows.slice(),Q=0,Uu=0,open=0,openQ=0,ex=0;
+  rows.forEach(function(r){var lr=liveRow(r);Q+=lr.q;if(lr.u!==null)Uu+=lr.u;if(lr.b>0){open++;openQ+=lr.b;}else if(lr.b!==null)ex++;});
+  rows.sort(function(a,b){var x=liveRow(a),y=liveRow(b),xb=x.b||0,yb=y.b||0;
+    if((xb>0)!==(yb>0))return yb>0?1:-1;return xb>0?yb-xb:y.q-x.q;});
+  var cname=cat.c+' '+(L==='en'?cat.en:cat.zh),pct=Q>0?Uu/Q*100:0;
+  var best=rows.filter(function(r){var lr=liveRow(r);return lr.b>0&&r.iso;}).slice(0,3).map(function(r){return (L==='en'?r.ne:r.nz)+' '+fmt(liveRow(r).b)+U;});
+  s+='<div class="qk-head">'+(L==='en'
+    ?(cname+' · '+per+': '+fmt1(pct)+'% used. <span class="hl">'+open+'</span> of '+rows.length+' order numbers still have room ('+fmt(openQ)+U+' in total)'+(best.length?'; most room: '+best.join(', '):'')+'.')
+    :(cname+' · '+per+'：已用 '+fmt1(pct)+'%，'+rows.length+' 个订单号中仍有余量的 <span class="hl">'+open+'</span> 个（合计 '+fmt(openQ)+U+'）'+(best.length?'；余量最多：'+best.join('、'):'')+'。'))+'</div>';
+  s+='<div class="qk-kpis">'+qkKpi(L==='en'?'Quota this quarter':'本季配额',fmt(Q)+'<small>'+U+'</small>')
+    +qkKpi(L==='en'?'Still available':'仍可用',fmt(openQ)+'<small>'+U+'</small>')
+    +qkKpi(L==='en'?'Order numbers with room':'仍有余量',open+' / '+rows.length)
+    +qkKpi(L==='en'?'Used up':'已用尽',ex)+'</div>';
+  s+='<div class="qk-tb"><table><thead><tr><th>'+(L==='en'?'Source':'来源')+'</th><th class="qk-hm">'+(L==='en'?'Type':'类型')+'</th><th class="qk-hm">'+(L==='en'?'Order':'订单号')+'</th><th class="num qk-hm">'+(L==='en'?'Quota':'本季配额')
+    +'</th><th class="num">'+(L==='en'?'Left':'剩余')+'</th><th>'+(L==='en'?'% used':'占用率')+'</th><th>'+(L==='en'?'Pace / outlook':'节奏 / 预计')+'</th></tr></thead><tbody>';
+  rows.forEach(function(r){var lr=liveRow(r);
+    s+='<tr'+(lr.b===0?' class="qk-gone"':'')+'><td><b>'+qkSrc(r,L)+'</b>'+(r.iso?' <span class="an2">'+r.iso+'</span>':'')+'<div class="qk-om">'+qkOrd(r)+' · '+qkTy(r,L)+'</div></td><td class="qk-hm"><span class="tybadge ty-'+r.tk+'">'+qkTy(r,L)+'</span></td><td class="qk-hm">'+qkOrd(r)+'</td><td class="num qk-hm">'+fmt(lr.q)+'</td><td class="num">'+(lr.b===null?'–':fmt(lr.b))
+      +'</td><td>'+qkBar(lr)+'</td><td class="qk-pace">'+qkPace(r,L)+'</td></tr>';});
+  s+='</tbody></table></div>';
+  s+='<div class="qk-note">'+(L==='en'
+    ?'Country-specific quotas (CSQ, FTA-spec) can only be used by goods from that origin. FTA–CSQ is a top-up for FTA partners whose own quota is used up; "Other countries" and "FTA–Other" are shared pools for origins without their own quota. Goods from an exhausted origin cannot switch to another country\'s quota.'
+    :'国别配额（CSQ、FTA专属）只能由该原产地的货物使用；FTA–CSQ 是自有额度用尽后给 FTA 伙伴的追加池；"其他国家"与"FTA–其他"是给没有国别配额的原产地的共用池。某原产地额度用尽后，不能改用别国的国别配额。')+'</div>';
+  s+='<div class="qk-acts"><button class="btn" onclick="filterCat(\''+cat.c+'\')">'+(L==='en'?'Filter the tracker to this product':'在追踪表中筛选该产品')+' →</button>'
+    +'<button class="btn pri" onclick="qkView(\'check\')">'+(L==='en'?'Check a shipment':'核查一票货')+' →</button></div>';
+  return s;
+}
+function qkCheckPanel(L){
+  var asof=PRELOAD.asOf;
+  var s='<div class="qk-ctl qk-ctl5">'
+    +'<div class="f grow"><label>'+(L==='en'?'Origin':'原产地')+'</label>'+qkOriginSelect(L,'qkCo','onchange="qkInput()"')+'</div>'
+    +'<div class="f grow"><label>'+(L==='en'?'Product':'产品类别')+'</label>'+qkCatSelect(L,'qkCc','onchange="qkInput()"')+'</div>'
+    +'<div class="f"><label>'+(L==='en'?'Tonnes':'数量（吨）')+'</label><input id="qkCt" type="number" min="0" step="100" value="'+(QK.t||'')+'" oninput="qkInput()"></div>'
+    +'<div class="f"><label>'+(L==='en'?'Clearance date':'预计清关日')+'</label><input id="qkCd" type="date" min="'+asof+'" value="'+QK.d+'" onchange="qkInput()" oninput="qkInput()"></div>'
+    +'<div class="f"><label>'+(L==='en'?'Customs value EUR/t (CIF)':'完税价格 EUR/吨（CIF）')+'</label><input id="qkCv" type="number" min="0" step="10" value="'+(QK.val||'')+'" oninput="qkInput()"></div>'
+    +'</div><div id="qkRes">'+qkCheckRes(L)+'</div>';
+  return s;
+}
+function qkOverviewPanel(L){
+  var U=L==='en'?' t':' 吨',per=qkPer(L),h=PRELOAD.history||[];
+  var Q=0,Uu=0,ne=0,nc=0,d1=0,soon=0,cats={},orgs={};
+  DATA.forEach(function(r){var lr=liveRow(r);Q+=lr.q;if(lr.u!==null)Uu+=lr.u;
+    if(lr.st==='exh')ne++;else if(lr.st==='crit')nc++;
+    var dd=deltaLive(r);if(dd){d1+=dd.d1;if(dd.runout!==null&&dd.runout<=WATCH_SOON_DAYS&&!qClosed())soon++;}
+    var c=cats[r.c]||(cats[r.c]={c:r.c,zh:r.cz,en:r.ce,q:0,u:0});c.q+=lr.q;if(lr.u!==null)c.u+=lr.u;
+    if(r.iso&&r.tk!=='ni'){var o=orgs[r.iso]||(orgs[r.iso]={zh:r.nz,en:r.ne,n:0,ex:0});o.n++;if(lr.st==='exh')o.ex++;}});
+  var pct=Q>0?Uu/Q*100:0,prevPct=null;
+  if(h.length>=2){var pb=h[h.length-2].b,pu=0;DATA.forEach(function(r){var b=pb[r.o];if(typeof b==='number')pu+=liveQuota(r)-Math.max(0,b);});prevPct=Q>0?pu/Q*100:null;}
+  var topC=Object.keys(cats).map(function(k){return cats[k];}).filter(function(c){return c.q>0;}).sort(function(a,b){return b.u/b.q-a.u/a.q;}).slice(0,3)
+    .map(function(c){return c.c+' '+(L==='en'?c.en:c.zh)+' '+fmt1(c.u/c.q*100)+'%';});
+  var topO=Object.keys(orgs).map(function(k){return orgs[k];}).filter(function(o){return o.ex>0;}).sort(function(a,b){return b.ex-a.ex||a.n-b.n;}).slice(0,3)
+    .map(function(o){return (L==='en'?o.en:o.zh)+' '+o.ex+'/'+o.n;});
+  var cq=(PRELOAD.closed||{}),cqs='';
+  Object.keys(cq).forEach(function(k){var b=cq[k].balances||{},t=0;Object.keys(b).forEach(function(o){t+=Math.max(0,+b[o]||0);});
+    cqs+=L==='en'?(k.toUpperCase()+' '+(qFinal(cq[k])?'final':'settling until '+stopTxt(cq[k],'en'))+': '+fmt(t)+U+' unused, to be carried into the next quarter.')
+      :(k.toUpperCase()+(qFinal(cq[k])?' 已结算':' 结算中（至 '+stopTxt(cq[k],'zh')+'）')+'：未用 '+fmt(t)+U+'，将结转下一季。');});
+  var s='<div class="qk-kpis">'+qkKpi(per+(L==='en'?' used':' 已用'),fmt1(pct)+'<small>%</small>')
+    +qkKpi(L==='en'?'Since last snapshot':'较上次快照',(prevPct===null?'–':'+'+fmt1(pct-prevPct)+'<small>'+(L==='en'?' pts':' 个百分点')+'</small>'))
+    +qkKpi(L==='en'?'Used up / ≥90%':'已用尽 / ≥90%',ne+' / '+nc)
+    +qkKpi(L==='en'?'May run out in 7 days':'7 日内可能用尽',soon)+'</div>';
+  s+='<ul class="qk-pts">'
+    +'<li>'+(L==='en'?(per+' is '+fmt1(pct)+'% used: '+fmt(Uu)+' of '+fmt(Q)+U+'; '+fmt(d1)+U+' drawn since the previous snapshot.'):(per+' 已用 '+fmt1(pct)+'%：'+fmt(Q)+U+' 中用掉 '+fmt(Uu)+U+'，较上次快照又用掉 '+fmt(d1)+U+'。'))+'</li>'
+    +(topC.length?'<li>'+(L==='en'?'Tightest products (all quota types): ':'最紧的产品（全部配额类型）：')+topC.join(L==='en'?'; ':'；')+'</li>':'')
+    +(topO.length?'<li>'+(L==='en'?'Most order numbers used up (own quotas): ':'国别订单号用尽最多的原产地：')+topO.join(L==='en'?'; ':'；')+'</li>':'')
+    +(cqs?'<li>'+cqs+'</li>':'')+'</ul>';
+  s+='<div class="qk-acts">'
+    +'<button class="btn" onclick="document.getElementById(\'dash\').scrollIntoView()">'+(L==='en'?'Dashboard & heatmap':'看板与热力图')+'</button>'
+    +'<button class="btn" onclick="document.getElementById(\'track\').scrollIntoView()">'+(L==='en'?'Full tracker':'追踪表')+'</button>'
+    +'<button class="btn" onclick="exportCSV()">⬇ CSV</button>'
+    +'<button class="btn" onclick="printBrief()">'+(L==='en'?'One-page brief':'一页简报')+'</button>'
+    +'<button class="btn" onclick="document.getElementById(\'method\').scrollIntoView()">'+(L==='en'?'Methodology':'方法论')+'</button></div>';
+  return s;
+}
+function renderQuick(){
+  var box=document.getElementById('qkBody');if(!box||!PRELOAD||!PRELOAD.asOf)return;
+  var L=state.lang;qkValid(L);
+  Array.prototype.forEach.call(document.querySelectorAll('#qkTabs .qk-tab'),function(b){
+    var on=b.getAttribute('data-v')===QK.v;b.classList.toggle('on',on);b.setAttribute('aria-selected',on?'true':'false');});
+  var a=document.getElementById('qkAsOf');
+  if(a)a.textContent=(L==='en'?'Live: ':'当前：')+qkPer(L)+' · TARIC '+PRELOAD.asOf;
+  box.innerHTML=QK.v==='origin'?qkOriginPanel(L):QK.v==='product'?qkProductPanel(L):QK.v==='check'?qkCheckPanel(L):qkOverviewPanel(L);
+  qkSave();
+}
+
 /* ---------------- tour ---------------- */
 var TOUR=[
+ {sel:'#quick .qk-wrap',zh:{t:'快速查询：按你的角色',x:'出口商按原产地查、进口商/贸易商按产品比较来源、有货在途的核查一票货能否在配额内清关、研究分析看全局。答案都用最新 TARIC 余额算好。'},en:{t:'Quick check by role',x:'Exporters look up their origin, importers/traders compare origins for a product, anyone with cargo on the way checks one shipment against clearance day, analysts get the overview. All worked out from the latest TARIC balances.'}},
  {sel:'#periods',zh:{t:'选择期间',x:'配额按季度开放，标 LIVE 的是当前活跃季；标「结算中」的是进口期已结束、但迟到申报仍在分配的上一季（Q3 至 10-28）；"年度合计"看全年盘子。'},en:{t:'Pick a period',x:'Quotas open quarterly. The LIVE tab is the current quarter; SETTLING is the one whose import period just ended but which still takes late allocations (Q3 until 28 Oct); "Annual" shows the full-year picture.'}},
  {sel:'#kpis',zh:{t:'看板速读',x:'期间配额量、已用量、总体占用率、较上次快照消耗、临界与已用尽数量——每周一、三、五随官方快照刷新。'},en:{t:'Read the KPIs',x:'Period quota, used, overall %, draw-down since the last snapshot, critical &amp; exhausted counts — refreshed Mon/Wed/Fri from the official snapshot.'}},
  {sel:'.sumgrid',zh:{t:'占用率热力图',x:'行=类别、列=原产地，颜色深浅=占用率，交叉差异一眼可见；"合计"行/列是汇总占用率。悬停看订单号明细，点击任意格子直接筛选追踪表。'},en:{t:'Usage heatmap',x:'Rows = categories, columns = origins; color = % used, so cross-differences pop instantly. The "Total" row/column carry aggregates. Hover for order detail; click any cell to filter the tracker.'}},
@@ -1818,7 +2337,7 @@ function tourStop(){tOn=false;if(tEl)tEl.classList.remove('tour-hl');document.ge
 
 /* ---------------- scroll spy ---------------- */
 function spy(){
-  var ids=['dash','track','cost','policy','timeline','data','method','guide','docs'];
+  var ids=['quick','dash','track','cost','policy','timeline','data','method','guide','docs'];
   var links=document.querySelectorAll('#sbNav .sb-link');
   var cur=ids[0];
   ids.forEach(function(id){
@@ -1872,7 +2391,7 @@ function renderStale(){
   bar.innerHTML='<span class="sb-ico">\u26a0</span><span><span class="zh">'+zh+'</span><span class="en">'+en+'</span></span>';
 }
 
-function renderAll(){if(typeof rsStat==='function')rsStat();renderPeriods();renderKPIs();renderAlerts();renderFilters();renderHead();renderTable();renderTicker();renderSummary();renderPolicy();renderTimeline();renderDataTables();ccBuild();renderStale();spy();if(tOn)tourShow(ti);}
+function renderAll(){if(typeof rsStat==='function')rsStat();renderPeriods();renderKPIs();renderAlerts();renderFilters();renderHead();renderTable();renderTicker();renderSummary();renderPolicy();renderTimeline();renderDataTables();ccBuild();renderStale();renderQuick();spy();if(tOn)tourShow(ti);}
 document.getElementById('ccOrder').addEventListener('change',ccCalc);
 document.getElementById('ccQty').addEventListener('input',ccCalc);
 document.getElementById('ccVal').addEventListener('input',ccCalc);
@@ -1885,6 +2404,7 @@ document.getElementById('fCat').addEventListener('change',function(){state.cat=t
 load();
 state.mode='balance';
 applyPreload();
+qkLoad();
 applyLang();
 renderAll();
 /* ---------------- remote data sync (client/site edition) ---------------- */
